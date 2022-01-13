@@ -1,0 +1,42 @@
+# Unix
+alias ll="ls -al"
+alias ln="ln -v"
+alias mkdir="mkdir -p"
+alias e="$EDITOR"
+alias v="$VISUAL"
+
+# Bundler
+alias b="bundle"
+
+# Rails
+alias migrate="bin/rails db:migrate db:rollback && bin/rails db:migrate db:test:prepare"
+alias s="rspec"
+
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
+
+# Include custom aliases
+if [[ -f ~/.aliases.local ]]; then
+  source ~/.aliases.local
+fi
+
+alias sshw="ssh a.bogomazov@192.168.73.100"
+# alias connectvpn="sudo route -n add -host 173.249.33.81/32 -interface ppp0 &&
+# sudo route -n add -host 167.86.81.157/32 -interface ppp0 && sudo route -n add -host 178.238.230.57/32 -interface ppp0"
+alias unlock="sudo xattr -rd com.apple.quarantine "
+alias setttl="sudo sysctl -w net.inet.ip.ttl=65"
+alias setttloff="sudo sysctl -w net.inet.ip.ttl=64"
+alias tracert=traceroute
+
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+
+# Shortcuts
+alias dl="cd ~/Downloads"
+alias p="cd ~/projects"
+alias g="git"

@@ -1,0 +1,53 @@
+#!/bin/sh
+
+############
+# Brewery
+############
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+############
+#   Terminal
+############
+
+# JSON Viewer
+brew install fx
+brew install ccat
+# Docker container TOP
+brew install ctop
+# Docker TUI
+brew install lazygit
+# Stream tty to browser
+brew install yudai/gotty/gotty
+brew install spotify-tui
+# Like GREP
+brew install peco
+# Interactive ssh client for multiple servers
+brew install hss
+
+#############
+#   Casks
+#############
+
+brew install iterm2
+brew install jetbrains-toolbox
+brew install google-chrome
+brew install firefox
+brew install visual-studio-code
+brew install anki
+brew install notion
+brew install docker
+brew install transmission
+brew install tree
+brew install tmux
+brew install thefuck
+brew install node
+brew install htop
+brew install cheatsheet
+
+################
+#   Other Software
+################
+
+# Tmux Plugin Manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
