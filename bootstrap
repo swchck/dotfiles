@@ -38,7 +38,7 @@ fi
 pip3 install --upgrade pip
 
 # Install Python Dependencies
-pip3 install -r -q requirements.txt
+pip3 install -q pyinquirer
 
 # Installation Script
 python3 bin/bootstrap

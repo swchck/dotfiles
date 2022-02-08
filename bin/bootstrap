@@ -207,6 +207,13 @@ if __name__ == '__main__':
             'message': 'Do you want to Override default configurations?',
             'default': False,
         },
+        # Override *nix tty welcome text
+        {
+            'type': 'confirm',
+            'name': 'override',
+            'message': 'Do you want to Override default *nix tty welcome text?',
+            'default': False,
+        },
     ]
 
     print(f"{Bcolors.FAIL}{logo}{Bcolors.END_C}")

@@ -5,7 +5,7 @@
     "unsupported": []
   },
   {
-    "id": "aliases",
+    "id": "aliases --devel",
     "name": "Aliases - Location Based Aliases",
     "unsupported": []
   },
@@ -57,6 +57,11 @@
   {
     "id": "hss",
     "name": "hss - Interactive ssh client for multiple servers.",
+    "unsupported": []
+  },
+  {
+    "id": "trntv/sshed/sshed",
+    "name": "SSHed - ssh connections manager and config editor",
     "unsupported": []
   }
 ]
