@@ -1,12 +1,26 @@
 #!/bin/bash
 
-# Cloning Repo with Dotfiles and go to Directory
-git clone https://github.com/swchck/dotfiles.git ~/dotfiles && cd "$_" || echo 'Directory not Found!'
-
 # Install Brewery
 if [ -z "$(which brew)" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+
+# Install Git on Linux Host or Developer tools on MacOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  xcode-select --install
+elif [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "freebsd"* ]]; then
+  if [ -z "$(which git)" ]; then
+    brew install git
+  fi
+elif [[ "$OSTYPE" == "win32"* || "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+  echo "Windows is not supported at this time 😭"
+fi
+
+# Cloning Repo with Dotfiles and go to Directory
+git clone https://github.com/swchck/dotfiles.git ~/dotfiles && cd "$_" || echo 'Directory not Found!'
+
+# Delete .git folder
+rm -rf .git
 
 # Install Python
 if [ -z "$(which python3)" ]; then
