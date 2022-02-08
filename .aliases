@@ -27,5 +27,9 @@ git-conf:
   command: python3 ~/dotfiles/bin/git-config-manager
 cat:
   command: ccat
+gcane:
+  command: git add . && git commit --amend --no-edit
+gmc:
+  command: git checkout $1 && git cherry-pick master && git checkout master && git reset HEAD~ --hard
 ...: 
   command: ../..

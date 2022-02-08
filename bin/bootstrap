@@ -44,12 +44,12 @@ with open('data/cli_utils.json') as json_file:
 def get_textarea_question(name: str, message: str, ext: str):
     return {
         'type': 'editor',
-        'name': 'bio',
-        'message': 'Please write a short bio of at least 3 lines.',
+        'name': name,
+        'message': message,
         'default': '<You can paste file content here>',
         'eargs': {
             'editor': "vi",
-            'ext': '.py'
+            'ext': '.{}'.format(ext)
         }
     }
 
@@ -64,10 +64,6 @@ def get_choices_from_file(items: list[dict]):
             'disabled': "" if unsupported.__contains__(platform_name) else ""
         })
     return choices
-
-
-def configure_git(git_answers: list):
-    personal_username = git_answers
 
 
 def configure_shell(shell_name: str, shell_extension: bool):
@@ -149,6 +145,7 @@ if __name__ == '__main__':
             'default': True,
             'when': lambda data: data['shell'] == "zsh"
         },
+        # Applications chooser
         {
             'type': 'checkbox',
             'name': 'cli_utils',
@@ -156,11 +153,19 @@ if __name__ == '__main__':
             'choices': get_choices_from_file(cli_utils_json)
         },
         {
+            'type': 'confirm',
+            'name': 'tmux_plugin_manager',
+            'message': 'Do you want to install Tmux Plugin Manager?',
+            'default': True,
+            'when': lambda data: data['cli_utils'].__contains__('tmux')
+        },
+        {
             'type': 'checkbox',
             'name': 'casks',
             'message': 'What Applications do you need to install?',
             'choices': get_choices_from_file(casks_json)
         },
+        # Git configuration
         {
             'type': 'confirm',
             'name': 'git_config',
@@ -194,6 +199,13 @@ if __name__ == '__main__':
             'message': 'Please type your *work* git email',
             'filter': lambda val: val.lower(),  # type: str
             'when': lambda data: data['git_config'] is True
+        },
+        # Override Remote Configurations
+        {
+            'type': 'confirm',
+            'name': 'override',
+            'message': 'Do you want to Override default configurations?',
+            'default': False,
         },
     ]
 
