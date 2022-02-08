@@ -1,0 +1,52 @@
+[
+  {
+    "id": "iterm2",
+    "name": "iTerm2 - is a replacement for Terminal and the successor to iTerm",
+    "unsupported": ["win32", "linux"]
+  },
+  {
+    "id": "jetbrains-toolbox",
+    "name": "JetBrains Toolbox App",
+    "unsupported": []
+  },
+  {
+    "id": "google-chrome",
+    "name": "Google Chrome",
+    "unsupported": []
+  },
+  {
+    "id": "firefox",
+    "name": "Firefox",
+    "unsupported": []
+  },
+  {
+    "id": "visual-studio-code",
+    "name": "VSCode",
+    "unsupported": []
+  },
+  {
+    "id": "anki",
+    "name": "Anki FlashCard",
+    "unsupported": []
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "unsupported": []
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "unsupported": []
+  },
+  {
+    "id": "transmission",
+    "name": "Transmission - Torrent Downloader",
+    "unsupported": ["win32"]
+  },
+  {
+    "id": "cheatsheet",
+    "name": "Cheatsheet - Interactive window with shortcuts by ⌘ press",
+    "unsupported": ["win32", "linux"]
+  }
+]

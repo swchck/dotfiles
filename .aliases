@@ -20,6 +20,12 @@ dl:
 g:
   command: git
 upd:
-  command: python3 ~/dotfiles/update/update.py
+  command: python3 ~/dotfiles/bin/update
+override-dot:
+  command: python3 ~/dotfiles/bin/dotfiles-local
+git-conf:
+  command: python3 ~/dotfiles/bin/git-config-manager
+cat:
+  command: ccat
 ...: 
   command: ../..

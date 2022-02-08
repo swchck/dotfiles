@@ -1,0 +1,201 @@
+#!/bin/python3
+
+import os
+import json
+import platform
+import subprocess
+
+from PyInquirer import prompt
+
+# Get Platform name
+platform_name = platform.system().lower()
+logo = """
+        ▓█████▄   ▒█████   ▄▄▄█████▓  █████▒   ██▓  ██▓     ▓█████    ██████ 
+        ▒██▀ ██▌ ▒██▒  ██▒▓   ██▒   ▓▒▓██   ▒ ▓██▒▓ ██▒     ▓█   ▀  ▒██    ▒ 
+        ░██   █▌ ▒██░  ██▒▒  ▓██░   ▒░▒████ ░ ▒██▒▒ ██░     ▒███    ░ ▓██▄   
+        ░▓█▄   ▌ ▒██   ██░░  ▓██▓   ░ ░▓█▒  ░ ░██░▒ ██░     ▒▓█  ▄    ▒   ██▒
+    ██▓ ░▒████▓  ░ ████▓▒░   ▒██▒   ░ ░▒█░    ░██░░ ██████▒ ░▒████▒ ▒██████▒▒
+    ▒▓▒  ▒▒▓  ▒  ░ ▒░▒░▒░    ▒ ░░      ▒ ░    ░▓  ░  ▒░▓  ░ ░░ ▒░ ░ ▒ ▒▓▒ ▒ ░
+    ░▒   ░ ▒  ▒    ░ ▒ ▒░      ░       ░       ▒ ░░  ░ ▒  ░  ░ ░  ░ ░ ░▒  ░ ░
+    ░    ░ ░  ░  ░ ░ ░ ▒     ░         ░ ░     ▒ ░   ░ ░       ░    ░  ░  ░  
+     ░     ░         ░ ░                       ░       ░  ░    ░  ░       ░  
+     ░   ░                                                                                                                        
+ """
+
+
+class Bcolors:
+    HEADER = '\033[95m'
+    OK_BLUE = '\033[94m'
+    OK_CYAN = '\033[96m'
+    OK_GREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    END_C = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+with open('data/casks.json') as json_file:
+    casks_json = json.load(json_file)
+with open('data/cli_utils.json') as json_file:
+    cli_utils_json = json.load(json_file)
+
+
+def get_textarea_question(name: str, message: str, ext: str):
+    return {
+        'type': 'editor',
+        'name': 'bio',
+        'message': 'Please write a short bio of at least 3 lines.',
+        'default': '<You can paste file content here>',
+        'eargs': {
+            'editor': "vi",
+            'ext': '.py'
+        }
+    }
+
+
+def get_choices_from_file(items: list[dict]):
+    choices = []
+    for item in items:
+        unsupported = item.get('unsupported')  # type: list
+        choices.append({
+            'name': item.get('name'),
+            'value': item.get('id'),
+            'disabled': "" if unsupported.__contains__(platform_name) else ""
+        })
+    return choices
+
+
+def configure_git(git_answers: list):
+    personal_username = git_answers
+
+
+def configure_shell(shell_name: str, shell_extension: bool):
+    if os.system('which -s {}'.format(shell_name)) == '':
+        os.system('brew install {}'.format(shell_name))
+        if shell_name == 'fish' and shell_extension:
+            os.system('curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish')
+        elif shell_name == 'zsh' and shell_extension:
+            os.system('sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"')
+    os.system('chsh -s $(which {})'.format(shell_name))
+
+
+def install_cli_utils(utils: list):
+    for util in utils:
+        if os.system('which -s {}'.format(util)) != 0:
+            os.system("brew install -q {name}".format(name=util))
+        else:
+            print("{} already installed, Skipping...".format(util.capitalize()))
+
+
+def install_casks(casks: list):
+    casks_list = subprocess.check_output('brew list -1 --casks', shell=True).decode("utf-8").split()
+    for cask in casks:
+        if not casks_list.__contains__(cask):
+            os.system("brew install -q --cask {name}".format(name=cask))
+        else:
+            print("{} already installed, Skipping...".format(cask.capitalize()))
+
+
+def install_tmux_plugin_manager():
+    os.system('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
+
+
+def install(config: dict):
+    utils = config.get('cli_utils')  # type: list
+    casks = config.get('casks')  # type: list
+    shell_name = config.get('shell')  # type: str
+    is_use_oh_my = config.get(shell_name)  # type: bool
+
+    configure_shell(shell_name, is_use_oh_my)
+
+    install_cli_utils(utils)
+    install_casks(casks)
+
+    if utils.__contains__('tmux'):
+        install_tmux_plugin_manager()
+
+
+if __name__ == '__main__':
+    os.system('clear')
+    questions = [
+        {
+            'type': 'list',
+            'name': 'shell',
+            'message': "What shell do you want to use as Default?",
+            'choices': [
+                {
+                    'name': 'Fish - Friendly Interactive Shell',
+                    'value': 'fish'
+                },
+                {
+                    'name': 'ZSH',
+                    'value': 'zsh',
+                    'disabled': 'Not supported 🙁'
+                }
+            ]
+        },
+        {
+            'type': 'confirm',
+            'name': 'fish',
+            'message': 'Do you want to install Oh My Fish?',
+            'default': True,
+            'when': lambda data: data['shell'] == "fish"
+        },
+        {
+            'type': 'confirm',
+            'name': 'zsh',
+            'message': 'Do you want to install Oh My Zsh?',
+            'default': True,
+            'when': lambda data: data['shell'] == "zsh"
+        },
+        {
+            'type': 'checkbox',
+            'name': 'cli_utils',
+            'message': 'What CLI util do you need to install?',
+            'choices': get_choices_from_file(cli_utils_json)
+        },
+        {
+            'type': 'checkbox',
+            'name': 'casks',
+            'message': 'What Applications do you need to install?',
+            'choices': get_choices_from_file(casks_json)
+        },
+        {
+            'type': 'confirm',
+            'name': 'git_config',
+            'message': 'Do you want to configurate git for Work and Personal use?',
+            'default': False
+        },
+        {
+            'type': 'input',
+            'name': 'personal_git_username',
+            'message': 'Please type your *personal* git username',
+            'filter': lambda val: val.lower(),  # type: str
+            'when': lambda data: data['git_config'] is True
+        },
+        {
+            'type': 'input',
+            'name': 'personal_git_email',
+            'message': 'Please type your *personal* git email',
+            'filter': lambda val: val.lower(),  # type: str
+            'when': lambda data: data['git_config'] is True
+        },
+        {
+            'type': 'input',
+            'name': 'work_git_username',
+            'message': 'Please type your *work* git username',
+            'filter': lambda val: val.lower(),  # type: str
+            'when': lambda data: data['git_config'] is True
+        },
+        {
+            'type': 'input',
+            'name': 'work_git_email',
+            'message': 'Please type your *work* git email',
+            'filter': lambda val: val.lower(),  # type: str
+            'when': lambda data: data['git_config'] is True
+        },
+    ]
+
+    print(f"{Bcolors.FAIL}{logo}{Bcolors.END_C}")
+    install(prompt(questions=questions))
