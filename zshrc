@@ -68,6 +68,7 @@ _load_settings "$HOME/.zsh/configs"
 
 # source $ZSH/oh-my-zsh.sh
 # eval $(thefuck --alias)
+# eval "$(aliases init --global)"
 
 # # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

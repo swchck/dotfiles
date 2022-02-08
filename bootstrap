@@ -1,53 +1,30 @@
-#!/bin/sh
+#!/bin/bash
 
-############
-# Brewery
-############
+# Cloning Repo with Dotfiles and go to Directory
+git clone https://github.com/swchck/dotfiles.git ~/dotfiles && cd "$_" || echo 'Directory not Found!'
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install Brewery
+if [ -z "$(which brew)" ]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-############
-#   Terminal
-############
+# Install Python
+if [ -z "$(which python3)" ]; then
+  brew update
+  brew install python@3.10
+fi
 
-# JSON Viewer
-brew install fx
-brew install ccat
-# Docker container TOP
-brew install ctop
-# Docker TUI
-brew install lazygit
-# Stream tty to browser
-brew install yudai/gotty/gotty
-brew install spotify-tui
-# Like GREP
-brew install peco
-# Interactive ssh client for multiple servers
-brew install hss
+# Install RCM
+if [ -z "$(which rcm)" ]; then
+  brew install rcm
+  env RCRC=~/dotfiles/rcrc rcup
+fi
 
-#############
-#   Casks
-#############
+# Updating PIP
+pip3 install --upgrade pip
 
-brew install iterm2
-brew install jetbrains-toolbox
-brew install google-chrome
-brew install firefox
-brew install visual-studio-code
-brew install anki
-brew install notion
-brew install docker
-brew install transmission
-brew install tree
-brew install tmux
-brew install thefuck
-brew install node
-brew install htop
-brew install cheatsheet
+# Install Python Dependencies
+pip3 install -r -q installation/requirements.txt
 
-################
-#   Other Software
-################
-
-# Tmux Plugin Manager
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Installation Script
+python3 installation/bootstrap.py

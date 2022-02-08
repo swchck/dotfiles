@@ -1,38 +1,20 @@
-thoughtbot dotfiles
-===================
+# Dotfiles
 
 ![prompt](http://images.thoughtbot.com/thoughtbot-dotfiles-prompt.png)
 
-Requirements
-------------
-
-Set zsh as your login shell:
-
-    chsh -s $(which zsh)
-
-Install
--------
+## Install
 
 Clone onto your laptop:
 
     git clone git://github.com/thoughtbot/dotfiles.git ~/dotfiles
 
-Install MacOS Comand Line Tools
-
-xcode-select --install
-
-Install [rcm](https://github.com/thoughtbot/rcm):
-
-    brew install rcm
-
-Install the dotfiles:
-
-    env RCRC=$HOME/dotfiles/rcrc rcup
+Execute bootstrap.py (May need SUDO privileges):
+    
+    python3 bootstrap.py --full
 
 After the initial installation, you can run `rcup` without the one-time variable
 `RCRC` being set (`rcup` will symlink the repo's `rcrc` to `~/.rcrc` for future
-runs of `rcup`). [See
-example](https://github.com/thoughtbot/dotfiles/blob/master/rcrc).
+runs of `rcup`). [See example](https://github.com/swchck/dotfiles/blob/master/rcrc).
 
 This command will create symlinks for config files in your home directory.
 Setting the `RCRC` environment variable tells `rcup` to use standard
@@ -46,8 +28,7 @@ configuration options:
   overrides in a different directory
 
 
-Update
-------
+## Update
 
 From time to time you should pull down any updates to these dotfiles, and run
 
@@ -57,8 +38,7 @@ to link any new files and install new vim plugins. **Note** You _must_ run
 `rcup` after pulling to ensure that all files in plugins are properly installed,
 but you can safely run `rcup` multiple times so update early and update often!
 
-Make your own customizations
-----------------------------
+## Make your own customizations
 
 Create a directory for your personal customizations:
 
@@ -132,8 +112,7 @@ Your `~/dotfiles-local/vimrc.bundles.local` might look like this:
     Plug 'Lokaltog/vim-powerline'
     Plug 'stephenmckinney/vim-solarized-powerline'
 
-zsh Configurations
-------------------
+## ZSH Configurations
 
 Additional zsh configuration can go under the `~/dotfiles-local/zsh/configs` directory. This
 has two special subdirectories: `pre` for files that must be loaded first, and
@@ -162,39 +141,7 @@ can add the `virtualenv` file, another `keys`, and a third `chpwd`.
 
 The `~/dotfiles-local/zshrc.local` is loaded after `~/dotfiles-local/zsh/configs`.
 
-vim Configurations
-------------------
-
-Similarly to the zsh configuration directory as described above, vim
-automatically loads all files in the `~/dotfiles-local/vim/plugin` directory. This does not
-have the same `pre` or `post` subdirectory support that our `zshrc` has.
-
-This is an example `~/dotfiles-local/vim/plugin/c.vim`. It is loaded every time vim starts,
-regardless of the file name:
-
-    # Indent C programs according to BSD style(9)
-    set cinoptions=:0,t0,+4,(4
-    autocmd BufNewFile,BufRead *.[ch] setlocal sw=0 ts=8 noet
-
-What's in it?
--------------
-
-[vim](http://www.vim.org/) configuration:
-
-* [fzf](https://github.com/junegunn/fzf.vim) for fuzzy file/buffer/tag finding.
-* [Rails.vim](https://github.com/tpope/vim-rails) for enhanced navigation of
-  Rails file structure via `gf` and `:A` (alternate), `:Rextract` partials,
-  `:Rinvert` migrations, etc.
-* Run many kinds of tests [from vim]([https://github.com/janko-m/vim-test)
-* Set `<leader>` to a single space.
-* Switch between the last two files with space-space.
-* Syntax highlighting for Markdown, HTML, JavaScript, Ruby, Go, Elixir, more.
-* Use [Ag](https://github.com/ggreer/the_silver_searcher) instead of Grep when
-  available.
-* Map `<leader>ct` to re-index ctags.
-* Use [vim-mkdir](https://github.com/pbrisbin/vim-mkdir) for automatically
-  creating non-existing directories before writing the buffer.
-* Use [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins.
+## What's in it?
 
 [tmux](http://robots.thoughtbot.com/a-tmux-crash-course)
 configuration:
@@ -203,6 +150,7 @@ configuration:
 * Remove administrative debris (session name, hostname, time) in status bar.
 * Set prefix to `Ctrl+s`
 * Soften status bar color from harsh green to light gray.
+* List of possible [TMUX VARS LIST](./TMUX_VARS.md)
 
 [git](http://git-scm.com/) configuration:
 
@@ -215,90 +163,3 @@ configuration:
 * Adds `pre-commit` and `prepare-commit-msg` stubs that delegate to your local
   config.
 * Adds `trust-bin` alias to append a project's `bin/` directory to `$PATH`.
-
-[Ruby](https://www.ruby-lang.org/en/) configuration:
-
-* Add trusted binstubs to the `PATH`.
-* Load the ASDF version manager.
-
-Shell aliases and scripts:
-
-* `b` for `bundle`.
-* `g` with no arguments is `git status` and with arguments acts like `git`.
-* `migrate` for `bin/rails db:migrate db:rollback && bin/rails db:migrate db:test:prepare`.
-* `mcd` to make a directory and change into it.
-* `replace foo bar **/*.rb` to find and replace within a given list of files.
-* `tat` to attach to tmux session named the same as the current directory.
-* `v` for `$VISUAL`.
-
-Thanks
-------
-
-Thank you, [contributors](https://github.com/thoughtbot/dotfiles/contributors)!
-Also, thank you to Corey Haines, Gary Bernhardt, and others for sharing your
-dotfiles and other shell scripts from which we derived inspiration for items
-in this project.
-
-License
--------
-
-dotfiles is copyright © 2009-2018 thoughtbot. It is free software, and may be
-redistributed under the terms specified in the [`LICENSE`] file.
-
-[`LICENSE`]: /LICENSE
-
-About thoughtbot
-----------------
-
-![thoughtbot](http://presskit.thoughtbot.com/images/thoughtbot-logo-for-readmes.svg)
-
-dotfiles is maintained and funded by thoughtbot, inc.
-The names and logos for thoughtbot are trademarks of thoughtbot, inc.
-
-We love open source software!
-See [our other projects][community].
-We are [available for hire][hire].
-
-[community]: https://thoughtbot.com/community?utm_source=github
-[hire]: https://thoughtbot.com/hire-us?utm_source=github
-
-TMUX VARS
-# $(echo $USER) - shows the current username
-# %a --> Day of week (Mon)
-# %A --> Day of week Expanded (Monday)
-
-# %b --> Month (Jan)
-# %d --> Day (31)
-# %Y --> Year (2017)
-
-# %D --> Month/Day/Year (12/31/2017)
-# %v --> Day-Month-Year (31-Dec-2017)
-
-# %r --> Hour:Min:Sec AM/PM (12:30:27 PM)
-# %T --> 24 Hour:Min:Sec (16:30:27)
-# %X --> Hour:Min:Sec (12:30:27)
-# %R --> 24 Hour:Min (16:30)
-# %H --> 24 Hour (16)
-# %l --> Hour (12)
-# %M --> Mins (30)
-# %S --> Seconds (09)
-# %p --> AM/PM (AM)
-
-# For a more complete list view: https://linux.die.net/man/3/strftime
-
-#colour0 (black)
-#colour1 (red)
-#colour2 (green)
-#colour3 (yellow)
-#colour4 (blue)
-#colour7 (white)
-#colour5 colour6 colour7 colour8 colour9 colour10 colour11 colour12 colour13 colour14 colour15 colour16 colour17
-
-#D ()
-#F ()
-#H (hostname)
-#I (window index)
-#P ()
-#S (session index)
-#T (pane title)
-#W (currnet task like vim if editing a file in vim or zsh if running zsh)
