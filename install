@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#######################
+# Pre Install Script
+#######################
+
 # Install Brewery
 if [ -z "$(which brew)" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -12,20 +16,18 @@ elif [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "freebsd"* ]]; then
   if [ -z "$(which git)" ]; then
     brew install git
   fi
-elif [[ "$OSTYPE" == "win32"* || "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
-  echo "Windows is not supported at this time 😭"
 fi
 
-# Cloning Repo with Dotfiles and go to Directory
-git clone https://github.com/swchck/dotfiles.git ~/dotfiles && cd "$_" || echo 'Directory not Found!'
+# Cloning Installer and go to Directory
+INSTALLER_DIR=$(mktemp -d)
+git clone https://github.com/swchck/dotfiles.git "$INSTALLER_DIR" && cd "$_" || echo 'Directory not Found!'
 
-# Delete .git folder
-rm -rf .git
-
-# Install Python
+# Install Python and Dependencies
 if [ -z "$(which python3)" ]; then
   brew update
   brew install python@3.10
+  pip3 install --upgrade pip
+  pip3 install -q pyinquirer
 fi
 
 # Install RCM
@@ -34,11 +36,15 @@ if [ -z "$(which rcm)" ]; then
   env RCRC=~/dotfiles/rcrc rcup
 fi
 
-# Updating PIP
-pip3 install --upgrade pip
-
-# Install Python Dependencies
-pip3 install -q pyinquirer
-
+#######################
 # Installation Script
+#######################
+
 python3 bin/bootstrap
+
+#######################
+# Post Install CleanUp
+#######################
+
+# Delete Installer Directory
+rm -rf "$INSTALLER_DIR"
