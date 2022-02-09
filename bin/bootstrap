@@ -6,9 +6,8 @@ import platform
 import subprocess
 
 from PyInquirer import prompt
+from github import Github
 
-# Get Platform name
-platform_name = platform.system().lower()
 logo = """
         ▓█████▄   ▒█████   ▄▄▄█████▓  █████▒   ██▓  ██▓     ▓█████    ██████ 
         ▒██▀ ██▌ ▒██▒  ██▒▓   ██▒   ▓▒▓██   ▒ ▓██▒▓ ██▒     ▓█   ▀  ▒██    ▒ 
@@ -22,6 +21,19 @@ logo = """
      ░   ░                                                                                                                        
  """
 
+github_link = "https://github.com/settings/tokens/new?description=Dotfiles&scopes=repo%2Cgist%2Cread%2Cuser"
+auth_message = "Please paste github access token. Token will be used for repo creation.\n" + \
+               "You can generate token with granular permissions by the link: {}\n".format(github_link) + \
+               "Token:"
+
+with open('data/casks.json') as json_file:
+    casks_json = json.load(json_file)
+with open('data/cli_utils.json') as json_file:
+    cli_utils_json = json.load(json_file)
+
+# Get Platform name
+platform_name = platform.system().lower()
+
 
 class Bcolors:
     HEADER = '\033[95m'
@@ -33,12 +45,6 @@ class Bcolors:
     END_C = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-
-with open('data/casks.json') as json_file:
-    casks_json = json.load(json_file)
-with open('data/cli_utils.json') as json_file:
-    cli_utils_json = json.load(json_file)
 
 
 def get_textarea_question(name: str, message: str, ext: str):
@@ -66,50 +72,82 @@ def get_choices_from_file(items: list[dict]):
     return choices
 
 
-def configure_shell(shell_name: str, shell_extension: bool):
+def brew_install(names: list[str], cask=False):
+    for name in names:
+        if cask:
+            casks_list = subprocess.check_output('brew list -1 --casks', shell=True).decode("utf-8").split()
+            if not casks_list.__contains__(cask):
+                os.system("brew install -q --cask {name}".format(name=cask))
+            else:
+                print("{} already installed, Skipping...".format(name.capitalize()))
+        else:
+            if os.system('which -s {}'.format(name)) != 0:
+                os.system("brew install -q {name}".format(name=name))
+            else:
+                print("{} already installed, Skipping...".format(name.capitalize()))
+
+
+def git_clone(url: str, path: str):
+    os.system("git clone {} {}".format(url, path))
+
+
+def create_github_repo():
+    github_answers = prompt(questions=[
+        {
+            "type": "list",
+            "name": "repo_creation",
+            "message": "Create repository with token or Provide Clone URL",
+            "choices": [{"name": "Token", "value": "token"}, {"name": "Existed repository URL", "value": "repo"}]
+        },
+        {
+            "type": "input",
+            "name": "token",
+            "message": auth_message,
+            "when": lambda data: data['repo_creation'] == 'token'
+        },
+        {
+            "type": "input",
+            "name": "repo_url",
+            "message": "Paste Repo URL",
+            "when": lambda data: data['repo_creation'] == 'repo'
+        }
+    ])
+
+    if github_answers.get('repo_creation') == 'token':
+        github_user = Github(github_answers.get("token")).get_user()
+
+        for repo in github_user.get_repos():
+            if repo.name == "dotfiles":
+                git_clone(repo.clone_url, "~/dotfiles")
+            else:
+                git_clone(
+                    github_user.create_repo("dotfiles", "dotfiles").clone_url,
+                    "~/dotfiles"
+                )
+    else:
+        git_clone(github_answers.get('repo_url'), "~/dotfiles")
+
+    os.chdir("~/dotfiles")
+
+
+def configure_shell(shell_name: str):
     if os.system('which -s {}'.format(shell_name)) == '':
         os.system('brew install {}'.format(shell_name))
-        if shell_name == 'fish' and shell_extension:
+        if shell_name == 'fish':
             os.system('curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish')
-        elif shell_name == 'zsh' and shell_extension:
+        elif shell_name == 'zsh':
             os.system('sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"')
     os.system('chsh -s $(which {})'.format(shell_name))
 
 
-def install_cli_utils(utils: list):
-    for util in utils:
-        if os.system('which -s {}'.format(util)) != 0:
-            os.system("brew install -q {name}".format(name=util))
-        else:
-            print("{} already installed, Skipping...".format(util.capitalize()))
-
-
-def install_casks(casks: list):
-    casks_list = subprocess.check_output('brew list -1 --casks', shell=True).decode("utf-8").split()
-    for cask in casks:
-        if not casks_list.__contains__(cask):
-            os.system("brew install -q --cask {name}".format(name=cask))
-        else:
-            print("{} already installed, Skipping...".format(cask.capitalize()))
-
-
-def install_tmux_plugin_manager():
-    os.system('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
-
-
 def install(config: dict):
-    utils = config.get('cli_utils')  # type: list
-    casks = config.get('casks')  # type: list
-    shell_name = config.get('shell')  # type: str
-    is_use_oh_my = config.get(shell_name)  # type: bool
+    configure_shell(config.get('shell'))
 
-    configure_shell(shell_name, is_use_oh_my)
+    brew_install(config.get('cli_utils'))
+    brew_install(config.get('casks'), cask=True)
 
-    install_cli_utils(utils)
-    install_casks(casks)
-
-    if utils.__contains__('tmux'):
-        install_tmux_plugin_manager()
+    if config.get('cli_utils').__contains__('tmux'):
+        git_clone("https://github.com/tmux-plugins/tpm", "~/.tmux/plugins/tpm")
 
 
 if __name__ == '__main__':
@@ -131,20 +169,6 @@ if __name__ == '__main__':
                 }
             ]
         },
-        {
-            'type': 'confirm',
-            'name': 'fish',
-            'message': 'Do you want to install Oh My Fish?',
-            'default': True,
-            'when': lambda data: data['shell'] == "fish"
-        },
-        {
-            'type': 'confirm',
-            'name': 'zsh',
-            'message': 'Do you want to install Oh My Zsh?',
-            'default': True,
-            'when': lambda data: data['shell'] == "zsh"
-        },
         # Applications chooser
         {
             'type': 'checkbox',
@@ -153,68 +177,13 @@ if __name__ == '__main__':
             'choices': get_choices_from_file(cli_utils_json)
         },
         {
-            'type': 'confirm',
-            'name': 'tmux_plugin_manager',
-            'message': 'Do you want to install Tmux Plugin Manager?',
-            'default': True,
-            'when': lambda data: data['cli_utils'].__contains__('tmux')
-        },
-        {
             'type': 'checkbox',
             'name': 'casks',
             'message': 'What Applications do you need to install?',
             'choices': get_choices_from_file(casks_json)
-        },
-        # Git configuration
-        {
-            'type': 'confirm',
-            'name': 'git_config',
-            'message': 'Do you want to configurate git for Work and Personal use?',
-            'default': False
-        },
-        {
-            'type': 'input',
-            'name': 'personal_git_username',
-            'message': 'Please type your *personal* git username',
-            'filter': lambda val: val.lower(),  # type: str
-            'when': lambda data: data['git_config'] is True
-        },
-        {
-            'type': 'input',
-            'name': 'personal_git_email',
-            'message': 'Please type your *personal* git email',
-            'filter': lambda val: val.lower(),  # type: str
-            'when': lambda data: data['git_config'] is True
-        },
-        {
-            'type': 'input',
-            'name': 'work_git_username',
-            'message': 'Please type your *work* git username',
-            'filter': lambda val: val.lower(),  # type: str
-            'when': lambda data: data['git_config'] is True
-        },
-        {
-            'type': 'input',
-            'name': 'work_git_email',
-            'message': 'Please type your *work* git email',
-            'filter': lambda val: val.lower(),  # type: str
-            'when': lambda data: data['git_config'] is True
-        },
-        # Override Remote Configurations
-        {
-            'type': 'confirm',
-            'name': 'override',
-            'message': 'Do you want to Override default configurations?',
-            'default': False,
-        },
-        # Override *nix tty welcome text
-        {
-            'type': 'confirm',
-            'name': 'override',
-            'message': 'Do you want to Override default *nix tty welcome text?',
-            'default': False,
-        },
+        }
     ]
 
     print(f"{Bcolors.FAIL}{logo}{Bcolors.END_C}")
+    create_github_repo()
     install(prompt(questions=questions))

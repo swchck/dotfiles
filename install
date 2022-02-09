@@ -19,15 +19,18 @@ elif [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "freebsd"* ]]; then
 fi
 
 # Cloning Installer and go to Directory
+CONFIGURATIONS_DIR=$(mktemp -d)
 INSTALLER_DIR=$(mktemp -d)
 git clone https://github.com/swchck/dotfiles.git "$INSTALLER_DIR" && cd "$_" || echo 'Directory not Found!'
+git clone -b default_configurations https://github.com/swchck/dotfiles.git "$CONFIGURATIONS_DIR" &&
+ cd "$_" || echo 'Directory not Found!'
 
 # Install Python and Dependencies
 if [ -z "$(which python3)" ]; then
   brew update
   brew install python@3.10
   pip3 install --upgrade pip
-  pip3 install -q pyinquirer
+  pip3 install -q pyinquirer PyGithub
 fi
 
 # Install RCM
@@ -47,4 +50,4 @@ python3 bin/bootstrap
 #######################
 
 # Delete Installer Directory
-rm -rf "$INSTALLER_DIR"
+rm -rf "$INSTALLER_DIR" "$CONFIGURATIONS_DIR"
