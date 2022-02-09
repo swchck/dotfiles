@@ -1,42 +1,66 @@
 # Dotfiles
 
-![cmd_example](http://image.png)
-
-## Install
-
-### Execute script via cURL:
-
-```bash
-curl https://raw.githubusercontent.com/swchck/dotfiles/master/bootstrap | bash
-```
-
-### or via wget:
-
-```bash
-wget https://raw.githubusercontent.com/swchck/dotfiles/master/bootstrap | bash
-```
-
-## Update configuration
-
-From time to time you should run `upd` command from your shell environment
-
-## Change RCM options
-
-This command will create symlinks for config files in your home directory.
-Setting the `RCRC` environment variable tells `rcup` to use standard
-configuration options:
-
-* Exclude the `README.md`, `README-ES.md` and `LICENSE` files, which are part of
-  the `dotfiles` repository but do not need to be symlinked in.
-* Give precedence to personal overrides which by default are placed in
-  `~/dotfiles-local`
-* Please configure the `rcrc` file if you'd like to make personal
-  overrides in a different directory
-
 ## Git Hooks
 
 To extend your `git` hooks, create executable scripts in
 `~/dotfiles-local/git_template.local/hooks/*` files.
+
+## TMUX VARS
+
+```bash
+$(echo $USER) - shows the current username
+%a --> Day of week (Mon)
+%A --> Day of week Expanded (Monday
+%b --> Month (Jan)
+%d --> Day (31)
+%Y --> Year (2017
+%D --> Month/Day/Year (12/31/2017)
+%v --> Day-Month-Year (31-Dec-2017
+%r --> Hour:Min:Sec AM/PM (12:30:27 PM)
+%T --> 24 Hour:Min:Sec (16:30:27)
+%X --> Hour:Min:Sec (12:30:27)
+%R --> 24 Hour:Min (16:30)
+%H --> 24 Hour (16)
+%l --> Hour (12)
+%M --> Mins (30)
+%S --> Seconds (09)
+%p --> AM/PM (AM)
+```
+
+*For a more complete list view: https://linux.die.net/man/3/strftime*
+
+```bash
+colour0 (black)
+colour1 (red)
+colour2 (green)
+colour3 (yellow)
+colour4 (blue)
+colour7 (white)
+colour5 
+colour6 
+colour7 
+colour8 
+colour9 
+colour10 
+colour11 
+colour12 
+colour13 
+colour14 
+colour15 
+colour16 
+colour17
+```
+
+```bash
+D ()
+F ()
+H (hostname)
+I (window index)
+P ()
+S (session index)
+T (pane title)
+W (currnet task like vim if editing a file in vim or zsh if running zsh)
+```
 
 ## ZSH Configurations
 
@@ -76,7 +100,6 @@ configuration:
 * Remove administrative debris (session name, hostname, time) in status bar.
 * Set prefix to `Ctrl+s`
 * Soften status bar color from harsh green to light gray.
-* List of possible [TMUX VARS LIST](./TMUX_VARS.md)
 
 [git](http://git-scm.com/) configuration:
 
