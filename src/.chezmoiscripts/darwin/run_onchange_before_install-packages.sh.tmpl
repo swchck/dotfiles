@@ -6,6 +6,7 @@ set -eufo pipefail
     "go" -}}
 
 {{ $brews := list
+    "chezmoi"
     "iproute2mac"
     "tmux"
     "hurl"
@@ -79,9 +80,6 @@ set -eufo pipefail
 {{   $casks = concat $casks (list
        "virtualbox") -}}
 {{ end -}}
-
-# Install XCode Command Line Tools
-xcode-select --install
 
 {{ if lookPath "brew" }}
 echo "Homebrew already installed. Skipping..."
