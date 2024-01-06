@@ -1,0 +1,18 @@
+{{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) -}}
+
+{{ $extensions := list
+     "eamodio.gitlens"
+     "EditorConfig.EditorConfig"
+     "riussi.code-stats-vscode"
+     "GitHub.copilot"
+     "GitHub.copilot-chat" -}}
+
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ range $extensions -}}
+code --force --install-extension {{ . }}
+{{ end -}}
+
+{{ end -}}

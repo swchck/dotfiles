@@ -1,0 +1,25 @@
+##########
+# Status #
+##########
+
+# Set length of status bar
+set -g status-left-length 30
+set -g status-right-length 150
+
+# TBD: Set status bar to be on
+set-option -g status "on"
+
+# Set justification of status bar
+set-option -g status-justify "centre"
+
+# Set status bar left side
+set -g status-left ""
+
+# Set status bar right side
+set -g status-right "#{tmux_mode_indicator}"
+
+# Set window title string
+set -g window-status-format " #W "
+
+# Set active window title string
+set -g window-status-current-format "#[bg=#698DDA,fg=#000000] #I:#W#{?window_zoomed_flag, 󰊓 , }"

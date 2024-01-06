@@ -1,0 +1,45 @@
+#################################
+#   Plugins Keybindings List    #
+#################################
+
+# Key bindings for plugins
+#  - Tmux Plugin Manager
+#    - prefix + I — install plugins
+#    - prefix + U — update plugins
+#    - prefix + alt + u — remove/uninstall plugins
+#
+#  - Tmux fzf
+#    - prefix + alt + F — search in tmux commands
+#
+#  - Tmux Fuzzback (fzf for tmux history)
+#    - prefix + ? — search by tmux history
+
+#########################
+#   Plugins Settings    #
+#########################
+
+# -- Autoreload --
+
+# A comma-delimited list of paths to configuration files which should be
+# watched in addition to the base tmux configuration files.
+# set-option -g @tmux-autoreload-configs '~/.tmux/global.tmux.conf,~/.tmux/settings.tmux.conf,...'
+
+# A comma-delimited list of paths to configuration files which should be
+# reloaded when any watched configuration file changes. If unset, the changed
+# file itself will be reloaded.
+set-option -g @tmux-autoreload-entrypoints '~/.tmux/global.tmux.conf'
+
+# If set to 1, tmux-autoreload will not display status messages.
+# set-option -g @tmux-autoreload-quiet 0|1 (Default: 0)
+
+# -- Mode Indicator --
+
+# prompt to display when tmux prefix key is pressed
+set -g @mode_indicator_prefix_prompt ' MOD '
+
+# prompt to display when tmux is in normal mode
+set -g @mode_indicator_empty_prompt ' TMUX '
+
+# style values for empty prompt
+set -g @mode_indicator_empty_mode_style 'bg=#16F729,fg=black'
+

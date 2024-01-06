@@ -1,0 +1,19 @@
+{{- $choices := list "personal" "work" "container" -}}
+{{- $personal := promptChoiceOnce . "personal" "What type of host are you on" $choices -}}
+{{ if eq $personal "work" }}
+    {{- $companies := list "inango" "wb" -}}
+    {{- $company_name := promptChoiceOnce . "company_name" "What is the name of your company" $companies -}}
+{{ end }}
+
+[data]
+    personal = {{ $personal | quote }}
+
+
+{{ if eq $personal "personal" }}
+    [edit]
+        command = "code"
+        args = ["--wait"]
+{{ end }}
+
+[diff]
+    exclude = ["scripts"]

@@ -1,0 +1,115 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $languages := list
+    "go" -}}
+
+{{ $brews := list
+    "iproute2mac"
+    "tmux"
+    "hurl"
+    "tokei"
+    "fzf"
+    "bat"
+    "sd"
+    "eza"
+    "zoxide"
+    "fd"
+    "viddy"
+    "dust"
+    "bandwhich"
+    "bottom"
+    "ripgrep"
+    "fx"
+    "ffmpegthumbnailer"
+    "unar"
+    "jq"
+    "poppler"
+    "yazi"
+    "starship"
+    "topgrade"
+    "termshark"
+    "ffmpeg"
+    "gh"
+    "tailspin"
+    "sebglazebrook/aliases/aliases" -}}
+
+{{ $casks := list
+    "iterm2"
+    "anki"
+    "keycastr"
+    "skype"
+    "discord"
+    "motrix"
+    "rapidapi"
+    "visual-studio-code"
+    "google-chrome"
+    "notion"
+    "raspberry-pi-imager"
+    "vlc"
+    "obsidian"
+    "rocket-chat"
+    "spotify"
+    "openlens"
+    "gb-studio"
+    "bloomrpc"
+    "orbstack"
+    "arc"
+    "keka"
+    "kekaexternalhelper"
+    "windscribe"
+    "keycastr"
+    "hyperkey"
+    "raycast"
+    "zoom"
+    "coconutbattery"
+    "openvpn-connect"
+    "latest" -}}
+
+{{ $fonts := list
+    "font-droid-sans-mono-nerd-font"
+    "font-jetbrains-mono-nerd-font"
+    "font-symbols-only-nerd-font"
+    "font-fira-code-nerd-font" -}}
+
+{{ if eq .chezmoi.arch "amd64" -}}
+{{   $brews = concat $brews (list
+       "shellcheck") -}}
+{{   $casks = concat $casks (list
+       "virtualbox") -}}
+{{ end -}}
+
+# Install XCode Command Line Tools
+xcode-select --install
+
+{{ if lookPath "brew" }}
+echo "Homebrew already installed. Skipping..."
+{{ else }}
+echo "Installing Homebrew..."
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+{{ end }}
+
+{{ if lookPath "cargo"}}
+echo "Cargo already installed. Skipping..."
+{{ else }}
+echo "Installing Cargo..."
+curl https://sh.rustup.rs -sSf | sh -s -- -yq --profile default
+source "$HOME/.cargo/env"
+{{ end }}
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+tap "homebrew/cask-fonts"
+{{ range ($languages | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+{{ range ($fonts | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+EOF

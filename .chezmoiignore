@@ -1,0 +1,25 @@
+{{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
+{{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
+{{ else }}
+.bash_aliases
+.config/git/cookies
+.gnupg
+.gnupg/**
+.inputrc
+.oh-my-zsh
+.oh-my-zsh/**
+.p10k.zsh
+.ssh/id_rsa
+.ssh/id_rsa.pub
+.tmux.conf
+.zprofile
+.zshrc
+{{ end }}

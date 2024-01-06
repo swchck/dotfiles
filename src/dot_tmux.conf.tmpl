@@ -1,0 +1,42 @@
+{{ $plugins := list
+    "tmux-plugins/tpm"
+    "tmux-plugins/tmux-sensible"
+    "b0o/tmux-autoreload"
+    "MunifTanjim/tmux-mode-indicator"
+    "sainnhe/tmux-fzf"
+    "roosta/tmux-fuzzback" -}}
+
+#############################
+# Main tmux entrypount file #
+#############################
+
+#######################
+# Install TPM plugins #
+#######################
+
+{{ range ($plugins | uniq) -}}
+set -g @plugin '{{ . }}'
+{{ end }}
+
+######################
+# Tmux configuration #
+######################
+
+# Load tmux settings
+source-file ~/.tmux/settings.tmux.conf
+
+# Load custom key bindings
+source-file ~/.tmux/bindings.tmux.conf
+
+# Load TPM plugins
+source-file ~/.tmux/plugins.tmux.conf
+
+# Load status bar configuration
+source-file ~/.tmux/status.tmux.conf
+
+# Load color scheme
+source-file ~/.tmux/colors.tmux.conf
+
+# Initialize TMUX plugin manager 
+# (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'

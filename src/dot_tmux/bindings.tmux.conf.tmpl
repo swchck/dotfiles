@@ -1,0 +1,65 @@
+############################
+# TMUX Custom Key Bindings #
+############################
+
+# Bindings list:
+#  - Prefix + | to split window vertically
+#  - Prefix + - to split window horizontally
+#  - Prefix + e to open ~/.tmux.conf in vim and reload settings on quit
+#  - Prefix + arrow keys to switch between panes
+#  - Prefix + shift + alt + arrow keys to resize panes
+#  - Prefix + shift + arrow keys to switch between windows
+#  - Prefix + r to reload tmux settings
+#  - Prefix + shift + r to rename a window
+#  - Prefix + m to toggle mouse mode
+#  - Prefix + a to toggle synchronize panes
+#  - Prefix + / to search
+#  - Prefix + y to clear screen and history buffer
+
+# Use | and - to split a window vertically and horizontally instead of " and % respoectively
+unbind '"'
+unbind %
+bind | split-window -h -c '#{pane_current_path}'
+bind - split-window -v -c '#{pane_current_path}'
+
+# Open ~/.tmux.conf in vim and reload settings on quit
+unbind e
+bind e new-window -n '~/.tmux.conf' "sh -c 'nvim ~/.tmux.conf && tmux source ~/.tmux.conf'"
+
+# Switch betewen panes using alt + arrow
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Use shift + arrow key to move between windows in a session
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# Use alt + shift + arrow key to resize panes
+bind -n M-S-Left  resize-pane -L 5
+bind -n M-S-Right resize-pane -R 5
+bind -n M-S-Up    resize-pane -U 5
+bind -n M-S-Down  resize-pane -D 5
+
+# Use r to quickly reload tmux settings
+unbind r
+bind r source-file ~/.tmux.conf \; display-message 'tmux.conf reloaded!'
+
+# Use alt + shift + r to rename a window
+bind -n M-S-r command-prompt -p 'Rename window:' 'rename-window %%'
+
+# Use m to toggle mouse mode
+unbind m
+bind m run-shell 'if tmux show -g | grep -q "mouse on"; then tmux set -g mouse off; tmux display "Mouse mode is disabled."; else tmux set -g mouse on; tmux display "Mouse mode is enabled."; fi'
+
+# Use a to toggle synchronize panes
+unbind a
+bind a run-shell 'if tmux show-window-option synchronize-panes | grep -q "on"; then tmux setw synchronize-panes off; tmux display "Synchronize panes is disabled."; else tmux setw synchronize-panes on; tmux display "Synchronize panes is enabled."; fi'
+
+# Prefix + / to search
+bind / command-prompt -p 'Search tmux history:' 'history-search-backward ""'
+# bind-key / copy-mode \; send-key ?
+
+# Prefix + y to clear screen and history buffer
+bind y send-keys 'reset && tmux clear-history' \; send-keys Enter \; display-message 'Screen and history buffer cleared!'

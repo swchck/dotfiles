@@ -1,0 +1,101 @@
+g:
+  command: git
+...: 
+  command: ../..
+
+{{ if lookPath "tmux" }}
+t:
+  command: tmux
+ta:
+  command: tmux attach
+tnew:
+  command: tmux new -s
+tls:
+  command: tmux ls
+tkill:
+  command: tmux kill-session -t
+tkillall:
+  command: tmux kill-server
+{{ end }}
+
+{{ if lookPath "fzf" }}
+fzf-update:
+  command: cd ~/.fzf && git pull && ./install
+{{ end }}
+
+{{ if lookPath "bat" }}
+cat:
+  command: bat
+pcat:
+  command: bat --plain
+{{ end }}
+
+{{ if lookPath "sd" }}
+sed:
+  command: sd
+{{ end }}
+
+{{ if lookPath "eza" }}
+ls:
+  command: eza
+tree:
+  command: eza -t
+{{ end }}
+
+{{ if lookPath "zoxide" }}
+z:
+  command: zoxide
+cd:
+  command: zoxide
+{{ end }}
+
+{{ if lookPath "fd" }}
+find:
+  command: fd
+{{ end }}
+
+{{ if lookPath "viddy" }}
+watch:
+  command: viddy
+{{ end }}
+
+{{ if lookPath "dust" }}
+du:
+  command: dust
+{{ end }}
+
+{{ if lookPath "bandwhich" }}
+bw:
+  command: bandwhich
+{{ end }}
+
+{{ if lookPath "btm" }}
+top:
+  command: btm
+htop:
+  command: btm
+{{ end }}
+
+{{ if lookPath "rg" }}
+grep:
+  command: rg
+{{ end }}
+
+{{ if lookPath "fx" }}
+jq:
+  command: fx
+{{ end }}
+
+{{ if lookPath "topgrade" }}
+upgrade:
+  command: topgrade
+{{ end }}
+
+{{ if eq .chezmoi.os "darwin" }}
+unlock:
+  command: sudo xattr -rd com.apple.quarantine
+ttl_on:
+  command: sudo sysctl -w net.inet.ip.ttl=65
+ttl_off:
+  command: sudo sysctl -w net.inet.ip.ttl=64
+{{ end }}

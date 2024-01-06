@@ -1,0 +1,20 @@
+############
+# Settings #
+############
+
+# Set default terminal to 256 colors
+set -g default-terminal "screen-256color"
+
+# Set the history limit so we get lots of scrollback.
+set -g history-limit 1000000
+
+# Set renumbering windows sequentially after closing any of them
+set -g renumber-windows on
+
+# Set start window and pane indices at 1.
+set -g base-index 1
+set -g pane-base-index 0
+
+# Use local config file if exists
+# TBD. Make tmux plugin from this
+if-shell "[ -f ~/.tmux.conf.local ]" 'source ~/.tmux.conf.local'
