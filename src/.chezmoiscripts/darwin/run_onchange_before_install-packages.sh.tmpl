@@ -2,6 +2,10 @@
 
 set -eufo pipefail
 
+{{ $taps := list
+    "homebrew/cask-fonts"
+    "sebglazebrook/aliases" -}}
+
 {{ $languages := list
     "go" -}}
 
@@ -100,16 +104,22 @@ source "$HOME/.cargo/env"
 {{ end }}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
-tap "homebrew/cask-fonts"
+{{ range ($taps | sortAlpha | uniq) -}}
+tap "{{ . }}"
+{{ end -}}
+
 {{ range ($languages | sortAlpha | uniq) -}}
 brew "{{ . }}"
 {{ end -}}
+
 {{ range ($fonts | sortAlpha | uniq) -}}
 cask "{{ . }}"
 {{ end -}}
+
 {{ range ($brews | sortAlpha | uniq) -}}
 brew "{{ . }}"
 {{ end -}}
+
 {{ range ($casks | sortAlpha | uniq) -}}
 cask "{{ . }}"
 {{ end -}}

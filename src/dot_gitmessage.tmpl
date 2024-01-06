@@ -1,15 +1,3 @@
-{{ if eq .company_name "inango" }}
-Commit Title: <Short Description>
-
-BugID: <Bug ID>
-Bug Fixed(y/N[blankN]): <Bug Fixed>
-Description:
- - <Description>
-{{ else if eq .company_name "wb" }}
-[<TaskID>] — <Short Description>
-
-- <Changes>
-{{ else }}
 # 50-character subject line
 #
 # 72-character wrapped longer description. This should answer:
@@ -24,4 +12,3 @@ Description:
 #
 # Co-authored-by: Full Name <email@example.com>
 # Co-authored-by: Full Name <email@example.com>
-{{ end }}
