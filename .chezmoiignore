@@ -1,0 +1,4 @@
+{{/* Darwin */}}
+{{ if eq .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
+{{ end }}
