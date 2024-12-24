@@ -34,6 +34,14 @@ function macOS_setup() {
       echo "To install chezmoi, you must have curl or wget installed." >&2
       exit 1
     fi
+  else
+    # If Chezmoi is already installed, prompt for confirmation to run Chezmoi One-Shot Install.
+    read -p "Chezmoi is already installed. Do you want to run Chezmoi One-Shot Install? (y/n): " CONFIRM
+    if [ "$CONFIRM" = "y" ]; then
+      chezmoi init --one-shot "$1"
+    else
+      echo "Chezmoi One-Shot Install was not run." >&2
+    fi
   fi
 }
 
@@ -45,7 +53,7 @@ if [ "$(uname)" != "Darwin" ]; then
 fi
 
 # Prompt for GitHub username.
-read -pr "Enter your GitHub username: " GITHUB_USER
+read -p "Enter GitHub username: " GITHUB_USER
 
 # Call macOS_setup function with GitHub username as argument.
 macOS_setup "$GITHUB_USER"
