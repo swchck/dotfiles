@@ -1,0 +1,26 @@
+{
+	"name": "Chezmoi",
+	"image": "mcr.microsoft.com/devcontainers/go:1-1.21-bullseye",
+	"features": {
+		"ghcr.io/rio/features/chezmoi:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"eamodio.gitlens",
+				"jinliming2.vscode-go-template",
+				"GitHub.copilot",
+				"EditorConfig.EditorConfig",
+				"tamasfe.even-better-toml",
+				"GitHub.copilot-chat",
+				"GitHub.vscode-pull-request-github",
+				"redhat.vscode-yaml",
+				"timonwong.shellcheck",
+				"yzhang.markdown-all-in-one",
+				"ms-python.python",
+				"ms-vscode.PowerShell",
+				"bmalehorn.vscode-fish"
+			]
+		}
+	}
+}
