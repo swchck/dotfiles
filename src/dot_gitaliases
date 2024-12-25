@@ -1,0 +1,15 @@
+[alias]
+    aa = add --all # Add all files to the staging area
+    ap = add --patch # Add files interactively
+    br = branch # List, create, or delete branches
+    ci = commit -v # Commit with verbose output
+    co = checkout # Checkout a branch or file
+    df = diff # Show the changes between commits, commit and working tree, etc
+    pf = push --force-with-lease # Force push with lease
+    st = status # Show the working tree status
+    lg = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short # Show the commit history with a graph
+    rb = rebase -i # Rebase interactively
+    # Show the branches sorted by the last commit date
+    branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+    # Squash the last n commits into one
+    squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"

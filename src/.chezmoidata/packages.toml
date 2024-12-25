@@ -1,0 +1,26 @@
+[packages.darwin]
+
+# Homebrew taps
+taps = [
+    "homebrew/cask-fonts", # fonts repository
+]
+
+# Fonts
+fonts = [
+    "font-monaspace", # GitHub's monospace font
+]
+
+# Programming Languages
+languages = [
+    "go", # Go programming language
+    "node", # Node.js
+    "python", # Python
+]
+
+# CLI Tools
+cli = [
+    "chezmoi", # dotfiles manager (Configurable)
+]
+
+# GUI Tools (Casks)
+casks = []

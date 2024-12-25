@@ -1,0 +1,34 @@
+[init]
+    defaultBranch = master # Set the default branch name
+
+[push]
+    default = current # Push the current branch to its upstream branch
+
+[color]
+    ui = auto # Used to colorize output
+
+[core]
+    # TODO: Choose from .chezmoi file.
+    editor = nvim # Set the default editor
+    excludesFile = ~/.gitignore_global # Set the global gitignore file
+    autocrlf = input # Convert CRLF to LF on commit
+
+[merge]
+    ff = only # Fast-forward only
+
+[fetch]
+    prune = true # Prune remote branches
+
+[commit]
+    template = ~/.gitmessage # Set the commit message template
+
+[rebase]
+    autoSquash = true # Automatically squash commits
+    autoStash = true # Automatically stash changes
+
+[diff]
+    colorMoved = zebra # Color moved lines differently
+
+[include]
+    path = ~/.gitaliases # Include the global git aliases file
+    path = ~/.gitconfig.local # Include the local git configuration file if it exists
