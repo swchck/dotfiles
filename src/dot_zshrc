@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Check if fish is installed
+if command -v fish &> /dev/null; then
+    # Get fish binary path
+    FISH_PATH=$(which fish)
+
+    # Check if fish is not in allowed shells list
+    if ! grep -q "$FISH_PATH" /etc/shells; then
+        # Add fish to allowed shells
+        echo "$FISH_PATH" | sudo tee -a /etc/shells
+    fi
+
+    # Check if fish is not the default shell
+    if [ "$SHELL" != "$FISH_PATH" ]; then
+        # Change default shell to fish
+        chsh -s "$FISH_PATH"
+    fi
+fi

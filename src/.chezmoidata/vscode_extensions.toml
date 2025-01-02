@@ -1,0 +1,39 @@
+[vscode]
+
+extensions = [
+    # Core
+    "ms-vscode-remote.vscode-remote-extensionpack",
+    "VisualStudioExptTeam.intellicode-api-usage-examples",
+    "christian-kohler.path-intellisense",
+    "github.copilot",
+    "GitHub.copilot-chat",
+    "MS-vsliveshare.vsliveshare",
+    "ms-vscode.vscode-commander",
+
+    # Themes
+    "Catppuccin.catppuccin-vsc-pack",
+
+    # Languages
+    "bmalehorn.vscode-fish",
+    "kdl-org.kdl",
+    "nortakales.flipper-zero-syntax-highlighting",
+    "redhat.vscode-xml",
+    "sumneko.lua",
+    "tamasfe.even-better-toml",
+    "Xqua.ducky-script-lang-vscode-flipper",
+    "ms-toolsai.jupyter",
+    "donjayamanne.python-extension-pack",
+    "ms-python.black-formatter",
+    "redhat.vscode-yaml",
+    "golang.Go",
+    "ms-vscode.PowerShell",
+
+    # Tools
+    "ms-azuretools.vscode-docker",
+
+    # Utilities
+    "riussi.code-stats-vscode",
+    "semanticdiff.semanticdiff",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+]

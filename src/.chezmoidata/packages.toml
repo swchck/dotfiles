@@ -2,25 +2,110 @@
 
 # Homebrew taps
 taps = [
-    "homebrew/cask-fonts", # fonts repository
+    "derailed/k9s", # Kubernetes CLI Repository
 ]
 
 # Fonts
 fonts = [
-    "font-monaspace", # GitHub's monospace font
+    "font-monaspace",                # GitHub's monospace font
+    "font-jetbrains-mono",           # JetBrains Mono
+    "font-jetbrains-mono-nerd-font", # JetBrains Mono Nerd Font
+    "font-fira-code-nerd-font",      # Fira Code Nerd Font
 ]
 
 # Programming Languages
 languages = [
-    "go", # Go programming language
-    "node", # Node.js
+    "go",     # Go programming language
+    "node",   # Node.js
     "python", # Python
 ]
 
 # CLI Tools
 cli = [
-    "chezmoi", # dotfiles manager (Configurable)
+    "chezmoi",              # dotfiles manager (Configurable)
+    "iproute2mac",          # iproute2 for macOS
+    "neovim",               # text editor (Configurable)
+    "zellij",               # terminal multiplexer (Configurable)
+    "fzf",                  # fuzzy finder (Integration)
+    "fish",                 # Modern shell (Configurable)
+    "starship",             # shell prompt (Configurable)
+    "bat",                  # cat clone with syntax highlighting
+    "eza",                  # ls modern replcement on steroids
+    "atuin",                # History manager (Configurable)
+    "zoxide",               # cd replacement (Configurable)
+    "sd",                   # sed replacement
+    "fd",                   # find replacement
+    "viddy",                # modern watch replacement
+    "dust",                 # du replacement
+    "bandwhich",            # network utilization
+    "bottom",               # system monitor
+    "ripgrep",              # grep replacement
+    "fx",                   # JSON viewer
+    "ffmpegthumbnailer",    # video thumbnailer
+    "unar",                 # unarchiver
+    "jq",                   # JSON processor
+    "poppler",              # PDF tools
+    "yazi",                 # Terminal file manager
+    "topgrade",             # update all the things
+    "termshark",            # Wireshark for the terminal
+    "ffmpeg",               # video processing
+    "gh",                   # GitHub CLI
+    "tailspin",             # log viewer
+    "gabrie30/utils/ghorg", # Repository management (Configurable)
+    "procs",                # modern ps replacement
+    "ollama",               # Language model
+    "derailed/k9s/k9s",     # Kubernetes CLI
+    "hurl",                 # HTTP client
+    "tokei",                # code statistics
+    "wget",                 # download utility
+    "hugo",                 # Static site generator
+    "pandoc",               # document converter
+    "syncthing",            # File synchronization
+    "mas",                  # Mac App Store CLI
 ]
 
 # GUI Tools (Casks)
-casks = []
+casks = [
+    # Communication
+    "discord", # Chat Client
+    "zoom",    # Video Conferencing
+
+    # Browsers
+    "arc", # Modern Chromium Based Browser
+
+    # Development
+    "wezterm",            # Terminal Emulator
+    "visual-studio-code", # Code Editor
+    "orbstack",           # macOS Container Manager
+    "zed",                # Code Editor
+    "gb-studio",          # Game Boy Game Development
+
+    # Video
+    "vlc", # Video Player
+
+    # Music
+    "yandex-music", # Music Streaming Service
+
+    # Productivity
+    "obsidian", # Note Taking Application
+
+    # Utilities
+    "anki",                # Flashcard Application
+    "motrix",              # Torrent Client
+    "keka",
+    "kekaexternalhelper",  # macOS Archive Manager
+    "hyperkey",            # Keyboard Remapper adds Hyper Key
+    "raycast",             # macOS Launcher (Spotlight Alternative)
+    "coconutbattery",      # macOS Battery Health Monitor
+    "qflipper",            # Flipper Zero Manager
+    "keycastr",            # Key Press Visualizer
+    "raspberry-pi-imager", # Raspberry Pi Image Flasher
+    "chatgpt",             # AI Chatbot
+]
+
+# App Store Apps
+[packages.darwin.appstore_apps]
+
+FoXray = 6448898396  # macOS X-Ray VPN Client
+Telegram = 747648890 # Telegram Messenger
+Sider = 6447783111   # AI Tool
