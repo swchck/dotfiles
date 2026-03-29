@@ -98,7 +98,6 @@ casks = [
 
     # Development
     "wezterm",              # Terminal Emulator
-    "ghostty",              # Terminal Emulator
     "visual-studio-code",   # Code Editor
     "orbstack",             # macOS Container Manager
     "zed",                  # Code Editor

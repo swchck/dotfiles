@@ -17,7 +17,6 @@
 
 {{ if ne .chezmoi.os "darwin" }}
 # macOS-specific apps
-.config/ghostty
 .config/wezterm
 .orbstack
 .docker
@@ -53,7 +52,6 @@
 # Skip GUI-only configs
 .config/zed
 .config/gram
-.config/ghostty
 .config/wezterm
 {{ end }}
 
