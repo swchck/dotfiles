@@ -1,0 +1,17 @@
+# act configuration
+# https://github.com/nektos/act
+#
+# Usage:
+#   act                    # run default event (push)
+#   act -l                 # list available workflows
+#   act -j <job>           # run specific job
+#   act pull_request       # run pull_request event
+#   act -n                 # dry run
+
+# Use medium images (good balance of size and compatibility)
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
+-P ubuntu-22.04=catthehacker/ubuntu:act-22.04
+-P ubuntu-20.04=catthehacker/ubuntu:act-20.04
+
+# Container architecture (needed on Apple Silicon)
+--container-architecture linux/amd64

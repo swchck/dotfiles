@@ -56,6 +56,7 @@ cli = [
 
     # Git
     "gh",                   # GitHub CLI
+    "act",                  # Run GitHub Actions locally
     "git-delta",            # beautiful git diffs
     "lazygit",              # Git TUI
     "deadbranch",           # Git dead branch cleaner
