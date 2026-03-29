@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+{{ if not .ephemeral -}}
+
+set -uo pipefail
+
+if ! command -v go &>/dev/null; then
+    echo "Go not found, skipping Go tools"
+    exit 0
+fi
+
+echo "Installing Go tools..."
+
+{{ range (dig "common" (list) .packages.go) -}}
+go install {{ . }} 2>/dev/null && echo "  {{ . }}" || true
+{{ end -}}
+
+{{ if eq .machine_type "work" -}}
+{{ range (dig "work" (list) .packages.go) -}}
+go install {{ . }} 2>/dev/null && echo "  {{ . }}" || true
+{{ end -}}
+{{ end -}}
+
+echo "Go tools installed."
+
+{{ end -}}

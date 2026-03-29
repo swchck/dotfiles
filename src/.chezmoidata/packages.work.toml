@@ -4,7 +4,6 @@
 
 taps = [
     "bufbuild/buf",  # Protobuf tooling
-    "plutov/tap",    # oq OpenAPI viewer
 ]
 
 cli = [
@@ -23,9 +22,6 @@ cli = [
     "derailed/k9s/k9s",    # Kubernetes CLI
     "kaskade",              # Kafka TUI
     "openfortivpn",         # FortiVPN client
-
-    # API
-    "plutov/tap/oq",        # Terminal OpenAPI spec viewer
 
     # Misc
     "slackdump",            # Slack export tool

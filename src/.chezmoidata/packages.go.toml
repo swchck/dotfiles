@@ -1,0 +1,13 @@
+# Go tools installed via `go install`
+
+[packages.go]
+
+# Common (all machines)
+common = [
+    # "golang.org/x/tools/gopls@latest",  # Go LSP (managed by mason in nvim)
+]
+
+# Work-only
+work = [
+    "github.com/plutov/oq@latest",        # Terminal OpenAPI spec viewer
+]
