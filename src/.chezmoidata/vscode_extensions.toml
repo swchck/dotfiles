@@ -5,7 +5,6 @@ extensions = [
     "ms-vscode-remote.vscode-remote-extensionpack",
     "VisualStudioExptTeam.intellicode-api-usage-examples",
     "christian-kohler.path-intellisense",
-    "github.copilot",
     "GitHub.copilot-chat",
 
     # Themes
