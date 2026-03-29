@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Regenerate when packages change:
+# {{ include ".chezmoidata/packages.toml" | sha256sum }}
+{{ if not .ephemeral -}}
+
+set -euo pipefail
+
+FISH_COMPLETIONS="${HOME}/.config/fish/completions"
+mkdir -p "$FISH_COMPLETIONS"
+
+echo "Generating fish completions..."
+
+# chezmoi
+if command -v chezmoi &>/dev/null; then
+    chezmoi completion fish > "$FISH_COMPLETIONS/chezmoi.fish" 2>/dev/null || true
+fi
+
+# gh (GitHub CLI)
+if command -v gh &>/dev/null; then
+    gh completion -s fish > "$FISH_COMPLETIONS/gh.fish" 2>/dev/null || true
+fi
+
+# docker
+if command -v docker &>/dev/null; then
+    docker completion fish > "$FISH_COMPLETIONS/docker.fish" 2>/dev/null || true
+fi
+
+# kubectl
+if command -v kubectl &>/dev/null; then
+    kubectl completion fish > "$FISH_COMPLETIONS/kubectl.fish" 2>/dev/null || true
+fi
+
+# rustup
+if command -v rustup &>/dev/null; then
+    rustup completions fish > "$FISH_COMPLETIONS/rustup.fish" 2>/dev/null || true
+fi
+
+# cargo
+if command -v cargo &>/dev/null; then
+    # cargo doesn't have native fish completions, skip
+    true
+fi
+
+# hugo
+if command -v hugo &>/dev/null; then
+    hugo completion fish > "$FISH_COMPLETIONS/hugo.fish" 2>/dev/null || true
+fi
+
+# deno
+if command -v deno &>/dev/null; then
+    deno completions fish > "$FISH_COMPLETIONS/deno.fish" 2>/dev/null || true
+fi
+
+echo "Fish completions generated in $FISH_COMPLETIONS"
+
+{{ end -}}

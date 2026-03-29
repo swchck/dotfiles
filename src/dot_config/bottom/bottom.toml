@@ -1,0 +1,154 @@
+# bottom 0.12.3
+# bottom (btm) configuration
+# https://clementtsang.github.io/bottom/
+#
+# Usage:
+#   btm              # launch (or `top` alias)
+#   btm --help       # all flags
+#   btm -b           # basic mode
+
+# ── General ──────────────────────────────────────────────────────────
+
+# One Dark Pro theme
+[styles]
+[styles.cpu]
+all_entry_color = "#61afef"
+avg_entry_color = "#e06c75"
+
+[styles.memory]
+ram_color = "#98c379"
+cache_color = "#c678dd"
+swap_color = "#d19a66"
+arc_color = "#56b6c2"
+gpu_colors = ["#c678dd", "#e06c75", "#d19a66", "#98c379", "#56b6c2"]
+
+[styles.network]
+rx_color = "#98c379"
+tx_color = "#e06c75"
+rx_total_color = "#98c379"
+tx_total_color = "#e06c75"
+
+[styles.battery]
+high_battery_color = "#98c379"
+medium_battery_color = "#e5c07b"
+low_battery_color = "#e06c75"
+
+[styles.tables]
+headers = { color = "#c678dd", bold = true }
+
+[styles.graphs]
+graph_color = "#636d83"
+legend_text = { color = "#abb2bf" }
+
+[styles.widgets]
+border_color = "#636d83"
+selected_border_color = "#61afef"
+widget_title = { color = "#abb2bf" }
+text = { color = "#abb2bf" }
+selected_text = { color = "#282c34", bg_color = "#61afef" }
+disabled_text = { color = "#5c6370" }
+
+# ── Flags ────────────────────────────────────────────────────────────
+
+[flags]
+# Rate in ms to update data (default: 1000)
+# rate = 1000
+
+# How long to keep data in ms (default: 600000 = 10min)
+# retention = "10m"
+
+# Show process tree by default
+# tree = false
+
+# Show processes as command instead of name
+# process_command = false
+
+# Show process memory as value instead of percentage
+# process_memory_as_value = false
+
+# Group same processes together
+# group_processes = false
+
+# Show table scroll position
+# show_table_scroll_position = false
+
+# Hide table gaps for compact view
+# hide_table_gap = false
+
+# Hide time display
+# hide_time = false
+
+# Show battery widget
+# battery = false
+
+# Show GPU info (if available)
+# disable_gpu = false
+
+# Enable cache memory tracking
+# enable_cache_memory = false
+
+# Network display options
+# network_use_bytes = false
+# network_use_binary_prefix = false
+# network_use_log = false
+
+# Memory legend position: none, top-left, top, top-right, left, right, bottom-left, bottom, bottom-right
+# memory_legend = "top-right"
+
+# Network legend position
+# network_legend = "top-right"
+
+# Default widget type: cpu, mem, net, proc, temp, disk, battery
+# default_widget_type = "proc"
+
+# Default time range for graphs in ms (default: 60000 = 60s, min: 30s)
+# default_time_value = 60000
+
+# Time zoom step in ms (default: 15000 = 15s)
+# time_delta = 15000
+
+# Auto-hide time scale after zooming
+# autohide_time = false
+
+# Simpler htop-inspired look without graphs
+# basic = false
+
+# Start with default widget expanded
+# expanded = false
+
+# Use dot markers for graphs instead of braille
+# dot_marker = false
+
+# Disable mouse click interaction
+# disable_click = false
+
+# Search defaults
+# case_sensitive = false
+# regex = false
+# whole_word = false
+
+# CPU display
+# current_usage = false          # CPU% as current usage, not total
+# unnormalized_cpu = false       # Don't average over core count
+# cpu_left_legend = false        # Legend on left side
+# hide_avg_cpu = false           # Hide average CPU entry
+# default_cpu_entry = "all"      # Default selected: "all" or "avg"
+
+# Process display
+# get_threads = false            # Also gather thread info
+# tree_collapse = false          # Collapse tree by default
+# disable_advanced_kill = false  # Only SIGTERM, no signal menu
+# read_only = false              # Prevent system-affecting actions
+
+# Temperature unit: celsius (default), fahrenheit, kelvin
+# temperature_type = "celsius"
+
+# Memory
+# free_arc = false               # Subtract reclaimable ARC
+
+# N'th instance of default widget to select
+# default_widget_count = 1
+
+# Pre-defined color theme (overrides [styles]):
+# default, default-light, gruvbox, gruvbox-light, nord, nord-light
+# theme = "default"

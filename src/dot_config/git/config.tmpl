@@ -1,0 +1,108 @@
+# git + delta 0.18.2
+
+[user]
+    name = "{{ .name }}"
+    email = "{{ .email }}"
+
+[init]
+    defaultBranch = master
+
+[push]
+    default = current
+    autoSetupRemote = true
+
+[pull]
+    rebase = true
+
+[core]
+    editor = nvim
+    autocrlf = input
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = OneHalfDark
+    hyperlinks = true
+
+[color]
+    ui = auto
+
+[merge]
+    ff = only
+    conflictstyle = zdiff3
+
+[fetch]
+    prune = true
+    fsckObjects = true
+
+[commit]
+    template = ~/.config/git/message
+
+[rebase]
+    autoSquash = true
+    autoStash = true
+
+[log]
+    date = iso
+    abbrevCommit = true
+
+[blame]
+    coloring = highlightRecent
+
+[status]
+    short = true
+
+[diff]
+    colorMoved = default
+    algorithm = histogram
+
+[rerere]
+    enabled = true
+
+{{ if eq .chezmoi.os "darwin" -}}
+[credential]
+    helper = osxkeychain
+{{ else if eq .chezmoi.os "linux" -}}
+[credential]
+    helper = store
+{{ end -}}
+
+[help]
+    autocorrect = prompt
+
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
+
+[column]
+    ui = auto
+
+[transfer]
+    fsckObjects = true
+
+[receive]
+    fsckObjects = true
+
+[protocol]
+    version = 2
+
+[include]
+    path = ~/.config/git/aliases
+    path = ~/.config/git/config.local
+
+[includeIf "gitdir/i:{{ .paths.work }}/"]
+    path = ~/.config/git/config-work
+
+[includeIf "gitdir/i:{{ .paths.personal }}/"]
+    path = ~/.config/git/config-personal
+{{ if and (eq .machine_type "work") (hasKey . "gitlab") }}
+[url "ssh://git@{{ .gitlab.url }}/"]
+    insteadOf = https://{{ .gitlab.url }}/
+{{ end }}

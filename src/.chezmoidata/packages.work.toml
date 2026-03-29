@@ -1,0 +1,36 @@
+# Work-only packages
+
+[packages.darwin.work]
+
+taps = [
+    "bufbuild/buf", # Protobuf tooling
+]
+
+cli = [
+    # API & Protobuf
+    "buf",                  # Protobuf tooling
+    "protobuf",             # Protocol Buffers
+    "protoc-gen-go",        # Go protobuf codegen
+    "protoc-gen-go-grpc",   # Go gRPC codegen
+    "newman",               # Postman CLI runner
+    "go-task",              # Task runner (Makefile alternative)
+
+    # Java
+    "openjdk",              # Java Development Kit
+
+    # Infrastructure
+    "derailed/k9s/k9s",    # Kubernetes CLI
+    "kaskade",              # Kafka TUI
+    "openfortivpn",         # FortiVPN client
+
+    # Misc
+    "slackdump",            # Slack export tool
+    "node@22",              # Node.js 22 LTS
+]
+
+casks = [
+    # Communication
+    "zoom",                 # Video Conferencing
+    "slack",                # Team Messenger
+    "postman",              # API Testing
+]

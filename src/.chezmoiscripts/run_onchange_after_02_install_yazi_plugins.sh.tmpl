@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Reinstall when package.toml changes:
+# {{ include "dot_config/yazi/package.toml.tmpl" | sha256sum }}
+{{ if not .ephemeral -}}
+
+set -uo pipefail
+
+if command -v ya &>/dev/null; then
+    echo "Installing yazi plugins..."
+    ya pkg install 2>/dev/null || true
+    echo "Yazi plugins installed."
+else
+    echo "yazi not found, skipping plugin install"
+fi
+
+{{ end -}}

@@ -1,0 +1,130 @@
+# Common packages — installed on ALL machines
+
+[packages.darwin.common]
+
+taps = [
+    "derailed/k9s",             # Kubernetes CLI Repository
+    "armgabrielyan/deadbranch", # Git dead branch cleaner
+    "gabrie30/utils",           # Ghorg repository cloner
+]
+
+fonts = [
+    "font-monaspace",                # GitHub's monospace font
+    "font-jetbrains-mono",           # JetBrains Mono
+    "font-jetbrains-mono-nerd-font", # JetBrains Mono Nerd Font
+    "font-fira-code-nerd-font",      # Fira Code Nerd Font
+    "font-inter",                    # Inter typeface
+    "font-symbols-only-nerd-font",   # Nerd Font icons only (fallback)
+]
+
+languages = [
+    "go",     # Go programming language
+    "node",   # Node.js
+    "python", # Python
+    "deno",   # JavaScript/TypeScript runtime
+]
+
+cli = [
+    # Dotfiles & System
+    "chezmoi",              # dotfiles manager (Configurable)
+    "topgrade",             # update all the things
+    "mas",                  # Mac App Store CLI
+
+    # Shell & Prompt
+    "fish",                 # Modern shell (Configurable)
+    "starship",             # shell prompt (Configurable)
+    "atuin",                # History manager (Configurable)
+    "zoxide",               # cd replacement (Configurable)
+    "fzf",                  # fuzzy finder (Integration)
+
+    # Editors & Multiplexers
+    "neovim",               # text editor (Configurable)
+    "zellij",               # terminal multiplexer (Configurable)
+
+    # Modern CLI Replacements
+    "bat",                  # cat clone with syntax highlighting
+    "eza",                  # ls modern replacement
+    "fd",                   # find replacement
+    "ripgrep",              # grep replacement
+    "sd",                   # sed replacement
+    "dust",                 # du replacement
+    "bottom",               # system monitor (top replacement)
+    "viddy",                # modern watch replacement
+    "procs",                # modern ps replacement
+    "rm-improved",          # safe rm replacement (rip2 binary)
+
+    # Git
+    "gh",                   # GitHub CLI
+    "git-delta",            # beautiful git diffs
+    "lazygit",              # Git TUI
+    "deadbranch",           # Git dead branch cleaner
+
+    # Data & Text Processing
+    "jq",                   # JSON processor
+    "fx",                   # JSON viewer
+    "tokei",                # code statistics
+
+    # Network & Files
+    "iproute2mac",          # iproute2 for macOS
+    "wget",                 # download utility
+    "bandwhich",            # network utilization
+
+    # Media & Archives
+    "ffmpeg",               # video processing
+    "ffmpegthumbnailer",    # video thumbnailer
+    "poppler",              # PDF tools
+    "unar",                 # unarchiver
+
+    # File Manager
+    "yazi",                 # Terminal file manager
+
+    # Python
+    "pipx",                 # Python CLI tool installer
+
+    # Node
+    "nvm",                  # Node version manager
+
+    # Misc
+    "age",                  # file encryption
+    "tailspin",             # log viewer
+    "graphviz",             # graph visualization
+    "upx",                  # binary packer
+]
+
+casks = [
+    # Browsers
+    "arc",                  # Modern Chromium Based Browser
+    "google-chrome",        # Chrome Browser
+
+    # Development
+    "wezterm",              # Terminal Emulator
+    "ghostty",              # Terminal Emulator
+    "visual-studio-code",   # Code Editor
+    "orbstack",             # macOS Container Manager
+    "zed",                  # Code Editor
+
+    # AI
+    "chatgpt",              # OpenAI ChatGPT
+    "claude",               # Anthropic Claude
+    "copilot-cli",          # GitHub Copilot CLI
+
+    # Video
+    "vlc",                  # Video Player
+
+    # Productivity
+    "obsidian",             # Note Taking Application
+    "anki",                 # Flashcard Application
+
+    # Utilities
+    "keka",                 # macOS Archive Manager
+    "kekaexternalhelper",   # Keka helper
+    "hyperkey",             # Keyboard Remapper adds Hyper Key
+    "raycast",              # macOS Launcher (Spotlight Alternative)
+    "coconutbattery",       # macOS Battery Health Monitor
+    "keycastr",             # Key Press Visualizer
+    "latest",               # App Update Checker
+]
+
+[packages.darwin.common.appstore_apps]
+Telegram = 747648890          # Telegram Messenger
+# uBlockOriginLite = 6745342698 # Safari Ad Blocker (mas install fails for Safari extensions)

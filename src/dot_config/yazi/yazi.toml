@@ -1,0 +1,89 @@
+# yazi 26.1.22
+# Yazi file manager configuration
+# https://yazi-rs.github.io/docs/configuration/yazi
+#
+# Usage:
+#   yazi              # open file manager
+#   ya pack -i        # install plugins from package.toml
+#   ya pack -u        # update plugins
+
+[manager]
+# Layout ratios: parent:current:preview
+ratio = [1, 4, 3]
+
+# Sorting
+sort_by = "natural"
+sort_sensitive = false
+sort_reverse = false
+sort_dir_first = true
+sort_translit = false
+
+# Display
+show_hidden = false
+show_symlink = true
+linemode = "size"          # size, permissions, mtime, none
+# scrolloff = 5
+# title_format = "Yazi: {cwd}"
+
+[preview]
+# Max file size to preview (bytes)
+max_width = 1200
+max_height = 900
+# cache_dir = ""
+# image_delay = 30
+
+# Use ueberzugpp for image preview (fallback: sixel, kitty, iterm2)
+# image_filter = "triangle"
+# image_quality = 75
+
+[opener]
+# Custom openers
+# [opener.edit]
+# run = 'nvim "$@"'
+# block = true
+# desc = "Edit with Neovim"
+
+[open]
+# Rules for opening files
+# prepend_rules = [
+#   { name = "*.md", use = "edit" },
+# ]
+
+[plugin]
+# Plugin prepend rules for previewing
+prepend_previewers = [
+    # Use bat for text file previews with syntax highlighting
+    { name = "*.fish", run = "code" },
+    { name = "*.toml", run = "code" },
+    { name = "*.yaml", run = "code" },
+    { name = "*.yml", run = "code" },
+]
+
+# prepend_fetchers = []
+
+[input]
+# cd_title = "Change directory:"
+# create_title = "Create:"
+# rename_title = "Rename:"
+# filter_title = "Filter:"
+# find_title = ["Find next:", "Find previous:"]
+# search_title = "Search via {n}:"
+# shell_title = ["Shell:", "Shell (block):"]
+
+[confirm]
+# trash_title = "Move {n} selected file(s) to trash?"
+# delete_title = "Delete {n} selected file(s) permanently?"
+# overwrite_title = "A file with that name already exists, overwrite?"
+
+[select]
+# open_title = "Open with:"
+
+[which]
+# Timeout for which-key popup (ms)
+# sort_by = "none"        # none, key, desc
+# sort_sensitive = false
+# sort_reverse = false
+# sort_translit = false
+
+[log]
+# enabled = false

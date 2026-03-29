@@ -1,0 +1,7 @@
+# Ollama models to pull on personal machines
+
+[packages.darwin.personal.ollama]
+models = [
+    "llama3.2",
+    "translategemma",
+]

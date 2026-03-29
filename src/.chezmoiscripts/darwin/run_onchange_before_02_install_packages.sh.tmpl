@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+# Note: not using set -e — brew bundle returns exit 1 if any single
+# dependency fails, but we want to continue with the rest
+
+{{ $darwin := .packages.darwin -}}
+
+{{/* Always include: common + personal */}}
+{{/* Work machines additionally include: work */}}
+{{ $taps      := concat (dig "common" "taps"      (list) $darwin) (dig "personal" "taps"      (list) $darwin) -}}
+{{ $fonts     := concat (dig "common" "fonts"     (list) $darwin) (dig "personal" "fonts"     (list) $darwin) -}}
+{{ $languages := concat (dig "common" "languages" (list) $darwin) (dig "personal" "languages" (list) $darwin) -}}
+{{ $cli       := concat (dig "common" "cli"       (list) $darwin) (dig "personal" "cli"       (list) $darwin) -}}
+{{ $casks     := concat (dig "common" "casks"     (list) $darwin) (dig "personal" "casks"     (list) $darwin) -}}
+
+{{ if eq .machine_type "work" -}}
+{{ $taps      = concat $taps      (dig "work" "taps"      (list) $darwin) -}}
+{{ $fonts     = concat $fonts     (dig "work" "fonts"     (list) $darwin) -}}
+{{ $languages = concat $languages (dig "work" "languages" (list) $darwin) -}}
+{{ $cli       = concat $cli       (dig "work" "cli"       (list) $darwin) -}}
+{{ $casks     = concat $casks     (dig "work" "casks"     (list) $darwin) -}}
+{{ end -}}
+
+{{ $taps      = $taps      | sortAlpha | uniq -}}
+{{ $fonts     = $fonts     | sortAlpha | uniq -}}
+{{ $languages = $languages | sortAlpha | uniq -}}
+{{ $cli       = $cli       | sortAlpha | uniq -}}
+{{ $casks     = $casks     | sortAlpha | uniq -}}
+
+# Install packages via Brewfile
+brew bundle --file=/dev/stdin <<EOF
+{{ range $taps -}}
+tap "{{ . }}"
+{{ end -}}
+
+{{ range $fonts -}}
+cask "{{ . }}"
+{{ end -}}
+
+{{ range $languages -}}
+brew "{{ . }}"
+{{ end -}}
+
+{{ range $cli -}}
+brew "{{ . }}"
+{{ end -}}
+
+{{ range $casks -}}
+cask "{{ . }}"
+{{ end -}}
+
+{{ range $key, $value := (dig "common" "appstore_apps" (dict) $darwin) -}}
+mas "{{$key}}", id: {{$value}}
+{{ end -}}
+{{ range $key, $value := (dig "personal" "appstore_apps" (dict) $darwin) -}}
+mas "{{$key}}", id: {{$value}}
+{{ end -}}
+{{ if eq .machine_type "work" -}}
+{{ range $key, $value := (dig "work" "appstore_apps" (dict) $darwin) -}}
+mas "{{$key}}", id: {{$value}}
+{{ end -}}
+{{ end -}}
+
+{{ range (.vscode.extensions | sortAlpha | uniq) -}}
+vscode "{{ . }}"
+{{ end -}}
+EOF
+
+# Remove packages not in the list
+brew bundle cleanup --force --file=/dev/stdin <<EOF
+{{ range $taps -}}
+tap "{{ . }}"
+{{ end -}}
+
+{{ range $fonts -}}
+cask "{{ . }}"
+{{ end -}}
+
+{{ range $languages -}}
+brew "{{ . }}"
+{{ end -}}
+
+{{ range $cli -}}
+brew "{{ . }}"
+{{ end -}}
+
+{{ range $casks -}}
+cask "{{ . }}"
+{{ end -}}
+
+{{ range $key, $value := (dig "common" "appstore_apps" (dict) $darwin) -}}
+mas "{{$key}}", id: {{$value}}
+{{ end -}}
+{{ range $key, $value := (dig "personal" "appstore_apps" (dict) $darwin) -}}
+mas "{{$key}}", id: {{$value}}
+{{ end -}}
+{{ if eq .machine_type "work" -}}
+{{ range $key, $value := (dig "work" "appstore_apps" (dict) $darwin) -}}
+mas "{{$key}}", id: {{$value}}
+{{ end -}}
+{{ end -}}
+EOF
+
+brew autoremove

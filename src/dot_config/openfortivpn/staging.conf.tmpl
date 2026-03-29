@@ -1,0 +1,21 @@
+{{ if and (eq .machine_type "work") (hasKey . "openfortivpn") -}}
+#########################
+#   Host Configuration  #
+#########################
+
+host = {{ .openfortivpn.staging_hostname }}
+port = {{ .openfortivpn.staging_port }}
+
+#############################
+#   Advanced Configuration  #
+#############################
+
+set-dns = 1
+set-routes = 1
+half-internet-routes = 0
+pppd-use-peerdns = 1
+insecure-ssl = 0
+cipher-list = HIGH:!aNULL:!kRSA:!PSK:!SRP:!MD5:!RC4
+persistent = 10
+seclevel-1 = 0
+{{ end -}}

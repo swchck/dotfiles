@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+{{ if not .ephemeral -}}
+
+set -euo pipefail
+
+# Install Homebrew on Linux (for tools not available in system repos)
+if ! command -v brew &>/dev/null; then
+    echo "Installing Homebrew for Linux..."
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add to path for this session
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+echo "Homebrew ready: $(brew --version | head -1)"
+
+{{ end -}}

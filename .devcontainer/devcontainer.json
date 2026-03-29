@@ -1,0 +1,22 @@
+{
+  "name": "Dotfiles Dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/rio/features/chezmoi:1": {},
+    "ghcr.io/devcontainers/features/fish:1": {},
+    "ghcr.io/devcontainers/features/go:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/rust:1": {}
+  },
+  "postCreateCommand": "chezmoi init --apply swchck",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmalehorn.vscode-fish",
+        "tamasfe.even-better-toml",
+        "sumneko.lua"
+      ]
+    }
+  }
+}

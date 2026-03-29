@@ -1,0 +1,308 @@
+# atuin 18.13.2
+# Atuin configuration
+# https://docs.atuin.sh/cli/configuration/config/
+#
+# Usage:
+#   atuin search <query>        # search history
+#   atuin stats                 # show statistics
+#   atuin sync                  # sync history
+#   atuin daemon                # start background sync daemon
+
+# ── Paths ────────────────────────────────────────────────────────────
+
+# Database, encryption key, and session file paths
+# db_path = "~/.local/share/atuin/history.db"
+# key_path = "~/.local/share/atuin/key"
+# session_path = "~/.local/share/atuin/session"
+
+# ── General ──────────────────────────────────────────────────────────
+
+# Timezone: "local", "l", or UTC offset like "+3", "-05:30"
+timezone = "local"
+
+# Date dialect for stats: "us" (mm/dd), "uk" (dd/mm)
+dialect = "us"
+
+# ── Search ───────────────────────────────────────────────────────────
+
+# Search mode: prefix, fulltext, fuzzy, skim, daemon-fuzzy
+search_mode = "fuzzy"
+
+# Filter mode: global, host, session, directory, workspace (switchable via Ctrl+R)
+filter_mode = "host"
+
+# Workspace filtering — filter commands within the same git repo tree
+workspaces = true
+
+# Filter/search mode when invoked from shell up-key binding
+# filter_mode_shell_up_key_binding = "global"
+# search_mode_shell_up_key_binding = "fuzzy"
+
+# Enable && or || command chaining
+# command_chaining = false
+
+# Score multipliers for daemon-fuzzy search mode
+# frequency_score_multiplier = 1.0
+# recency_score_multiplier = 1.0
+# frecency_score_multiplier = 1.0
+
+# ── UI ───────────────────────────────────────────────────────────────
+
+# Style: auto, full, compact
+style = "auto"
+
+# Max lines the interface takes up (0 = fullscreen)
+inline_height = 0
+
+# Max lines when invoked via shell up-key binding
+# inline_height_shell_up_key_binding = 40
+
+# Hide UI when terminal height is below this threshold
+# auto_hide_height = 8
+
+# Invert UI — search bar at the top
+invert = false
+
+# Show preview of selected command
+show_preview = true
+
+# Max preview height
+max_preview_height = 4
+
+# Show help row (version, keymap hints, command count)
+show_help = true
+
+# Show tabs for search and inspect
+# show_tabs = true
+
+# Execute command immediately on Enter (Tab to edit instead)
+enter_accept = true
+
+# Escape key behavior: return-original, return-query
+# exit_mode = "return-original"
+
+# Minimize UI motion (no live timers, etc.)
+# prefers_reduced_motion = false
+
+# ── UI Columns ───────────────────────────────────────────────────────
+
+[ui]
+# Columns displayed in interactive search
+# Available: duration, time, datetime, directory, host, user, exit, command
+# columns = ["duration", "time", "command"]
+
+# ── Keymap ───────────────────────────────────────────────────────────
+
+[keys]
+# Startup keymap mode: auto, emacs, vim-insert, vim-normal
+# keymap_mode = "auto"
+
+# Cursor style per keymap mode
+# Available: "default", "{blink,steady}-{block,underline,bar}"
+# keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
+
+# Word jump mode: emacs, subl
+# word_jump_mode = "emacs"
+
+# Characters that count as part of a word
+# word_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+# Context lines when scrolling by pages
+# scroll_context_lines = 1
+
+# Use Ctrl instead of Alt for numerical shortcuts (Ctrl-0..9) — useful on macOS
+# ctrl_n_shortcuts = true
+
+# Up/down key exits TUI when scrolled past first/last entry
+# scroll_exits = true
+
+# Prefix key for shortcuts
+# prefix = "a"
+
+# Exit when left-arrow pressed at line start
+# exit_past_line_start = true
+
+# Right-arrow accepts like Tab at line end
+# accept_past_line_end = true
+
+# Left-arrow accepts like Tab at line start
+# accept_past_line_start = false
+
+# Backspace accepts like Tab
+# accept_with_backspace = false
+
+# ── History ──────────────────────────────────────────────────────────
+
+# Default history list format
+# history_format = "{time}\t{command}\t{duration}"
+
+# Record commands with non-zero exit status
+# store_failed = true
+
+# Auto-filter secrets (AWS keys, GitHub PATs, Slack tokens, etc.)
+secrets_filter = true
+
+# Regex patterns to exclude from history
+# history_filter = [
+#     "^secret-cmd",
+#     "^innocuous-cmd .*--secret=.+",
+# ]
+
+# Exclude commands run in these directories
+# cwd_filter = [
+#     "^/very/secret/area",
+# ]
+
+# ── Sync ─────────────────────────────────────────────────────────────
+
+# Auto sync when logged in
+auto_sync = false
+
+# Check for updates
+update_check = false
+
+# Sync server address
+# sync_address = "https://api.atuin.sh"
+
+# Sync frequency (only triggered on command run, 0 = after every command)
+sync_frequency = "10d"
+
+# ── Network ──────────────────────────────────────────────────────────
+
+# Max seconds to wait for network requests
+# network_timeout = 30
+
+# Max seconds for connection establishment
+# network_connect_timeout = 5
+
+# SQLite connection timeout (seconds)
+# local_timeout = 5
+
+# ── Stats ────────────────────────────────────────────────────────────
+
+[stats]
+# Commands where subcommand matters for stats (e.g. "git push" vs "git pull")
+common_subcommands = [
+    "apt",
+    "cargo",
+    "composer",
+    "dnf",
+    "docker",
+    "git",
+    "go",
+    "ip",
+    "kubectl",
+    "nix",
+    "nmcli",
+    "npm",
+    "pecl",
+    "pnpm",
+    "podman",
+    "port",
+    "systemctl",
+    "tmux",
+    "yarn",
+    "vpn",
+]
+
+# Strip these prefixes from stats
+common_prefix = ["sudo"]
+
+# Completely ignore these commands from stats
+ignored_commands = [
+    "cd",
+    "ls",
+    "vi",
+]
+
+# ── Search Filters ───────────────────────────────────────────────────
+
+[search]
+# Available filter modes in cycle order
+# filters = ["global", "host", "session", "directory", "workspace"]
+
+# ── Sync v2 ──────────────────────────────────────────────────────────
+
+[sync]
+records = true
+
+# ── Dotfiles Sync ────────────────────────────────────────────────────
+
+[dotfiles]
+enabled = false
+
+# ── Preview ──────────────────────────────────────────────────────────
+
+[preview]
+# Preview height strategy: auto, static, fixed
+# strategy = "auto"
+
+# ── Theme ────────────────────────────────────────────────────────────
+
+[theme]
+# Theme name: default, autumn, marine, or custom
+# name = "default"
+
+# Output theme loading diagnostics
+# debug = false
+
+# Theme inheritance traversal depth
+# max_depth = 10
+
+# ── Logging ──────────────────────────────────────────────────────────
+
+[logs]
+# Enable file-based logging
+# enabled = true
+
+# Log file directory
+# dir = "~/.atuin/logs"
+
+# Log level: trace, debug, info, warn, error
+# level = "info"
+
+# Days to retain log files
+# retention = 4
+
+# Per-subsystem log overrides
+# [logs.ai]
+# enabled = true
+# file = "ai.log"
+# level = "info"
+# retention = 4
+
+# [logs.daemon]
+# enabled = true
+# file = "daemon.log"
+# level = "info"
+# retention = 4
+
+# [logs.search]
+# enabled = true
+# file = "search.log"
+# level = "info"
+# retention = 4
+
+# ── Daemon ───────────────────────────────────────────────────────────
+
+[daemon]
+# Background sync daemon (start with `atuin daemon`)
+enabled = false
+
+# Automatically manage daemon lifecycle
+# autostart = false
+
+# Daemon sync interval (seconds)
+# sync_frequency = 300
+
+# Unix socket path
+# socket_path = "~/.local/share/atuin/atuin.sock"
+
+# Daemon PID file
+# pidfile_path = "~/.local/share/atuin/atuin-daemon.pid"
+
+# systemd socket activation (Linux only)
+# systemd_socket = false
+
+# TCP port for non-unix systems
+# tcp_port = 8889

@@ -1,0 +1,87 @@
+# One Dark Pro skin for k9s
+
+k9s:
+  body:
+    fgColor: "#abb2bf"
+    bgColor: "#282c34"
+    logoColor: "#61afef"
+  prompt:
+    fgColor: "#abb2bf"
+    bgColor: "#282c34"
+    suggestColor: "#d19a66"
+  info:
+    fgColor: "#c678dd"
+    sectionColor: "#98c379"
+  dialog:
+    fgColor: "#abb2bf"
+    bgColor: "#3e4452"
+    buttonFgColor: "#282c34"
+    buttonBgColor: "#61afef"
+    buttonFocusFgColor: "#282c34"
+    buttonFocusBgColor: "#c678dd"
+    labelFgColor: "#d19a66"
+    fieldFgColor: "#abb2bf"
+  frame:
+    border:
+      fgColor: "#636d83"
+      focusColor: "#61afef"
+    menu:
+      fgColor: "#abb2bf"
+      keyColor: "#c678dd"
+      numKeyColor: "#d19a66"
+    crumbs:
+      fgColor: "#282c34"
+      bgColor: "#61afef"
+      activeColor: "#c678dd"
+    status:
+      newColor: "#98c379"
+      modifyColor: "#e5c07b"
+      addColor: "#98c379"
+      pendingColor: "#d19a66"
+      errorColor: "#e06c75"
+      highlightColor: "#61afef"
+      killColor: "#e06c75"
+      completedColor: "#636d83"
+    title:
+      fgColor: "#abb2bf"
+      bgColor: "#282c34"
+      highlightColor: "#61afef"
+      counterColor: "#c678dd"
+      filterColor: "#98c379"
+  views:
+    charts:
+      bgColor: "#282c34"
+      defaultDialColors:
+        - "#61afef"
+        - "#e06c75"
+      defaultChartColors:
+        - "#61afef"
+        - "#e06c75"
+    table:
+      fgColor: "#abb2bf"
+      bgColor: "#282c34"
+      cursorFgColor: "#282c34"
+      cursorBgColor: "#3e4452"
+      markColor: "#e5c07b"
+      header:
+        fgColor: "#c678dd"
+        bgColor: "#282c34"
+        sorterColor: "#61afef"
+    xray:
+      fgColor: "#abb2bf"
+      bgColor: "#282c34"
+      cursorColor: "#3e4452"
+      graphicColor: "#61afef"
+      showColor: "#98c379"
+    yaml:
+      keyColor: "#61afef"
+      colonColor: "#636d83"
+      valueColor: "#abb2bf"
+    logs:
+      fgColor: "#abb2bf"
+      bgColor: "#282c34"
+      indicator:
+        fgColor: "#c678dd"
+        bgColor: "#282c34"
+        toggleOnColor: "#98c379"
+        toggleOffColor: "#636d83"

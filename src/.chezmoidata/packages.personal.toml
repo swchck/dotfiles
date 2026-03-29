@@ -1,0 +1,52 @@
+# Personal-only packages
+
+[packages.darwin.personal]
+
+taps = [
+    "bahaaio/pomo", # Pomodoro Timer
+]
+
+cli = [
+    "hugo",                 # Static site generator
+    "pandoc",               # document converter
+    "syncthing",            # File synchronization
+    "ollama",               # Language model
+    "llama.cpp",            # LLM inference
+    "whisper-cpp",          # Speech-to-text
+    "yt-dlp",              # Video downloader
+    "termshark",            # Wireshark for the terminal
+    "gabrie30/utils/ghorg", # Repository management (Configurable)
+    "nmap",                 # Network scanner
+    "hurl",                 # HTTP client
+]
+
+casks = [
+    # Communication
+    "discord",              # Chat Client
+    "gram",                 # Telegram client
+
+    # Music
+    "yandex-music",         # Music Streaming Service
+    "spotify",              # Music Streaming Service
+
+    # Gaming
+    "epic-games",           # Game launcher
+
+    # Development
+    "gb-studio",            # Game Boy Game Development
+
+    # Browsers
+    "orion",                # WebKit Browser
+    "ungoogled-chromium",   # Privacy Browser
+
+    # Utilities
+    "motrix",               # Download Manager
+    "qflipper",             # Flipper Zero Manager
+    "raspberry-pi-imager",  # Raspberry Pi Image Flasher
+    "bahaaio/pomo/pomo",    # Pomodoro Timer
+]
+
+[packages.darwin.personal.appstore_apps]
+FoXray = 6448898396       # macOS X-Ray VPN Client
+LINE = 539883307          # LINE Messenger
+SnippetsLab = 1006087419  # Code Snippets Manager

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+{{ if eq .machine_type "personal" -}}
+
+set -euo pipefail
+
+if ! command -v ollama &>/dev/null; then
+    echo "ollama not installed, skipping model pull"
+    exit 0
+fi
+
+# Start ollama server if not running
+if ! ollama list &>/dev/null 2>&1; then
+    ollama serve &>/dev/null &
+    OLLAMA_PID=$!
+    sleep 2
+    trap "kill $OLLAMA_PID 2>/dev/null" EXIT
+fi
+
+INSTALLED=$(ollama list 2>/dev/null | awk 'NR>1{print $1}' | cut -d: -f1)
+
+{{ range (dig "personal" "ollama" "models" (list) .packages.darwin) -}}
+if echo "$INSTALLED" | grep -q "^{{ . }}$"; then
+    echo "{{ . }}: already installed"
+else
+    echo "Pulling {{ . }}..."
+    ollama pull {{ . }}
+fi
+{{ end -}}
+
+{{ end -}}

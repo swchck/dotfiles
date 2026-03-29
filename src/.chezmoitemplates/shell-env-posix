@@ -1,0 +1,18 @@
+{{ template "brew-shellenv-posix" . }}
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_BAT=1
+export MAS_NO_AUTO_INDEX=1
+
+# Go
+export GOPATH="$HOME/.go"
+export GOBIN="$GOPATH/bin"
+export GOMODCACHE="$GOPATH/pkg/mod"
+export PATH="$GOBIN:$HOME/.local/bin:$PATH"
+{{ if and (eq .machine_type "work") (not .ephemeral) (hasKey . "gitlab") -}}
+export GOPRIVATE="{{ .gitlab.url }}/*"
+export GONOSUMCHECK="{{ .gitlab.url }}/*"
+{{ end -}}
+
+# Deno
+export DENO_DIR="$HOME/.deno"

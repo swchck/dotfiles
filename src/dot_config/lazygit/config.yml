@@ -1,0 +1,205 @@
+# lazygit 0.60.0
+# Lazygit configuration
+# https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+#
+# Usage:
+#   lazygit (or lg alias)
+#   lazygit --config   # show config path
+
+gui:
+  # One Dark Pro theme
+  theme:
+    activeBorderColor:
+      - "#61afef"  # blue
+      - bold
+    inactiveBorderColor:
+      - "#636d83"  # gutter grey
+    searchingActiveBorderColor:
+      - "#e5c07b"  # yellow
+      - bold
+    optionsTextColor:
+      - "#61afef"  # blue
+    selectedLineBgColor:
+      - "#3e4452"  # selection
+    cherryPickedCommitBgColor:
+      - "#3e4452"  # selection
+    cherryPickedCommitFgColor:
+      - "#c678dd"  # purple
+    unstagedChangesColor:
+      - "#e06c75"  # red
+    defaultFgColor:
+      - "#abb2bf"  # fg
+    markedBaseCommitBgColor:
+      - "#e5c07b"  # yellow
+    markedBaseCommitFgColor:
+      - "#282c34"  # bg
+
+  # UI
+  mouseEvents: true
+  border: rounded               # single, double, rounded, hidden
+  showFileTree: true
+  showListFooter: false
+  showRandomTip: false
+  showBottomLine: true
+  showPanelJumps: true
+  nerdFontsVersion: "3"
+  # showIcons: false
+  # showFileIcons: false
+  # showCommandLog: true
+  # commandLogSize: 8
+  # showRootItemInFileTree: true
+  # showNumstatInFilesView: false
+  # showBranchCommitHash: false
+  # showDivergenceFromBaseBranch: none  # none, onlyArrow, arrowAndNumber
+  # animateExplosion: true
+
+  # Layout
+  # language: "auto"
+  # tabWidth: 4
+  # scrollHeight: 2
+  # scrollPastBottom: true
+  # scrollOffMargin: 2
+  # scrollOffBehavior: "margin"      # margin, jump
+  # sidePanelWidth: 0.3333
+  # expandFocusedSidePanel: true
+  # expandedSidePanelWeight: 2
+  # enlargedSideViewLocation: "left" # left, top
+  # mainPanelSplitMode: "flexible"   # flexible, horizontal, vertical
+  # screenMode: "normal"             # normal, half, fullscreen
+  # portraitMode: "auto"             # auto, always, never
+  # filterMode: "substring"          # substring, fuzzy
+  # statusPanelView: "dashboard"     # dashboard, allBranchesLog
+
+  # Confirmations
+  # skipAmendWarning: false
+  # skipNoStagedFilesWarning: false
+  # skipSwitchWorktreeOnCheckoutWarning: false
+  # skipDiscardChangeWarning: false
+  # skipStashWarning: false
+  # skipRewordInEditorWarning: false
+
+  # Wrap staging view lines
+  # wrapLinesInStagingView: true
+  # useHunkModeInStagingView: false
+
+  # Commit display
+  # commitLength:
+  #   show: true
+  # commitAuthorShortLength: 2
+  # commitAuthorLongLength: 17
+  # commitHashLength: 8
+  # timeFormat: "02 Jan 06"
+  # shortTimeFormat: "3:04PM"
+
+  # Stash behavior
+  # switchToFilesAfterStashPop: true
+  # switchToFilesAfterStashApply: true
+  # switchTabsWithPanelJumpKeys: false
+
+  # Spinner
+  # spinner:
+  #   frames: ['|', '/', '-', '\']
+  #   rate: 50
+
+  # Split diff
+  # splitDiff: "auto"
+
+  # Custom branch colors
+  # authorColors: {}
+  # branchColors: {}
+  # branchColorPatterns: {}
+
+git:
+  # Use delta as pager
+  paging:
+    pager: delta --dark --paging=never
+    colorArg: always
+    externalDiffCommand: ""
+
+  # Auto fetch/refresh
+  autoFetch: true
+  autoRefresh: true
+  # fetchAll: true
+  # autoForwardBranches: false
+
+  # Commit
+  # autoStageResolvedConflicts: true
+  # parseEmoji: true
+  # commit:
+  #   signOff: false
+  #   autoWrapCommitMessage: true
+  #   autoWrapWidth: 72
+  # commitPrefix: []
+  # commitPrefixes: {}
+
+  # Merging
+  # mainBranches: ["master", "main"]
+  # skipHookPrefix: "WIP"
+  # merging:
+  #   manualCommit: false
+  #   args: ""
+
+  # Diff
+  # diffContextSize: 3
+  # ignoreWhitespaceInDiffView: false
+  # renameSimilarityThreshold: 50
+
+  # Branch
+  # branchPrefix: ""
+  # localBranchSortOrder: "recency"   # recency, alphabetical
+  # remoteBranchSortOrder: "alphabetical"
+  # branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
+  # allBranchesLogCmds: []
+
+  # Log
+  # log:
+  #   order: "topo-order"     # date-order, author-date-order, topo-order
+  #   showGraph: "always"     # always, never, when-maximised
+  #   showWholeGraph: false
+  # truncateCopiedCommitHashesTo: 12
+
+  # Security
+  # overrideGpg: false
+  # disableForcePushing: false
+
+os:
+  editPreset: "nvim"
+  # editCommand: "nvim"
+  # editCommandTemplate: "{{editor}} {{filename}}"
+  # openCommand: "open {{filename}}"
+
+# Update check
+# update:
+#   method: "prompt"   # prompt, background, never
+#   days: 14
+
+# Refresh rate
+# refresher:
+#   refreshInterval: 10
+#   fetchInterval: 60
+
+# Quit behavior
+# confirmOnQuit: false
+# quitOnTopLevelReturn: false
+
+# Startup
+# disableStartupPopups: false
+# promptToReturnFromSubprocess: true
+# notARepository: "prompt"  # prompt, skip, quit
+
+# Custom commands
+# customCommands: []
+
+# Services (e.g. custom hosting)
+# services: {}
+
+# Keybindings — uncomment to customize
+# keybinding:
+#   universal:
+#     quit: "q"
+#     return: "<escape>"
+#     togglePanel: "<tab>"
+#     prevItem: "<up>"
+#     nextItem: "<down>"
+#     scrollUpMain: "<pgup>"
+#     scrollDownMain: "<pgdown>"

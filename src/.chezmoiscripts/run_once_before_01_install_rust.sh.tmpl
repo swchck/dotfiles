@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+{{ if not .ephemeral -}}
+
+set -euo pipefail
+
+if command -v rustup &>/dev/null; then
+    echo "Rust already installed."
+else
+    echo "Installing Rust via rustup..."
+    curl -sSf https://sh.rustup.rs | sh -s -- -yq --profile default
+    source "$HOME/.cargo/env"
+    echo "Rust installed."
+fi
+
+{{ end -}}

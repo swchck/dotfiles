@@ -1,0 +1,48 @@
+# gh 2.88.1
+# GitHub CLI configuration
+# https://cli.github.com/manual/gh_config
+#
+# Usage:
+#   gh config list              # show all settings
+#   gh config set <key> <value> # set a value
+#   gh auth status              # check auth
+
+# Config schema version
+version: 1
+
+# Git protocol for gh operations: ssh, https
+git_protocol: ssh
+
+# Editor for issues, PRs, etc. (blank = $EDITOR)
+editor:
+
+# Interactive prompting: enabled, disabled
+prompt: enabled
+
+# Prefer editor-based prompting: enabled, disabled
+prefer_editor_prompt: disabled
+
+# Pager program (blank = $PAGER, "cat" = disabled)
+pager:
+
+# Web browser for URLs (blank = $BROWSER)
+browser:
+
+# RGB hex color labels in truecolor terminals: enabled, disabled
+color_labels: disabled
+
+# 4-bit accessible colors: enabled, disabled
+accessible_colors: disabled
+
+# Accessible prompter: enabled, disabled
+accessible_prompter: disabled
+
+# Animated spinner progress indicator: enabled, disabled
+spinner: enabled
+
+# HTTP unix socket path (blank = default transport)
+http_unix_socket:
+
+# Aliases for gh commands
+aliases:
+    co: pr checkout

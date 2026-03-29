@@ -1,0 +1,11 @@
+# Files to remove on `chezmoi apply`
+# These are old locations that have been migrated
+
+# Git config migrated to ~/.config/git/
+.gitconfig
+.gitaliases
+.gitmessage
+.gitignore
+.gitconfig-personal
+.gitconfig-work
+.git-scripts

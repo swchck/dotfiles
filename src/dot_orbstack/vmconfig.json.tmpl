@@ -1,0 +1,10 @@
+{{- $cpuCount := output "sysctl" "-n" "hw.ncpu" | trim | atoi -}}
+{{- $memBytes := output "sysctl" "-n" "hw.memsize" | trim | int64 -}}
+{{- $cpuAlloc := max 2 (div (mul $cpuCount 30) 100) -}}
+{{- $memMib   := max 2048 (div (div (mul $memBytes 30) 100) 1048576) -}}
+{
+  "cpu": {{ $cpuAlloc }},
+  "k8s.enable": false,
+  "memory_mib": {{ $memMib }},
+  "mount_hide_shared": true
+}

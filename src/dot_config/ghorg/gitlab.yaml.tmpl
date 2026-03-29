@@ -1,0 +1,16 @@
+---
+# Ghorg — GitLab configuration
+# Usage: ghorg clone <org> --config=~/.config/ghorg/gitlab.yaml
+{{ if and (eq .machine_type "work") (hasKey . "gitlab") }}
+GHORG_SCM_TYPE: gitlab
+GHORG_SCM_BASE_URL: https://{{ .gitlab.url }}
+GHORG_CLONE_TYPE: org
+GHORG_ABSOLUTE_PATH_TO_CLONE_TO: {{ .paths.work }}
+GHORG_GITLAB_TOKEN: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "ghorg-gitlab-token" "-w" | trim }}
+
+{{ template "ghorg-common" . }}
+{{ else }}
+# GitLab not configured on personal machine
+# Add work credentials to enable:
+#   security add-generic-password -a chezmoi -s ghorg-gitlab-token -w '<TOKEN>'
+{{ end -}}

@@ -1,0 +1,7 @@
+# Homebrew init (macOS ARM, macOS Intel, Linux)
+for brewpath in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew
+    if test -x $brewpath
+        eval ($brewpath shellenv)
+        break
+    end
+end

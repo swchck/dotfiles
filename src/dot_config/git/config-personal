@@ -1,0 +1,2 @@
+# Personal git config — included via includeIf for ~/.repository/personal/
+# Uses the default [user] email from ~/.gitconfig

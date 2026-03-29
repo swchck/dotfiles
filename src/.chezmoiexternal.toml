@@ -1,0 +1,6 @@
+# External files managed by chezmoi
+# These are downloaded from remote sources and cached locally.
+# Run `chezmoi apply` to fetch/update.
+
+# Note: bat uses built-in "OneHalfDark" theme (closest to One Dark Pro)
+# No external themes needed

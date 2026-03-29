@@ -1,0 +1,61 @@
+# yt-dlp 2026.03.13
+# yt-dlp configuration
+# https://github.com/yt-dlp/yt-dlp#configuration
+#
+# Usage:
+#   yt-dlp <url>              # download video
+#   yt-dlp -x <url>           # extract audio only
+#   yt-dlp -F <url>           # list available formats
+#   yt-dlp --list-subs <url>  # list subtitles
+
+# ── Output ───────────────────────────────────────────────────────────
+
+# Output directory and filename template
+-o ~/Downloads/%(title)s.%(ext)s
+
+# ── Format ───────────────────────────────────────────────────────────
+
+# Prefer best video+audio merged, fallback to best available
+-f "bv*+ba/b"
+
+# Prefer mp4 container
+--merge-output-format mp4
+
+# ── Subtitles ────────────────────────────────────────────────────────
+
+# Embed subtitles if available
+--embed-subs
+
+# Download these subtitle languages (auto-generated as fallback)
+# --sub-langs "en,ru"
+
+# ── Metadata ─────────────────────────────────────────────────────────
+
+# Embed metadata (title, uploader, etc.)
+--embed-metadata
+
+# Embed thumbnail as cover art
+--embed-thumbnail
+
+# ── Network ──────────────────────────────────────────────────────────
+
+# Retry on error
+--retries 3
+
+# Fragment retries
+--fragment-retries 3
+
+# ── Misc ─────────────────────────────────────────────────────────────
+
+# Don't overwrite existing files
+--no-overwrites
+
+# Ignore errors in playlists
+# --ignore-errors
+
+# Concurrent fragments for faster downloads
+--concurrent-fragments 4
+
+# Sponsor block — skip sponsor segments
+# --sponsorblock-mark all
+# --sponsorblock-remove sponsor

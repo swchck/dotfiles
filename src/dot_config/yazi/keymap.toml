@@ -1,0 +1,25 @@
+# Yazi keybindings for plugins
+
+[manager]
+prepend_keymap = [
+    # Smart filter (live filtering)
+    { on = "F", run = "plugin smart-filter", desc = "Smart filter" },
+
+    # Diff selected with hovered
+    { on = ["<C-d>"], run = "plugin diff", desc = "Diff with hovered" },
+
+    # Chmod
+    { on = ["c", "m"], run = "plugin chmod", desc = "Chmod selected" },
+
+    # Compress
+    { on = ["c", "a"], run = "plugin compress", desc = "Compress selected" },
+
+    # Clipboard (yank to system clipboard)
+    { on = ["y", "c"], run = "plugin clipboard", desc = "Copy to clipboard" },
+
+    # Git changed files
+    { on = ["g", "f"], run = "plugin vcs-files", desc = "Git changed files" },
+
+    # macOS tags
+    { on = ["c", "t"], run = "plugin mactag", desc = "macOS tag" },
+]

@@ -1,0 +1,20 @@
+# fd 10.4.2
+# fd global ignore patterns
+# https://github.com/sharkdp/fd#excluding-specific-files-or-directories
+#
+# These paths are excluded from fd search results.
+# Uses .gitignore syntax.
+
+# macOS system directories
+/nix/
+/System/
+/Library/
+/private/
+/usr/
+
+# User Library (except CloudStorage)
+{{ .chezmoi.homeDir }}/Library/*
+{{ .chezmoi.homeDir }}/!/Library/CloudStorage/
+
+# Large binary files
+{{ .chezmoi.homeDir }}/**/*.photoslibrary/

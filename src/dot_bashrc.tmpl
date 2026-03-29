@@ -1,0 +1,76 @@
+# Bash interactive shell configuration
+
+# ── Environment (from .profile, but ensure loaded in non-login shells too) ──
+
+{{ template "shell-env-posix" . }}
+
+# Cargo
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+# Editor
+export EDITOR="nvim"
+export VISUAL="nvim"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
+
+# ── Prompt ───────────────────────────────────────────────────────────
+
+command -v starship &>/dev/null && eval "$(starship init bash)"
+
+# ── Integrations ─────────────────────────────────────────────────────
+
+command -v fzf &>/dev/null && eval "$(fzf --bash)"
+command -v atuin &>/dev/null && eval "$(atuin init bash)"
+command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
+
+# ── fzf ──────────────────────────────────────────────────────────────
+
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git"
+export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
+export FZF_DEFAULT_OPTS="\
+  --height=60% \
+  --layout=reverse \
+  --border \
+  --info=inline \
+  --color=bg+:#3e4452,bg:#282c34,spinner:#e5c07b,hl:#e06c75 \
+  --color=fg:#abb2bf,header:#e06c75,info:#c678dd,pointer:#e5c07b \
+  --color=marker:#61afef,fg+:#abb2bf,prompt:#c678dd,hl+:#e06c75 \
+  --color=selected-bg:#3e4452 \
+  --color=border:#636d83,label:#abb2bf"
+
+# ── Aliases (mirror fish wrappers) ───────────────────────────────────
+
+# CLI replacements
+command -v bat &>/dev/null && alias cat='bat --paging=never'
+command -v eza &>/dev/null && {
+    alias ls='eza --group-directories-first --icons --color=always'
+    alias l='eza -l --all --group-directories-first --git --icons'
+    alias ll='eza -l --all --group-directories-first --git --icons --header'
+    alias tree='eza --tree --level=2 --all --long --header --icons --git'
+}
+command -v fd &>/dev/null && alias find='fd'
+command -v rg &>/dev/null && alias grep='rg'
+command -v sd &>/dev/null && alias sed='sd'
+command -v dust &>/dev/null && alias du='dust'
+command -v btm &>/dev/null && alias top='btm'
+command -v procs &>/dev/null && alias ps='procs'
+command -v viddy &>/dev/null && alias watch='viddy'
+command -v rip2 &>/dev/null && alias rm='rip2'
+command -v lazygit &>/dev/null && alias lg='lazygit'
+
+# Navigation
+alias repo='cd ~/.repository'
+alias dots='cd ~/.repository/personal/dotfiles'
+
+# Network
+alias localip='ipconfig getifaddr en0 2>/dev/null || ip -4 addr show | grep -oP "(?<=inet )[\d.]+" | head -1'
+alias pubip='curl -s https://ifconfig.me; echo'
+
+# ── History ──────────────────────────────────────────────────────────
+
+export HISTSIZE=50000
+export HISTFILESIZE=50000
+export HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend

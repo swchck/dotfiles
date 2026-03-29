@@ -1,0 +1,74 @@
+# procs 0.14.11
+# procs configuration
+# https://github.com/dalance/procs#configuration
+#
+# Usage:
+#   procs              # list all (or `ps` alias)
+#   procs <keyword>    # search by keyword
+#   procs -t           # tree view
+#   procs -w           # watch mode
+#   procs -l           # list available columns
+
+# ── Display ──────────────────────────────────────────────────────────
+
+# Sort column (default: auto-detected)
+# sort_order = "Ascending"
+
+# Tree view by default
+# tree = false
+
+# Columns to display
+[[columns]]
+kind = "Pid"
+style = "BrightCyan"
+align = "Right"
+
+[[columns]]
+kind = "User"
+style = "BrightYellow"
+
+[[columns]]
+kind = "State"
+
+[[columns]]
+kind = "Nice"
+style = "BrightMagenta"
+align = "Right"
+
+[[columns]]
+kind = "Cpu"
+style = "BrightRed"
+align = "Right"
+
+[[columns]]
+kind = "Mem"
+style = "BrightGreen"
+align = "Right"
+
+[[columns]]
+kind = "VmRss"
+style = "BrightGreen"
+align = "Right"
+
+[[columns]]
+kind = "StartTime"
+style = "BrightBlue"
+
+[[columns]]
+kind = "Command"
+style = "BrightWhite"
+
+# ── Search ───────────────────────────────────────────────────────────
+
+# Default search logic for multiple keywords: And, Or, Nand, Nor
+# logic = "And"
+
+# ── Pager ────────────────────────────────────────────────────────────
+
+# Use pager for output
+# pager = { mode = "Auto", command = "less -SR" }
+
+# ── Docker ───────────────────────────────────────────────────────────
+
+# Show docker container name
+# docker = { path = "/var/run/docker.sock" }

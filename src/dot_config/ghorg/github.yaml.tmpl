@@ -1,0 +1,10 @@
+---
+# Ghorg — GitHub configuration
+# Usage: ghorg clone <user/org> --config=~/.config/ghorg/github.yaml
+
+GHORG_SCM_TYPE: github
+GHORG_CLONE_TYPE: user
+GHORG_ABSOLUTE_PATH_TO_CLONE_TO: {{ .paths.personal }}
+GHORG_GITHUB_TOKEN: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "ghorg-github-token" "-w" | trim }}
+
+{{ template "ghorg-common" . }}

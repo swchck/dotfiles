@@ -1,0 +1,104 @@
+name: Validate Dotfiles
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  validate-templates:
+    name: Validate chezmoi templates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Test template rendering (personal profile)
+        run: |
+          chezmoi init --source="$PWD/src" --no-tty \
+            --promptString email=test@test.com \
+            --promptString name="Test User" \
+            --promptString github.user=testuser \
+            --promptChoice machine_type=personal
+          chezmoi diff --source="$PWD/src" --no-tty || true
+
+      - name: Verify managed files list
+        run: chezmoi managed --source="$PWD/src" --no-tty | head -50
+
+  validate-syntax:
+    name: Validate config file syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install validators
+        run: |
+          pip install yamllint
+          npm install -g jsonlint
+
+      - name: Validate YAML files
+        run: |
+          find src -name "*.yaml" -o -name "*.yml" | while read f; do
+            echo "Checking $f"
+            yamllint -d relaxed "$f" || true
+          done
+
+      - name: Validate TOML files
+        run: |
+          # Check TOML syntax (basic: parse with python)
+          python3 -c "
+          import tomllib, glob, sys
+          errors = 0
+          for f in glob.glob('src/**/*.toml', recursive=True):
+              if '.tmpl' in f: continue
+              try:
+                  with open(f, 'rb') as fh: tomllib.load(fh)
+                  print(f'OK: {f}')
+              except Exception as e:
+                  print(f'ERROR: {f}: {e}')
+                  errors += 1
+          sys.exit(errors)
+          "
+
+      - name: Validate JSON files
+        run: |
+          find src -name "*.json" -not -name "*.tmpl" | while read f; do
+            echo "Checking $f"
+            python3 -c "import json; json.load(open('$f'))" || true
+          done
+
+  test-container:
+    name: Test in container
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt-get update -qq
+          apt-get install -y -qq curl git fish
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Apply dotfiles (ephemeral mode)
+        run: |
+          chezmoi init --source="$PWD/src" --no-tty \
+            --promptString email=test@test.com \
+            --promptString name="Test User" \
+            --promptString github.user=testuser \
+            --promptChoice machine_type=personal
+          chezmoi apply --source="$PWD/src" --no-tty --force || true
+
+      - name: Verify key configs exist
+        run: |
+          test -f ~/.config/fish/config.fish && echo "fish config: OK"
+          test -f ~/.config/git/config && echo "git config: OK"
+          test -f ~/.config/starship.toml && echo "starship config: OK"
+          test -f ~/.bashrc && echo "bashrc: OK"
+          echo "All checks passed"

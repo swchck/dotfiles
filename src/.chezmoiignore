@@ -1,0 +1,66 @@
+# chezmoi ignore rules (supports Go templates)
+# These patterns are excluded from chezmoi management
+
+# ── OS-specific scripts ──────────────────────────────────────────────
+
+{{ if ne .chezmoi.os "darwin" }}
+# Skip macOS scripts on non-darwin
+.chezmoiscripts/darwin/**
+{{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+# Skip Linux scripts on non-linux
+.chezmoiscripts/linux/**
+{{ end }}
+
+# ── macOS-only configs ───────────────────────────────────────────────
+
+{{ if ne .chezmoi.os "darwin" }}
+# macOS-specific apps
+.config/ghostty
+.config/wezterm
+.orbstack
+.docker
+.config/openfortivpn
+{{ end }}
+
+# ── Linux-only configs ───────────────────────────────────────────────
+
+{{ if ne .chezmoi.os "linux" }}
+# Linux-specific (none yet, placeholder)
+{{ end }}
+
+# ── Ephemeral environments (containers, codespaces) ──────────────────
+
+{{ if .ephemeral }}
+# Skip install scripts in containers
+.chezmoiscripts/**
+
+# Skip encrypted files (no age key in containers)
+.ssh
+.netrc
+
+# Skip heavy configs not useful in containers
+.config/k9s
+.config/ghorg
+.config/zellij
+.deadbranch
+{{ end }}
+
+# ── Headless environments ────────────────────────────────────────────
+
+{{ if .headless }}
+# Skip GUI-only configs
+.config/zed
+.config/gram
+.config/ghostty
+.config/wezterm
+{{ end }}
+
+# ── Work-specific ────────────────────────────────────────────────────
+
+{{ if ne .machine_type "work" }}
+.config/openfortivpn
+.config/k9s
+.netrc
+{{ end }}

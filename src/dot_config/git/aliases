@@ -1,0 +1,54 @@
+[alias]
+    # Basics
+    aa = add --all
+    ap = add --patch
+    sw = switch
+    co = checkout
+    br = branch
+    st = status
+    df = diff
+    ci = commit -v
+    pf = push --force-with-lease
+    rb = rebase -i
+    last = log -1 HEAD
+    root = rev-parse --show-toplevel
+
+    # Quick actions
+    undo = reset --soft HEAD~1
+    wip = !git add -A && git commit -m 'wip'
+    stash-all = stash push --include-untracked
+    gone = !git branch -vv | grep ': gone]' | awk '{print $1}'
+
+    # Log & branches
+    lg = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+
+    # Squash the last n commits into one
+    squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
+
+    # Tag operations
+    taglog = "!f(){ git log --oneline \"$1..$2\"; }; f"
+    taglognm = "!f(){ git log --oneline --no-merges \"$1..$2\"; }; f"
+    tagdiff = "!f(){ git diff \"$1..$2\"; }; f"
+    taggraph = "!f(){ git log --graph --oneline \"$1..$2\"; }; f"
+    taggraphnm = "!f(){ git log --graph --oneline --no-merges \"$1..$2\"; }; f"
+    tagbrowse = "!sh ~/.config/git/scripts/tagbrowse.sh"
+
+    # Interactive stash picker (requires fzf, bat)
+    unstash = "!f(){ \
+      command -v fzf >/dev/null 2>&1 || { echo 'fzf is required'; exit 1; }; \
+      command -v bat >/dev/null 2>&1 || { echo 'bat is required'; exit 1; }; \
+      sel=$(git stash list --pretty='%gd %cr %s' | \
+        fzf --ansi --no-sort --tac \
+            --prompt='Select stash to apply > ' \
+            --header='Enter: apply | ESC: cancel | Ctrl-d: drop' \
+            --bind 'enter:accept' \
+            --bind 'ctrl-d:execute-silent(git stash drop {1})+reload(git stash list --pretty=%gd\\ %cr\\ %s)' \
+            --preview 'git stash show -p {1} | bat -l diff --color=always --style=plain' \
+            --preview-window=right:60%:wrap); \
+      [ -z \"$sel\" ] && exit 0; \
+      num=$(echo \"$sel\" | awk '{print $1}' | grep -o '[0-9]\\+'); \
+      ref=\"stash@{$num}\"; \
+      echo \"Applying $ref\"; \
+      git stash apply \"$ref\"; \
+    }; f"

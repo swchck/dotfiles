@@ -1,0 +1,332 @@
+# topgrade 17.1.0
+# Topgrade configuration
+# https://github.com/topgrade-rs/topgrade
+#
+# Topgrade updates everything on your system in one command.
+# This file controls what gets updated and how.
+#
+# Usage:
+#   topgrade              # run all enabled steps
+#   topgrade --dry-run    # preview what would be updated
+#   topgrade --only brew  # run only the brew step
+#   topgrade --disable git # run everything except git
+#
+# Files in $CONFIG_DIR/topgrade.d/ are automatically included before this file.
+
+# ── Includes ─────────────────────────────────────────────────────────
+
+[include]
+# paths = ["/etc/topgrade.toml"]
+
+# ── General ──────────────────────────────────────────────────────────
+
+[misc]
+# Run `sudo -v` to cache credentials at the start of the run (default: false)
+# pre_sudo = false
+
+# Sudo command to be used
+# sudo_command = "sudo"
+
+# Disable specific steps — same options as the command line flag
+# disable = ["system", "emacs"]
+
+# Ignore failures for these steps
+# ignore_failures = ["powershell"]
+
+# List of remote machines with Topgrade installed on them
+# remote_topgrades = ["toothless", "pi", "parnas"]
+
+# Path to Topgrade executable on remote machines
+# remote_topgrade_path = ".cargo/bin/topgrade"
+
+# Arguments to pass to SSH when upgrading remote systems
+# ssh_arguments = "-o ConnectTimeout=2"
+
+# Arguments to pass tmux when pulling Repositories
+# tmux_arguments = "-S /var/tmux.sock"
+
+# Do not set the terminal title (default: true)
+# set_title = true
+
+# Display the time in step titles (default: true)
+# display_time = true
+
+# Don't ask for confirmations (no default value)
+assume_yes = true
+
+# Whether to ask what to do after a step fails (default: true)
+ask_retry = true
+
+# Number of times to automatically retry a step when it fails (default: 0)
+# auto_retry = 0
+
+# Show the reason for skipped steps (default: false)
+# show_skipped = true
+
+# Run inside tmux (default: false)
+# run_in_tmux = true
+
+# Tmux session mode (default: "attach_if_not_in_session")
+# Allowed values: "attach_if_not_in_session", "attach_always"
+# tmux_session_mode = "attach_if_not_in_session"
+
+# Cleanup temporary or old files (default: false)
+cleanup = true
+
+# Send a notification for every step (default: false)
+# notify_each_step = false
+
+# When to send a notification at the end of a run
+# (default: "always", allowed values: "always", "never", "on_failure")
+# notify_end = "on_failure"
+
+# The Bash-it branch to update (default: "stable")
+# bashit_branch = "stable"
+
+# Run specific steps — same options as the command line flag
+# only = ["system", "emacs"]
+
+# Whether to self update (default: false)
+# Ignored if built without self update support
+# Also available via TOPGRADE_NO_SELF_UPGRADE env var
+# no_self_update = true
+
+# Extra tracing filter directives
+# See: https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html#directives
+# log_filters = ["topgrade::command=debug", "warn"]
+
+# Show distribution-specific summary if applicable (default: true)
+# show_distribution_summary = false
+
+# NixOS/home-manager handler (default: "autodetect")
+# Allowed values: autodetect, nh, vanilla
+# nix_handler = "autodetect"
+
+# ── Pre/Post Commands ────────────────────────────────────────────────
+
+# Commands to run before anything
+[pre_commands]
+# "Backup Emacs" = "cp -rl ~/.emacs.d/elpa ~/.emacs.d/elpa.bak"
+
+# Commands to run after anything
+[post_commands]
+# "Rebuild bat cache" = "bat cache --build"
+
+# Custom update commands
+[commands]
+# "Neovim Plugins" = "nvim --headless '+Lazy! sync' +qa"
+# "Fish Completions" = "fish -c 'fish_update_completions'"
+
+# ── Languages & Package Managers ─────────────────────────────────────
+
+[python]
+# enable_pip_review = true
+# enable_pip_review_local = true
+# enable_pipupgrade = true
+# pipupgrade_arguments = "-y -u --pip-path pip"
+# poetry_force_self_update = true
+
+[conda]
+# Additional named conda environments to update
+# env_names = ["Toolbox", "PyTorch"]
+# Additional conda environment paths to update
+# env_paths = ["~/webserver/.conda/"]
+
+[npm]
+# Use sudo if the NPM directory isn't owned by the current user
+# use_sudo = true
+
+[yarn]
+# Run `yarn global upgrade` with `sudo`
+# use_sudo = true
+
+[deno]
+# Upgrade deno executable to the given version
+# version = "stable"
+
+[composer]
+# self_update = true
+
+[cargo]
+# Also update git-originating packages (default: true)
+# git = false
+# Run quietly (default: false)
+# quiet = true
+# Other options via CARGO_INSTALL_OPTS env var
+
+[rustup]
+# Update only these channels (default: [] — all channels)
+# channels = ["stable"]
+
+[julia]
+# Load startup file during update (default: true)
+# startup_file = true
+
+# ── Homebrew ─────────────────────────────────────────────────────────
+
+[brew]
+# Greedy cask upgrade — upgrade casks with auto_updates or version :latest (default: false)
+greedy_cask = true
+
+# Greedy latest — upgrade casks with version :latest only (default: false)
+# greedy_latest = true
+
+# Greedy auto_updates — upgrade casks with auto_updates only (default: false)
+# greedy_auto_updates = true
+
+# Run `brew autoremove` after formula upgrade (default: false)
+autoremove = true
+
+# Upgrade formulae built from HEAD branch (default: false)
+# fetch_head = true
+
+# ── Git ──────────────────────────────────────────────────────────────
+
+[git]
+# How many repos to pull/fetch in parallel
+# max_concurrency = 5
+
+# Additional git repositories to pull/fetch
+# repos = [
+#     "~/.repository/*/",
+# ]
+
+# Skip pulling/fetching predefined git repos (default: true)
+# pull_predefined = false
+
+# Arguments to pass Git when pulling/fetching
+# arguments = "--rebase --autostash"
+
+# Perform `git fetch` instead of `git pull` (default: false)
+# fetch_only = false
+
+# ── Chezmoi ──────────────────────────────────────────────────────────
+
+[chezmoi]
+# Exclude encrypted files from update (default: false)
+# exclude_encrypted = false
+
+# ── Editors ──────────────────────────────────────────────────────────
+
+[vim]
+# For `vim-plug`, execute `PlugUpdate!` instead of `PlugUpdate`
+# force_plug_update = true
+
+[vscode]
+# Update extensions for a specific profile
+# profile = ""
+
+# ── Mise ─────────────────────────────────────────────────────────────
+
+[mise]
+# Bump versions in mise.toml (default: false)
+# bump = false
+# Number of parallel jobs (default: 4)
+# jobs = 4
+# Run interactively (default: false)
+# interactive = false
+
+# ── Pixi ─────────────────────────────────────────────────────────────
+
+[pixi]
+# Show release notes of the latest pixi release (default: false)
+# include_release_notes = false
+
+# ── Doom Emacs ───────────────────────────────────────────────────────
+
+[doom]
+# Enable ahead-of-time native compilation (default: false)
+# aot = true
+
+# ── Zig ──────────────────────────────────────────────────────────────
+
+[zigup]
+# Versions to update (default: ["master"])
+# target_versions = ["master", "0.13.0"]
+# Install directory
+# install_dir = "~/.zig"
+# Symlink path for default compiler
+# path_link = "~/.bin/zig"
+# Run `zigup clean` after updating (default: false)
+# cleanup = false
+
+# ── Firmware ─────────────────────────────────────────────────────────
+
+[firmware]
+# Offer to update firmware; if false just check and display (default: false)
+# upgrade = true
+
+# ── Containers ───────────────────────────────────────────────────────
+
+[containers]
+# Containers to ignore while updating (wildcard supported)
+# ignored_containers = ["ghcr.io/rancher-sandbox/*", "docker.io*"]
+# Container runtime (default: "docker", allowed: "docker", "podman")
+# runtime = "podman"
+# Run `docker system prune` to clean up (default: false)
+# system_prune = false
+# Use sudo for updating containers (default: false)
+# use_sudo = false
+
+# ── Linux ────────────────────────────────────────────────────────────
+
+[linux]
+# Arch package manager (default: autodetect)
+# Allowed: autodetect, aura, garuda_update, pacman, pamac, paru, pikaur, trizen, yay
+# arch_package_manager = "pacman"
+# yay_arguments = "--nodevel"
+# dnf_arguments = "--refresh"
+# aura_aur_arguments = "-kx"
+# aura_pacman_arguments = ""
+# garuda_update_arguments = ""
+# show_arch_news = true
+# trizen_arguments = "--devel"
+# pikaur_arguments = ""
+# pamac_arguments = "--no-devel"
+# enable_tlmgr = true
+# emerge_sync_flags = "-q"
+# emerge_update_flags = "-uDNa --with-bdeps=y world"
+# redhat_distro_sync = false
+# suse_dup = false
+# rpm_ostree = false
+# bootc = false
+# nix_arguments = "--flake"
+# nix_env_arguments = "--prebuilt-only"
+# home_manager_arguments = ["--flake", "file"]
+
+[mandb]
+# Update manual entries (default: false)
+enable = true
+
+[pkgfile]
+# Update pkgfile database (default: false)
+# enable = true
+
+# ── Windows ──────────────────────────────────────────────────────────
+
+[windows]
+# accept_all_updates = false
+# updates_auto_reboot = "yes"  # allowed: "yes", "no", "ask"
+# open_remotes_in_new_terminal = true
+# wsl_update_pre_release = true
+# wsl_update_use_web_download = true
+# winget_install_silently = false
+# self_rename = true
+# winget_use_sudo = true
+
+# ── Misc Tools ───────────────────────────────────────────────────────
+
+[vagrant]
+# directories = []
+# power_on = true
+# always_suspend = true
+
+[flatpak]
+# use_sudo = true
+
+[distrobox]
+# use_root = false
+# containers = ["archlinux-latest"]
+
+[lensfun]
+# use_sudo = false

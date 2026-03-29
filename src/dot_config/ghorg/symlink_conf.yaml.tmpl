@@ -1,0 +1,5 @@
+{{ if eq .machine_type "work" -}}
+{{ .chezmoi.homeDir }}/.config/ghorg/gitlab.yaml
+{{- else -}}
+{{ .chezmoi.homeDir }}/.config/ghorg/github.yaml
+{{- end }}

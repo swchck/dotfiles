@@ -1,0 +1,733 @@
+# Starship prompt configuration
+# https://starship.rs/config/
+# starship 1.24.2
+"$schema" = 'https://starship.rs/config-schema.json'
+
+#########################
+#    General Options    #
+#########################
+
+# Timeout for file scanning, in milliseconds (default: 30)
+# scan_timeout = 30
+
+# Timeout for commands executed by starship, in milliseconds (default: 500)
+command_timeout = 5000
+
+# Inserts blank line between shell prompts (default: true)
+add_newline = true
+
+# A continuation prompt that displays two filled in arrows
+continuation_prompt = '▶▶ '
+
+# Follow symbolic links when checking file/directory conditions (default: true)
+# follow_symlinks = true
+
+# Prompt format — controls the overall prompt layout (default: '$all')
+# format = '$all'
+
+# Right-aligned prompt format (default: '')
+# right_format = ''
+
+# Color palette — select a named palette from [palettes] (default: '')
+# palette = ''
+
+# Custom color palettes — define named colors for reuse
+# [palettes.catppuccin_mocha]
+# rosewater = "#f5e0dc"
+# flamingo = "#f2cdcd"
+# pink = "#f5c2e7"
+# mauve = "#cba6f7"
+# red = "#f38ba8"
+# maroon = "#eba0ac"
+# peach = "#fab387"
+# yellow = "#f9e2af"
+# green = "#a6e3a1"
+# teal = "#94e2d5"
+# sky = "#89dceb"
+# sapphire = "#74c7ec"
+# blue = "#89b4fa"
+# lavender = "#b4befe"
+# text = "#cdd6f4"
+# subtext1 = "#bac2de"
+# subtext0 = "#a6adc8"
+# overlay2 = "#9399b2"
+# overlay1 = "#7f849c"
+# overlay0 = "#6c7086"
+# surface2 = "#585b70"
+# surface1 = "#45475a"
+# surface0 = "#313244"
+# base = "#1e1e2e"
+# mantle = "#181825"
+# crust = "#11111b"
+
+# Environment variable display
+# [env_var.USER]
+# https://starship.rs/config/#environment-variable
+# symbol = ""
+# variable = "USER"
+# default = "unknown user"
+# format = "with [$env_value]($style) "
+# disabled = false
+
+[character]
+# https://starship.rs/config/#character
+success_symbol = '[＄](bold green)'
+error_symbol = '[＄](bold red)'
+vimcmd_symbol = '[❮](bold green)'
+vimcmd_replace_one_symbol = '[❮](bold purple)'
+vimcmd_replace_symbol = '[❮](bold purple)'
+vimcmd_visual_symbol = '[❮](bold yellow)'
+
+#########################
+# Module Configuration #
+#########################
+
+# -- Common Modules --
+
+[directory]
+# https://starship.rs/config/#directory
+truncation_length = 3
+truncate_to_repo = true
+format = '[$path]($style)[$read_only]($read_only_style) '
+read_only = " 󰌾"
+read_only_style = "red"
+style = "bold cyan"
+repo_root_style = "bold yellow"
+repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+home_symbol = "home"
+use_os_path_sep = true
+use_logical_path = true
+
+[cmd_duration]
+# https://starship.rs/config/#cmd_duration
+min_time = 500
+format = 'underwent [$duration](bold yellow)'
+
+[directory.substitutions]
+# https://starship.rs/config/#directory.substitutions
+'/usr/local/go' = 'GOROOT'
+
+[hostname]
+# https://starship.rs/config/#hostname
+ssh_symbol = " "
+ssh_only = true
+trim_at = "."
+format = "[$ssh_symbol$hostname]($style) in "
+
+[jobs]
+# https://starship.rs/config/#jobs
+# symbol = "✦"
+# number_threshold = 1
+# symbol_threshold = 1
+# format = "[$symbol$number]($style) "
+# style = "bold blue"
+
+[localip]
+# https://starship.rs/config/#localip
+ssh_only = true
+format = "[$local_ipv4]($style) "
+style = "bold yellow"
+
+[os]
+# https://starship.rs/config/#os
+format = "[$symbol]($style)"
+style = "bold white"
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
+
+[package]
+# https://starship.rs/config/#package
+symbol = "󰏗 "
+format = '[$symbol$version]($style) '
+style = "bold green"
+display_private = false
+version_format = "v${raw}"
+
+[shell]
+# https://starship.rs/config/#shell
+bash_indicator = ""
+fish_indicator = ""
+zsh_indicator = ""
+powershell_indicator = ""
+ion_indicator = ""
+elvish_indicator = ""
+tcsh_indicator = ""
+xonsh_indicator = ""
+cmd_indicator = ""
+nu_indicator = ""
+unknown_indicator = ""
+format = "[$indicator]($style) "
+style = "bold yellow"
+
+[shlvl]
+# https://starship.rs/config/#shlvl
+format = '[$symbol$shlvl]($style) '
+symbol = "↕️ "
+style = "bold yellow"
+threshold = 2
+repeat = false
+repeat_offset = 0
+
+[status]
+# https://starship.rs/config/#status
+format = "[$symbol$status]($style) "
+symbol = "✖"
+style = "bold red"
+success_symbol = "✨"
+not_executable_symbol = "🚫"
+not_found_symbol = "🔍"
+sigint_symbol = "🧱"
+signal_symbol = "⚡"
+recognize_signal_code = true
+map_symbol = true
+pipestatus = true
+pipestatus_separator = "|"
+pipestatus_format = "[$pipestatus] => [$symbol$common_meaning$signal_name$maybe_int]($style)"
+
+[sudo]
+# https://starship.rs/config/#sudo
+format = '[as $symbol]($style)'
+symbol = "🥷 "
+style = "bold red"
+
+[time]
+# https://starship.rs/config/#time
+format = 'at [$time]($style) '
+use_12hr = true
+style = "bold yellow"
+utc_time_offset = "local"
+
+[username]
+# https://starship.rs/config/#username
+style_root = "bold red"
+style_user = "bold yellow"
+format = '[$user]($style) in '
+show_always = true
+
+# -- Language Modules --
+
+[kotlin]
+# https://starship.rs/config/#kotlin
+symbol = "🅺 "
+format = "via [$symbol($version )]($style)"
+version_format = "v${raw}"
+detect_extensions = ["kt", "kts"]
+style = "bold blue"
+kotlin_binary = "kotlin"
+
+[container]
+# https://starship.rs/config/#container
+symbol = '⬢'
+style = 'bold red dimmed'
+format = '[$symbol \[$name\]]($style) '
+
+[docker_context]
+# https://starship.rs/config/#docker-context
+symbol = " "
+format = "via [$symbol$context]($style) "
+style = "blue bold"
+
+[git_branch]
+# https://starship.rs/config/#git-branch
+symbol = " "
+always_show_remote = true
+format = "on [$symbol$branch(:$remote_branch)]($style) "
+style = "bold purple"
+truncation_symbol = "…"
+truncation_length = 9223372036854775807
+only_attached = false
+ignore_branches = ["master", "main"]
+
+[git_commit]
+# https://starship.rs/config/#git-commit
+commit_hash_length = 7
+format = "[$hash$tag]($style) "
+style = "bold green"
+only_detached = true
+tag_disabled = true
+tag_max_candidates = 0
+tag_symbol = " 🏷 "
+
+[git_state]
+# https://starship.rs/config/#git_state
+rebase = "REBASING"
+merge = "MERGING"
+revert = "REVERTING"
+cherry_pick = "CHERRY-PICKING"
+bisect = "BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+style = "bold yellow"
+format = "[$state( $progress_current/$progress_total)]($style) "
+
+[git_metrics]
+# https://starship.rs/config/#git_metrics
+added_style = "bold green"
+deleted_style = "bold red"
+only_nonzero_diffs = true
+format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+ignore_submodules = true
+
+[git_status]
+# https://starship.rs/config/#git_status
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+up_to_date = ""
+conflicted = "="
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+typechanged = ""
+style = "bold red"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+ignore_submodules = true
+
+[golang]
+# https://starship.rs/config/#golang
+symbol = " "
+format = "via [$symbol($version )]($style)"
+version_format = "v${raw}"
+detect_extensions = ["go"]
+detect_files = [
+    "go.mod",
+    "go.sum",
+    "go.work",
+    "glide.yaml",
+    "Gopkg.yml",
+    "Gopkg.lock",
+    ".go-version",
+]
+detect_folders = ["Godeps"]
+style = "bold cyan"
+not_capable_style = "bold red"
+
+[helm]
+# https://starship.rs/config/#helm
+symbol = "⎈ "
+format = "via [$symbol($version )]($style)"
+version_format = "v${raw}"
+detect_files = ["helmfile.yaml", "Chart.yaml"]
+detect_folders = ["deploy"]
+style = "bold white"
+
+
+[java]
+# https://starship.rs/config/#java
+symbol = " "
+format = 'via [${symbol}(${version} )]($style)'
+version_format = "v${raw}"
+detect_extensions = ["java", "class", "gradle", "jar", "cljs", "cljc"]
+detect_files = [
+    "pom.xml",
+    "build.gradle.kts",
+    "build.sbt",
+    ".java-version",
+    "deps.edn",
+    "project.clj",
+    "build.boot",
+    ".sdkmanrc",
+]
+style = "bold red dimmed"
+
+[kubernetes]
+# https://starship.rs/config/#kubernetes
+symbol = "☸ "
+format = '[$symbol$context( \($namespace\))]($style) in '
+style = "bold blue"
+context_aliases = { "dev-*" = "dev" }
+user_aliases = { "dev-*" = "dev" }
+
+[lua]
+# https://starship.rs/config/#lua
+symbol = " "
+format = "via [$symbol($version )]($style)"
+version_format = "v${raw}"
+detect_extensions = ["lua"]
+detect_files = [".lua-version"]
+detect_folders = ["lua"]
+style = "bold blue"
+lua_binary = "lua"
+
+[nodejs]
+# https://starship.rs/config/#nodejs
+symbol = " "
+format = "via [$symbol($version )]($style)"
+version_format = "v${raw}"
+detect_extensions = [
+    "js",
+    "mjs",
+    "cjs",
+    "ts",
+    "mts",
+    "cts",
+    "jsx",
+    "tsx",
+    "vue",
+    "graphql",
+    "gql",
+    "svelte",
+]
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+style = "bold green"
+not_capable_style = "bold red"
+
+
+[python]
+# https://starship.rs/config/#python
+symbol = " "
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+version_format = "v${raw}"
+pyenv_version_name = true
+pyenv_prefix = "pyenv "
+python_binary = ["python", "python3", "python2"]
+detect_extensions = ["py"]
+detect_files = [
+    "requirements.txt",
+    "pyproject.toml",
+    "setup.py",
+    "Pipfile",
+    "tox.ini",
+    ".python-version",
+    "Pipfile",
+    '__init__.py',
+]
+style = "yellow bold"
+
+[rust]
+# https://starship.rs/config/#rust
+symbol = " "
+format = 'via [$symbol($version )]($style)'
+version_format = "v${raw}"
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+style = "bold red"
+
+[vcsh]
+# https://starship.rs/config/#vcsh
+symbol = " "
+format = 'env [$symbol$repo]($style) '
+disabled = true
+
+# -- Additional Modules (commented) --
+
+# [direnv]
+# https://starship.rs/config/#direnv
+# format = '[$symbol$loaded/$allowed]($style) '
+# symbol = "direnv "
+# style = "bold orange"
+# disabled = true
+
+# [mise]
+# https://starship.rs/config/#mise
+# format = "via [$symbol($version )]($style)"
+# symbol = "mise "
+# style = "bold blue"
+# disabled = true
+
+# [nats]
+# https://starship.rs/config/#nats
+# format = '[$symbol($name )]($style)'
+# symbol = "✉️ "
+# style = "bold purple"
+# disabled = true
+
+[custom]
+# https://starship.rs/config/#custom-commands
+# Define custom modules that run shell commands
+# [custom.example]
+# command = "echo foo"
+# when = "true"
+# format = "[$output]($style) "
+# style = "bold green"
+
+
+#########################
+#   Disabled Modules    #
+#########################
+
+[zig]
+# https://starship.rs/config/#zig
+disabled = true
+
+[vagrant]
+# https://starship.rs/config/#vagrant
+disabled = true
+
+[vlang]
+# https://starship.rs/config/#vlang
+disabled = true # TBD. Not sure if I want to use this
+
+[swift]
+# https://starship.rs/config/#swift
+disabled = true # TBD. Not sure if I want to use this
+
+[terraform]
+# https://starship.rs/config/#terraform
+disabled = true # TBD. Not sure if I want to use this
+
+[singularity]
+# https://starship.rs/config/#singularity
+disabled = true
+
+[solidity]
+# https://starship.rs/config/#solidity
+disabled = true
+
+[spack]
+# https://starship.rs/config/#spack
+disabled = true
+
+[scala]
+# https://starship.rs/config/#scala
+symbol = " "
+disabled = true # TBD. Not sure if I want to use this
+
+[rlang]
+# https://starship.rs/config/#rlang
+disabled = true
+
+[raku]
+# https://starship.rs/config/#raku
+disabled = true
+
+[red]
+# https://starship.rs/config/#red
+disabled = true
+
+[ruby]
+# https://starship.rs/config/#ruby
+symbol = " "
+disabled = true # TBD. Not sure if I want to use this
+
+[perl]
+# https://starship.rs/config/#perl
+disabled = true
+
+[php]
+# https://starship.rs/config/#php
+disabled = true
+
+[pijul_channel]
+# https://starship.rs/config/#pijul_channel
+disabled = true
+
+[pulumi]
+# https://starship.rs/config/#pulumi
+disabled = true
+
+[purescript]
+# https://starship.rs/config/#purescript
+disabled = true
+
+[ocaml]
+# https://starship.rs/config/#ocaml
+disabled = true
+
+[opa]
+# https://starship.rs/config/#opa
+disabled = true # TBD. Not sure if I want to use this
+
+[openstack]
+# https://starship.rs/config/#openstack
+disabled = true # TBD. Not sure if I want to use this
+
+[memory_usage]
+# https://starship.rs/config/#memory_usage
+symbol = "󰍛 "
+disabled = true # TBD. Not sure if I want to use this
+
+[meson]
+# https://starship.rs/config/#meson
+disabled = true
+
+[hg_branch]
+# https://starship.rs/config/#mercurial_branch
+disabled = true
+
+[nim]
+# https://starship.rs/config/#nim
+symbol = "󰆥 "
+disabled = true # TBD. Not sure if I want to use this
+
+[nix_shell]
+# https://starship.rs/config/#nix_shell
+disabled = true
+
+[line_break]
+# https://starship.rs/config/#line_break
+disabled = false
+
+[aws]
+# https://starship.rs/config/#aws
+disabled = true # TBD. Not sure if I want to use this
+
+[azure]
+# https://starship.rs/config/#azure
+disabled = true
+
+[battery]
+# https://starship.rs/config/#battery
+disabled = true
+
+[buf]
+# https://starship.rs/config/#buf
+disabled = true
+
+[bun]
+# https://starship.rs/config/#bun
+disabled = true
+
+[c]
+# https://starship.rs/config/#c
+symbol = " "
+disabled = true # TBD. Not sure if I want to use this
+
+[cmake]
+# https://starship.rs/config/#cmake
+symbol = " "
+disabled = true # TBD. Not sure if I want to use this
+
+[cobol]
+# https://starship.rs/config/#cobol
+symbol = "≡ "
+disabled = true
+
+[conda]
+# https://starship.rs/config/#conda
+symbol = " "
+disabled = true # TBD. Not sure if I want to use this
+
+[dart]
+# https://starship.rs/config/#dart
+symbol = " "
+disabled = true
+
+[crystal]
+# https://starship.rs/config/#crystal
+disabled = true
+
+[daml]
+# https://starship.rs/config/#daml
+disabled = true
+
+[deno]
+# https://starship.rs/config/#deno
+symbol = " "
+disabled = true # TBD. Not sure if I want to use this
+
+[dotnet]
+# https://starship.rs/config/#dotnet
+disabled = true
+
+[elixir]
+# https://starship.rs/config/#elixir
+disabled = true
+
+[elm]
+# https://starship.rs/config/#elm
+disabled = true
+
+[erlang]
+# https://starship.rs/config/#erlang
+disabled = true
+
+[fennel]
+# https://starship.rs/config/#fennel
+disabled = true
+
+[fill]
+# https://starship.rs/config/#fill
+disabled = true
+
+[fossil_branch]
+# https://starship.rs/config/#fossil_branch
+disabled = true
+
+[gcloud]
+# https://starship.rs/config/#gcloud
+disabled = true
+
+[guix_shell]
+# https://starship.rs/config/#guix_shell
+disabled = true
+
+[gradle]
+# https://starship.rs/config/#gradle
+symbol = "🅶 "
+disabled = true # TBD. Not sure if I want to use this
+
+[haskell]
+# https://starship.rs/config/#haskell
+disabled = true
+
+[haxe]
+# https://starship.rs/config/#haxe
+disabled = true
+
+[julia]
+# https://starship.rs/config/#julia
+disabled = true
+
+[gleam]
+# https://starship.rs/config/#gleam
+disabled = true
+
+[fortran]
+# https://starship.rs/config/#fortran
+disabled = true
+
+[typst]
+# https://starship.rs/config/#typst
+disabled = true
+
+[fossil_metrics]
+# https://starship.rs/config/#fossil_metrics
+disabled = true
+
+[cpp]
+# https://starship.rs/config/#cpp
+disabled = true

@@ -1,0 +1,50 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors — VS Code
+.vscode/
+
+# Editors — JetBrains
+.idea/
+*.iml
+
+# Editors — Zed
+.zed/
+
+# Editors — Neovim
+.nvim/
+
+# Go (dlv debugger)
+__debug_bin*
+.attach*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env/
+
+# Node
+node_modules/
+
+# Rust
+target/
+
+# Docker / OrbStack
+docker-compose.override.yml
+
+# Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Claude Code
+CLAUDE.local.md

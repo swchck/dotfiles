@@ -1,0 +1,84 @@
+# bat 0.26.1
+# Bat configuration
+# https://github.com/sharkdp/bat
+#
+# Usage:
+#   bat <file>              # view file with syntax highlighting
+#   bat --list-themes       # list available themes
+#   bat --list-languages    # list supported languages
+#   bat --diagnostic        # show config and theme info
+
+# ── Theme ────────────────────────────────────────────────────────────
+
+# Color theme for syntax highlighting (use --list-themes to see all)
+--theme="OneHalfDark"
+
+# Theme for light/dark terminal (auto-detected)
+# --theme-light="OneHalfLight"
+# --theme-dark="{{ .theme.name }}"
+
+# ── Display ──────────────────────────────────────────────────────────
+
+# Line wrapping: auto, never, character
+--wrap="auto"
+
+# Style components (comma-separated): full, auto, plain, changes, header,
+# header-filename, header-filesize, grid, rule, numbers, snip
+# --style="auto"
+
+# Tab width (number of spaces)
+# --tabs=4
+
+# Color output: auto, always, never
+# --color="auto"
+
+# Italic text support: always, never
+# --italic-text="never"
+
+# Decorations: auto, always, never
+# --decorations="auto"
+
+# ── Paging ───────────────────────────────────────────────────────────
+
+# Pager behavior: auto, never, always
+# --paging="auto"
+
+# Custom pager command (default: less)
+# --pager="less -FR"
+
+# ── Content ──────────────────────────────────────────────────────────
+
+# Show non-printable characters notation: unicode, caret
+# --nonprintable-notation="unicode"
+
+# Binary file handling: as-text, skip
+# --binary="skip"
+
+# Squeeze consecutive blank lines (0 = disabled)
+# --squeeze-limit=0
+
+# Strip ANSI escape sequences: auto, always, never
+# --strip-ansi="auto"
+
+# ── Diff ─────────────────────────────────────────────────────────────
+
+# Context lines around diff changes
+# --diff-context=2
+
+# ── Terminal ─────────────────────────────────────────────────────────
+
+# Override detected terminal width
+# --terminal-width=0
+
+# Set terminal title when viewing files
+# --set-terminal-title
+
+# ── Syntax Mapping ───────────────────────────────────────────────────
+
+# Map file patterns to languages (glob:language)
+# --map-syntax="*.conf:INI"
+# --map-syntax=".ignore:Git Ignore"
+# --map-syntax="*.tmpl:Go HTML Template"
+
+# Ignore file suffixes for syntax detection
+# --ignored-suffix=".bak"

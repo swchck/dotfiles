@@ -1,0 +1,139 @@
+{{- /* chezmoi 2.70.0 — Feature detection ────────────────────────────────────────────── */ -}}
+
+{{- /* Detect OS */ -}}
+{{- $osID := .chezmoi.os -}}
+{{- if and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id") -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- /* Boolean feature flags */ -}}
+{{- $ephemeral := false -}}{{/* true if container, codespace, or VM */}}
+{{- $headless := false -}}{{/* true if no display (server, container) */}}
+
+{{- /* Auto-detect containers, codespaces, devcontainers */ -}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (env "REMOTE_CONTAINERS") -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
+
+{{- /* Auto-detect by username (root/ubuntu/vscode = likely container) */ -}}
+{{- if eq .chezmoi.username "root" "ubuntu" "vagrant" "vscode" -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
+
+{{- /* Auto-detect Docker container */ -}}
+{{- if stat "/.dockerenv" -}}
+{{-   $ephemeral = true -}}
+{{-   $headless = true -}}
+{{- end -}}
+
+{{- /* ── Prompts ─────────────────────────────────────────────────────── */ -}}
+
+{{- $name := "Bogomazov Andrei" -}}
+{{- $email := "a.bogomazov@proton.me" -}}
+{{- $github_user := "swchck" -}}
+{{- $machine_type := "personal" -}}
+
+{{- if not $ephemeral -}}
+{{-   if stdinIsATTY -}}
+{{-     $name = promptStringOnce . "name" "Full name" -}}
+{{-     $email = promptStringOnce . "email" "Personal email" -}}
+{{-     $github_user = promptStringOnce (dig "github" (dict) .) "user" "GitHub username" -}}
+{{-     $machine_type = promptChoiceOnce . "machine_type" "Machine type" (list "personal" "work") -}}
+{{-   end -}}
+{{- end -}}
+
+# ── General ──────────────────────────────────────────────────────────
+
+color = "auto"
+progress = true
+
+# ── Encryption ───────────────────────────────────────────────────────
+
+{{ if not $ephemeral -}}
+encryption = "age"
+
+[age]
+    recipient = "age1dwv7kax4macfa4jykfp6ksatgeucggfn2rfjjd7305993fn3uy6q58tqr0"
+    identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
+{{ end -}}
+
+# ── Editor ───────────────────────────────────────────────────────────
+
+[edit]
+    command = "nvim"
+    apply = true
+    watch = true
+
+# ── Diff ─────────────────────────────────────────────────────────────
+
+[diff]
+    pager = "delta"
+    exclude = ["scripts"]
+
+# ── Merge ────────────────────────────────────────────────────────────
+
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ "{{ .Destination }}" }}", "{{ "{{ .Source }}" }}", "{{ "{{ .Target }}" }}"]
+
+# ── Add ──────────────────────────────────────────────────────────────
+
+[add]
+    secrets = "error"
+
+# ── Git ──────────────────────────────────────────────────────────────
+
+[git]
+    autoAdd = true
+    autoCommit = true
+    autoPush = false
+
+# ── Status ───────────────────────────────────────────────────────────
+
+[status]
+    pathStyle = "absolute"
+
+# ── Data ─────────────────────────────────────────────────────────────
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    machine_type = {{ $machine_type | quote }}
+    osid = {{ $osID | quote }}
+    ephemeral = {{ $ephemeral }}
+    headless = {{ $headless }}
+
+[data.github]
+    user = {{ $github_user | quote }}
+
+[data.theme]
+    name = "One Dark Pro"
+
+[data.font]
+    main = "Monaspace Argon"
+    fallback = "Symbols Nerd Font"
+
+[data.paths]
+    repo_root = "{{ .chezmoi.homeDir }}/.repository"
+    personal = "{{ .chezmoi.homeDir }}/.repository/personal"
+    work = "{{ .chezmoi.homeDir }}/.repository/work"
+
+{{ if and (eq $machine_type "work") (not $ephemeral) -}}
+# ── Work-specific ────────────────────────────────────────────────────
+
+[data.work]
+    email = {{ promptStringOnce (dig "work" (dict) .) "email" "Work email" | quote }}
+
+[data.gitlab]
+    user = {{ promptStringOnce (dig "gitlab" (dict) .) "user" "GitLab username" | quote }}
+    url = {{ promptStringOnce (dig "gitlab" (dict) .) "url" "GitLab URL (without https://)" | quote }}
+
+[data.openfortivpn]
+    hostname = {{ promptStringOnce (dig "openfortivpn" (dict) .) "hostname" "FortiVPN primary hostname" | quote }}
+    port = {{ promptIntOnce (dig "openfortivpn" (dict) .) "port" "FortiVPN primary port" }}
+    username = {{ promptStringOnce (dig "openfortivpn" (dict) .) "username" "FortiVPN username" | quote }}
+    staging_hostname = {{ promptStringOnce (dig "openfortivpn" (dict) .) "staging_hostname" "FortiVPN staging hostname" | quote }}
+    staging_port = {{ promptIntOnce (dig "openfortivpn" (dict) .) "staging_port" "FortiVPN staging port" }}
+{{ end -}}

@@ -1,0 +1,313 @@
+// Gram 1.0.0 settings (Zed fork — code editor without AI/subscriptions/telemetry)
+// https://gram.liten.app/
+//
+// Open default settings: cmd-shift-p → "gram: open default settings"
+{
+  // ── Appearance ──────────────────────────────────────────────────────
+
+  "theme": {
+    "mode": "dark",
+    "dark": "{{ .theme.name }}",
+    "light": "One Light"
+  },
+  // "icon_theme": "Gram (Default)",
+
+  // Cursor
+  // "cursor_shape": "bar",
+  // "cursor_blink": true,
+  // "current_line_highlight": "all",    // none, gutter, line, all
+  // "rounded_selection": true,
+
+  // ── Fonts ───────────────────────────────────────────────────────────
+
+  "ui_font_family": ".ZedSans",
+  "ui_font_size": 16,
+  "ui_font_fallbacks": ["{{ .font.fallback }}"],
+  "ui_font_features": {
+    "calt": true,
+    "ss01": true, "ss02": true, "ss03": true, "ss04": true, "ss05": true,
+    "ss06": true, "ss07": true, "ss08": true, "ss09": true,
+    "liga": true
+  },
+
+  "buffer_font_family": "Monaspace Neon",
+  "buffer_font_size": 15,
+  // "buffer_font_weight": 400,
+  "buffer_font_fallbacks": ["{{ .font.fallback }}"],
+  "buffer_font_features": {
+    "calt": true,
+    "ss01": true, "ss02": true, "ss03": true, "ss04": true, "ss05": true,
+    "ss06": true, "ss07": true, "ss08": true, "ss09": true,
+    "liga": true
+  },
+  // "buffer_line_height": "comfortable",
+
+  // ── Editor ──────────────────────────────────────────────────────────
+
+  "autosave": "on_focus_change",
+  "format_on_save": "on",
+  "ensure_final_newline_on_save": true,
+  // "remove_trailing_whitespace_on_save": true,
+
+  "auto_update": true,
+  "restore_on_startup": "last_workspace",
+  // "confirm_quit": false,
+
+  "use_autoclose": true,
+  "selection_highlight": true,
+  "unnecessary_code_fade": 0.7,
+  // "colorize_brackets": false,        // rainbow brackets
+  // "vim_mode": false,
+  // "helix_mode": false,
+
+  // "use_system_window_tabs": true,
+  "multi_cursor_modifier": "alt",
+
+  "active_pane_modifiers": {
+    "border_size": 0.0,
+    "inactive_opacity": 1.0
+  },
+
+  // ── Gutter & Line Numbers ─────────────────────────────────────────
+
+  // "gutter": {
+  //   "line_numbers": true,
+  //   "runnables": true,
+  //   "breakpoints": true,
+  //   "folds": true
+  // },
+  // "relative_line_numbers": "disabled",
+
+  // ── Scrollbar & Minimap ───────────────────────────────────────────
+
+  // "scrollbar": {
+  //   "show": "auto",
+  //   "cursors": true,
+  //   "git_diff": true,
+  //   "search_results": true,
+  //   "selected_text": true,
+  //   "diagnostics": "all"
+  // },
+  // "minimap": {
+  //   "show": "never"
+  // },
+  // "vertical_scroll_margin": 3,
+  // "scroll_beyond_last_line": "one_page",
+
+  // ── Tabs ────────────────────────────────────────────────────────────
+
+  "tabs": {
+    "close_position": "right",
+    "file_icons": true,
+    "git_status": true,
+    "activate_on_close": "history",
+    "show_close_button": "hover",
+    "show_diagnostics": "all"
+  },
+  // "preview_tabs": {
+  //   "enabled": true,
+  //   "enable_preview_from_project_panel": true,
+  //   "enable_preview_from_file_finder": false
+  // },
+
+  // ── Toolbar ─────────────────────────────────────────────────────────
+
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": true,
+    "selections_menu": true
+  },
+
+  // ── Indent Guides ───────────────────────────────────────────────────
+
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+
+  // ── Text Wrapping ─────────────────────────────────────────────────
+
+  // "soft_wrap": "none",
+  // "preferred_line_length": 80,
+  // "show_wrap_guides": true,
+
+  // ── Inlay Hints ─────────────────────────────────────────────────────
+
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": false,
+    "show_parameter_hints": false,
+    "show_other_hints": true,
+    "show_background": false,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50
+  },
+
+  // ── Diagnostics ─────────────────────────────────────────────────────
+
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 150,
+      "padding": 4,
+      "min_column": 2,
+      "max_severity": "hint"
+    }
+  },
+
+  // ── Git ─────────────────────────────────────────────────────────────
+
+  "git": {
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "git_panel": {
+    "tree_view": true,
+    "sort_by_path": true,
+    "dock": "right"
+  },
+
+  // ── Panels ──────────────────────────────────────────────────────────
+
+  "project_panel": {
+    "button": true,
+    "dock": "left",
+    "git_status": true,
+    "default_width": 240,
+    "file_icons": true,
+    "folder_icons": true,
+    "indent_size": 25,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "scrollbar": { "show": "never" },
+    "indent_guides": { "show": "always" }
+  },
+  "outline_panel": {
+    "dock": "right",
+    "button": false,
+    "default_width": 300,
+    "file_icons": true,
+    "folder_icons": true,
+    "git_status": true,
+    "indent_size": 20,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "scrollbar": { "show": "never" }
+  },
+
+  // ── Terminal ────────────────────────────────────────────────────────
+
+  "terminal": {
+    "dock": "bottom",
+    "font_family": "Monaspace Neon",
+    "font_size": 12,
+    "font_features": {
+      "calt": true,
+      "ss01": true, "ss02": true, "ss03": true, "ss04": true, "ss05": true,
+      "ss06": true, "ss07": true, "ss08": true, "ss09": true,
+      "liga": true
+    },
+    "env": {
+      "EDITOR": "gram --wait"
+    },
+    "alternate_scroll": "on",
+    "blinking": "on",
+    "copy_on_select": false,
+    "line_height": "comfortable",
+    "option_as_meta": false,
+    "button": true,
+    "shell": "system",
+    "toolbar": { "breadcrumbs": false },
+    "working_directory": "current_project_directory",
+    "scrollbar": { "show": "never" },
+    "detect_venv": {
+      "on": {
+        "directories": [".env", "env", ".venv", "venv"],
+        "activate_script": "default"
+      }
+    }
+  },
+
+  // ── Debugger ────────────────────────────────────────────────────────
+
+  "debugger": {
+    "dock": "right",
+    "save_breakpoints": true,
+    "button": true,
+    "stepping_granularity": "line",
+    "timeout": 2000
+  },
+
+  // ── REPL ──────────────────────────────────────────────────────────
+
+  // "repl": {
+  //   "scrollback_max_columns": 500,
+  //   "scrollback_max_lines": 10000
+  // },
+
+  // ── Completions ───────────────────────────────────────────────────
+
+  // "show_completions_on_input": true,
+  // "show_completion_documentation": true,
+  // "completions": {
+  //   "words": "fallback",
+  //   "lsp": true
+  // },
+
+  // ── Code Intelligence ─────────────────────────────────────────────
+
+  // "enable_language_server": true,
+  // "hover_popover_enabled": true,
+  // "linked_edits": true,
+  // "auto_signature_help": false,
+
+  // ── Languages ───────────────────────────────────────────────────────
+
+  "languages": {
+    "Go": {
+      "wrap_guides": [80],
+      "inlay_hints": {},
+      "language_servers": ["gopls"]
+    }
+  },
+
+  // ── LSP ─────────────────────────────────────────────────────────────
+
+  "lsp": {
+    "lua-language-server": {
+      "initialization_options": {
+        "runtime.version": "LuaJIT",
+        "diagnostics.globals": ["vim"],
+        "workspace.checkThirdParty": false
+      }
+    }
+  },
+
+  // ── File Types & Exclusions ─────────────────────────────────────────
+
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.DS_Store",
+    "**/node_modules"
+  ],
+
+  // ── Direnv ────────────────────────────────────────────────────────
+
+  // "load_direnv": "direct",          // shell_hook, direct, disabled
+
+  // ── Journal ───────────────────────────────────────────────────────
+
+  // "journal": {
+  //   "path": "~",
+  //   "hour_format": "hour12"
+  // },
+
+  // ── Telemetry ───────────────────────────────────────────────────────
+
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  }
+}

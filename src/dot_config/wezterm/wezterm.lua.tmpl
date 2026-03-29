@@ -1,0 +1,577 @@
+-- WezTerm 20240203-110809 configuration
+-- https://wezterm.org/config/lua/config/
+--
+-- All commented options show defaults. Uncomment to override.
+
+local wezterm = require("wezterm")
+local act = wezterm.action
+
+-- ── Plugins ─────────────────────────────────────────────────────────
+
+local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+
+local config = wezterm.config_builder()
+
+-- ── Appearance ──────────────────────────────────────────────────────
+
+config.automatically_reload_config = true
+config.color_scheme = "One Dark (Gogh)"
+config.window_background_opacity = 0.97
+config.window_decorations = "RESIZE"          -- FULL, RESIZE, NONE, TITLE
+config.window_close_confirmation = "NeverPrompt" -- AlwaysPrompt, NeverPrompt
+
+-- Window size & padding
+-- config.initial_cols = 80
+-- config.initial_rows = 24
+-- window_padding set after tabline.apply_to_config (it overwrites this)
+-- config.window_content_alignment = "Center"
+
+-- Window background (gradient or image layers)
+-- config.window_background_gradient = {
+--     orientation = "Vertical",
+--     colors = { "#1e1e2e", "#181825" },
+-- }
+-- config.background = {}               -- multiple layers with image/gradient
+
+-- Custom color overrides (on top of color_scheme)
+-- config.colors = {
+--     cursor_bg = "#f5e0dc",
+--     cursor_fg = "#1e1e2e",
+--     cursor_border = "#f5e0dc",
+--     selection_bg = "#585b70",
+--     selection_fg = "#cdd6f4",
+--     tab_bar = {
+--         background = "#1e1e2e",
+--         active_tab = { bg_color = "#313244", fg_color = "#cdd6f4" },
+--         inactive_tab = { bg_color = "#1e1e2e", fg_color = "#6c7086" },
+--         inactive_tab_hover = { bg_color = "#313244", fg_color = "#cdd6f4" },
+--         new_tab = { bg_color = "#1e1e2e", fg_color = "#6c7086" },
+--         new_tab_hover = { bg_color = "#313244", fg_color = "#cdd6f4" },
+--     },
+-- }
+-- config.color_schemes = {}             -- define custom named color schemes
+-- config.bold_brightens_ansi_colors = "BrightAndBold" -- true, false, "BrightAndBold", "BrightOnly", "No"
+
+-- Window frame (title bar font & colors when use_fancy_tab_bar = true)
+-- config.window_frame = {
+--     font = wezterm.font("{{ .font.main }}"),
+--     font_size = 12.0,
+--     active_titlebar_bg = "#1e1e2e",
+--     inactive_titlebar_bg = "#181825",
+-- }
+
+-- Cursor
+config.default_cursor_style = "BlinkingBar"   -- SteadyBlock, BlinkingBlock, SteadyUnderline, BlinkingUnderline, SteadyBar, BlinkingBar
+-- config.cursor_blink_rate = 500             -- ms, 0 = disable
+-- config.cursor_blink_ease_in = "Constant"   -- Constant, Linear, EaseIn, EaseOut, EaseInOut
+-- config.cursor_blink_ease_out = "Constant"
+-- config.cursor_thickness = "1px"
+-- config.force_reverse_video_cursor = false
+
+-- Text contrast
+-- config.text_min_contrast_ratio = 1.0       -- 1.0 = no adjustment, higher = more contrast
+-- config.foreground_text_hsb = {             -- adjust all foreground text
+--     hue = 1.0,
+--     saturation = 1.0,
+--     brightness = 1.0,
+-- }
+
+-- ── macOS Specific ──────────────────────────────────────────────────
+
+-- config.macos_window_background_blur = 0    -- 0-100
+-- config.native_macos_fullscreen_mode = false
+-- config.macos_fullscreen_extend_behind_notch = false
+-- config.send_composed_key_when_left_alt_is_pressed = true
+-- config.send_composed_key_when_right_alt_is_pressed = false
+-- config.quit_when_all_windows_are_closed = false
+-- config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
+
+-- ── Font ────────────────────────────────────────────────────────────
+
+config.font = wezterm.font_with_fallback({
+    { family = "{{ .font.main }}", weight = "Bold" },
+    "{{ .font.fallback }}",
+})
+config.font_size = 14.0
+
+-- Line spacing & cell dimensions
+config.line_height = 1.15
+-- config.cell_width = 1.0
+
+-- Font rendering
+-- config.freetype_load_target = "Normal"     -- Normal, Light, Mono, HorizontalLcd
+-- config.font_antialias = "Greyscale"        -- None, Greyscale, Subpixel
+-- config.font_hinting = "Full"               -- None, Vertical, VerticalSubpixel, Full
+-- config.font_shaper = "Harfbuzz"            -- Harfbuzz, Allsorts
+
+-- OpenType features (alternative to font_with_fallback features)
+-- config.harfbuzz_features = { "calt=1", "clig=1", "liga=1" }
+
+-- Fallback font scaling
+-- config.use_cap_height_to_scale_fallback_fonts = false
+-- config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace" -- Never, Always, WhenFollowedBySpace
+-- config.custom_block_glyphs = true
+-- config.anti_alias_custom_block_glyphs = true
+-- config.warn_about_missing_glyphs = true
+
+-- Font rules for specific styles (italic, bold, bold+italic)
+-- config.font_rules = {
+--     { italic = true, font = wezterm.font("{{ .font.main }}", { italic = true }) },
+-- }
+
+-- Additional font directories
+-- config.font_dirs = {}
+-- config.font_locator = "ConfigDirsOnly"     -- ConfigDirsOnly, Gdi (win), CoreText (mac)
+
+-- ── Tab Bar ─────────────────────────────────────────────────────────
+
+config.enable_tab_bar = true
+config.use_fancy_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = false
+config.tab_bar_at_bottom = true
+config.tab_and_split_indices_are_zero_based = true
+
+-- config.show_new_tab_button_in_tab_bar = true
+-- config.show_close_tab_button_in_tabs = true
+-- config.show_tab_index_in_tab_bar = false
+-- config.show_tabs_in_tab_bar = true
+-- config.tab_max_width = 25
+-- config.switch_to_last_active_tab_when_closing_tab = false
+-- config.mouse_wheel_scrolls_tabs = false
+
+-- Tab bar style (for use_fancy_tab_bar = false)
+-- config.tab_bar_style = {
+--     new_tab = wezterm.format({ { Text = " + " } }),
+--     new_tab_hover = wezterm.format({ { Text = " + " } }),
+-- }
+
+-- ── Tabline Plugin ──────────────────────────────────────────────────
+-- https://github.com/michaelbrusegard/tabline.wez
+--
+-- Layout: | A | B | C | TABS | X | Y | Z |
+-- Components: mode, workspace, cwd, parent, process, index, zoomed,
+--             ram, cpu, datetime, battery, domain
+
+tabline.setup({
+    options = {
+        icons_enabled = true,
+        theme = "One Dark (Gogh)",
+        theme_overrides = {
+            normal_mode = {
+                a = { fg = "#282c34", bg = "#61afef" },
+                b = { fg = "#61afef", bg = "#3e4452" },
+                c = { fg = "#abb2bf", bg = "#282c34" },
+            },
+            tab = {
+                active = { fg = "#61afef", bg = "#3e4452" },
+                inactive = { fg = "#abb2bf", bg = "#282c34" },
+                inactive_hover = { fg = "#c678dd", bg = "#3e4452" },
+            },
+        },
+        tabs_enabled = true,
+        section_separators = "",
+        component_separators = "",
+        tab_separators = "",
+    },
+    sections = {
+        tabline_a = { "mode" },
+        tabline_b = {
+            function(window)
+                local name = window:active_workspace()
+                if name == "default" then return "" end
+                return name
+            end,
+        },
+        tabline_c = {},
+        tab_active = {
+            { "process", padding = { left = 1, right = 0 } },
+            ":",
+            { "cwd", padding = { left = 0, right = 1 } },
+            { "zoomed", padding = 0 },
+        },
+        tab_inactive = {
+            { "process", padding = { left = 1, right = 0 } },
+            ":",
+            { "cwd", padding = { left = 0, right = 1 } },
+        },
+        tabline_x = {},
+        tabline_y = {},
+        tabline_z = { "domain" },
+    },
+})
+
+-- ── Scrollback ──────────────────────────────────────────────────────
+
+-- config.scrollback_lines = 3500
+-- config.enable_scroll_bar = false
+-- config.min_scroll_bar_height = "1cell"
+-- config.scroll_to_bottom_on_input = true
+-- config.alternate_buffer_wheel_scroll_speed = 3
+
+-- ── Pane ────────────────────────────────────────────────────────────
+
+-- Dim inactive panes
+-- config.inactive_pane_hsb = {
+--     saturation = 0.9,
+--     brightness = 0.8,
+-- }
+-- config.pane_focus_follows_mouse = false
+-- config.unzoom_on_switch_pane = true
+
+-- ── Shell & Process ─────────────────────────────────────────────────
+
+-- config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
+-- config.default_cwd = nil
+-- config.default_workspace = "default"
+-- config.set_environment_variables = {}
+
+-- Skip close confirmation for these processes
+-- config.skip_close_confirmation_for_processes_named = {
+--     "bash", "sh", "zsh", "fish", "tmux", "nu", "cmd.exe", "pwsh.exe", "powershell.exe",
+-- }
+-- config.clean_exit_codes = { 130 }    -- exit codes that don't trigger close confirmation
+-- config.exit_behavior = "Close"       -- Close, Hold, CloseOnCleanExit
+-- config.exit_behavior_messaging = "Verbose" -- Verbose, Brief, None
+
+-- ── Bell ────────────────────────────────────────────────────────────
+
+-- config.audible_bell = "SystemBeep"   -- SystemBeep, Disabled
+-- config.visual_bell = {
+--     fade_in_function = "EaseIn",
+--     fade_in_duration_ms = 150,
+--     fade_out_function = "EaseOut",
+--     fade_out_duration_ms = 150,
+-- }
+
+-- ── Selection ───────────────────────────────────────────────────────
+
+-- config.selection_word_boundary = " \t\n{}[]()\"'`"
+
+-- Quick select patterns (Ctrl+Shift+Space)
+-- config.quick_select_patterns = {}
+-- config.quick_select_alphabet = "asdfqwerzxcvjklmiuopghtybn"
+-- config.disable_default_quick_select_patterns = false
+-- config.quick_select_remove_styling = true
+
+-- ── Hyperlinks ──────────────────────────────────────────────────────
+
+-- Custom clickable patterns (extends default URL detection)
+-- config.hyperlink_rules = wezterm.default_hyperlink_rules()
+-- table.insert(config.hyperlink_rules, {
+--     regex = [[\b[A-Z]+-\d+\b]],     -- JIRA-style issue numbers
+--     format = "https://jira.example.com/browse/$0",
+-- })
+
+-- ── Mouse & Input ───────────────────────────────────────────────────
+
+-- config.hide_mouse_cursor_when_typing = true
+-- config.swallow_mouse_click_on_pane_focus = false
+-- config.swallow_mouse_click_on_window_focus = false
+-- config.bypass_mouse_reporting_modifiers = "SHIFT"
+-- config.disable_default_mouse_bindings = false
+-- config.detect_password_input = true
+-- config.canonicalize_pasted_newlines = "None" -- None, LineFeed, CarriageReturn, CarriageReturnAndLineFeed
+-- config.quote_dropped_files = "SpacesOnly"   -- None, SpacesOnly, Posix, Windows
+
+-- ── IME ─────────────────────────────────────────────────────────────
+
+-- config.use_ime = true
+-- config.ime_preedit_rendering = "Builtin"    -- Builtin, System
+-- config.xim_im_name = nil                    -- X Input Method name (Linux)
+
+-- ── Performance ─────────────────────────────────────────────────────
+
+-- config.front_end = "WebGpu"          -- WebGpu, OpenGL, Software
+-- config.max_fps = 60
+-- config.animation_fps = 10
+-- config.webgpu_power_preference = "HighPerformance" -- LowPower, HighPerformance
+-- config.webgpu_force_fallback_adapter = false
+-- config.webgpu_preferred_adapter = nil
+
+-- ── Text Rendering ──────────────────────────────────────────────────
+
+-- config.text_blink_rate = 500
+-- config.text_blink_rate_rapid = 250
+-- config.text_blink_ease_in = "Constant"
+-- config.text_blink_ease_out = "Constant"
+
+-- Underline & strikethrough position
+-- config.underline_position = nil      -- override auto-detected position
+-- config.underline_thickness = nil
+-- config.strikethrough_position = nil
+
+-- ── Unicode ─────────────────────────────────────────────────────────
+
+-- config.unicode_version = 14
+-- config.treat_east_asian_ambiguous_width_as_wide = false
+-- config.normalize_output_to_unicode_nfc = false
+
+-- ── Command Palette ─────────────────────────────────────────────────
+
+-- config.command_palette_bg_color = nil
+-- config.command_palette_fg_color = nil
+-- config.command_palette_font = nil
+-- config.command_palette_font_size = nil
+-- config.command_palette_rows = 14
+
+-- ── Character Select (Ctrl+Shift+U) ────────────────────────────────
+
+-- config.char_select_bg_color = nil
+-- config.char_select_fg_color = nil
+-- config.char_select_font = nil
+-- config.char_select_font_size = nil
+
+-- ── Pane Select (leader + pane select) ──────────────────────────────
+
+-- config.pane_select_font = nil
+
+-- ── Launch Menu ─────────────────────────────────────────────────────
+
+-- config.launch_menu = {
+--     { label = "Fish",  args = { "/opt/homebrew/bin/fish", "-l" } },
+--     { label = "Bash",  args = { "/bin/bash", "-l" } },
+--     { label = "Zsh",   args = { "/bin/zsh", "-l" } },
+--     { label = "htop",  args = { "htop" } },
+-- }
+
+-- ── Key Tables ──────────────────────────────────────────────────────
+
+-- Named key tables for sub-modes (like vim modes)
+-- config.key_tables = {
+--     resize_pane = {
+--         { key = "LeftArrow",  action = act.AdjustPaneSize({ "Left", 1 }) },
+--         { key = "RightArrow", action = act.AdjustPaneSize({ "Right", 1 }) },
+--         { key = "UpArrow",    action = act.AdjustPaneSize({ "Up", 1 }) },
+--         { key = "DownArrow",  action = act.AdjustPaneSize({ "Down", 1 }) },
+--         { key = "Escape",     action = "PopKeyTable" },
+--     },
+-- }
+
+-- ── SSH / Multiplexer Domains ───────────────────────────────────────
+
+-- config.ssh_domains = {}
+-- config.ssh_backend = "Libssh"        -- Libssh, LibsshSsh2
+-- config.default_ssh_auth_sock = nil
+-- config.mux_enable_ssh_agent = true
+-- config.unix_domains = {}
+-- config.tls_clients = {}
+-- config.tls_servers = {}
+-- config.default_domain = "local"
+-- config.default_mux_server_domain = nil
+
+-- ── Notifications ───────────────────────────────────────────────────
+
+-- config.notification_handling = "AlwaysShow" -- AlwaysShow, NeverShow, SuppressFromFocusedPane, SuppressFromFocusedTab
+
+-- ── Misc ────────────────────────────────────────────────────────────
+
+-- config.check_for_updates = true
+-- config.show_update_window = true
+-- config.term = "xterm-256color"
+config.status_update_interval = 500 -- ms
+-- config.prefer_to_spawn_tabs = false
+-- config.use_resize_increments = false
+-- config.adjust_window_size_when_changing_font_size = true
+-- config.log_unknown_escape_sequences = false
+-- config.debug_key_events = false      -- useful for debugging keybindings
+
+-- System resource limits
+-- config.ulimit_nofile = nil
+-- config.ulimit_nproc = nil
+
+-- Keyboard protocol
+-- config.enable_kitty_keyboard = false
+-- config.enable_csi_u_key_encoding = false
+-- config.key_map_preference = "Mapped" -- Mapped, Physical
+-- config.swap_backspace_and_delete = false
+
+-- UI rendering
+-- config.ui_key_cap_rendering = "TextQualifier" -- UnixLong, Emacs, AppleSymbols, WindowsLong, WindowsSymbolsISO, TextQualifier
+-- config.display_pixel_geometry = "RGB" -- RGB, BGR, Unspecified
+-- config.dpi = nil                     -- override system DPI
+
+-- Linux/Wayland specific
+-- config.enable_wayland = true
+-- config.tiling_desktop_environments = {}
+-- config.kde_window_background_blur = false
+-- config.prefer_egl = false
+
+-- Windows specific
+-- config.allow_win32_input_mode = true
+-- config.win32_system_backdrop = "Auto" -- Auto, Disable, Acrylic, Mica, Tabbed
+-- config.win32_acrylic_accent_color = nil
+-- config.treat_left_ctrlalt_as_altgr = false
+
+-- ── Keybindings ─────────────────────────────────────────────────────
+--
+-- Leader key: Alt+q (2 second timeout), then:
+--   |          split right
+--   -          split down
+--   h/j/k/l   navigate panes
+--   Arrow      resize panes
+--   c          new tab
+--   x          close pane
+--   n/b        next/prev tab
+--   0-9        go to tab
+--   z          toggle zoom
+--   f          search
+--   s          save session (resurrect)
+--   r          restore session (resurrect)
+--   w          switch workspace (zoxide fuzzy)
+--   W          switch to previous workspace
+--
+-- Direct shortcuts (no leader):
+--   Alt+Arrow  navigate panes
+--   Alt+F9     tab navigator
+
+config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 2000 }
+
+config.keys = {
+    -- Pane splits (leader + | and -)
+    { mods = "LEADER", key = "|", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { mods = "LEADER", key = "-", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+    -- Pane navigation — leader + hjkl
+    { mods = "LEADER", key = "h", action = act.ActivatePaneDirection("Left") },
+    { mods = "LEADER", key = "j", action = act.ActivatePaneDirection("Down") },
+    { mods = "LEADER", key = "k", action = act.ActivatePaneDirection("Up") },
+    { mods = "LEADER", key = "l", action = act.ActivatePaneDirection("Right") },
+
+    -- Pane navigation — Alt + Arrow (direct, no leader)
+    { key = "LeftArrow",  mods = "ALT", action = act.ActivatePaneDirection("Left") },
+    { key = "RightArrow", mods = "ALT", action = act.ActivatePaneDirection("Right") },
+    { key = "UpArrow",    mods = "ALT", action = act.ActivatePaneDirection("Up") },
+    { key = "DownArrow",  mods = "ALT", action = act.ActivatePaneDirection("Down") },
+
+    -- Pane resize — leader + Arrow
+    { mods = "LEADER", key = "LeftArrow",  action = act.AdjustPaneSize({ "Left", 5 }) },
+    { mods = "LEADER", key = "RightArrow", action = act.AdjustPaneSize({ "Right", 5 }) },
+    { mods = "LEADER", key = "UpArrow",    action = act.AdjustPaneSize({ "Up", 5 }) },
+    { mods = "LEADER", key = "DownArrow",  action = act.AdjustPaneSize({ "Down", 5 }) },
+
+    -- Tabs
+    { mods = "LEADER", key = "c", action = act.SpawnTab("CurrentPaneDomain") },
+    { mods = "LEADER", key = "x", action = act.CloseCurrentPane({ confirm = true }) },
+    { mods = "LEADER", key = "n", action = act.ActivateTabRelative(1) },
+    { mods = "LEADER", key = "b", action = act.ActivateTabRelative(-1) },
+
+    -- Toggle pane zoom (like tmux prefix+z)
+    { mods = "LEADER", key = "z", action = act.TogglePaneZoomState },
+
+    -- Search
+    { mods = "LEADER", key = "f", action = act.Search({ CaseInSensitiveString = "" }) },
+
+    -- Tab navigator
+    { key = "F9", mods = "ALT", action = act.ShowTabNavigator },
+
+    -- ── Resurrect Plugin ────────────────────────────────────────────
+    -- Leader + s: save current workspace state
+    -- Leader + r: fuzzy load saved state
+    { mods = "LEADER", key = "s", action = wezterm.action_callback(function(win, pane)
+        resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
+        resurrect.window_state.save_window_action()
+    end) },
+    { mods = "LEADER", key = "r", action = wezterm.action_callback(function(win, pane)
+        resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
+            local type = string.match(id, "^([^/]+)")
+            id = string.match(id, "([^/]+)$")
+            id = string.match(id, "(.+)%..+$")
+            local opts = {
+                relative = true,
+                restore_text = true,
+                on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+            }
+            if type == "workspace" then
+                local state = resurrect.state_manager.load_state(id, "workspace")
+                resurrect.workspace_state.restore_workspace(state, opts)
+            elseif type == "window" then
+                local state = resurrect.state_manager.load_state(id, "window")
+                resurrect.window_state.restore_window(pane:window(), state, opts)
+            elseif type == "tab" then
+                local state = resurrect.state_manager.load_state(id, "tab")
+                resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+            end
+        end)
+    end) },
+
+    -- ── Workspace Switcher Plugin ───────────────────────────────────
+    -- Leader + w: fuzzy switch workspace (uses zoxide)
+    -- Leader + W: switch to previous workspace
+    { mods = "LEADER", key = "w", action = workspace_switcher.switch_workspace() },
+    { mods = "LEADER", key = "W", action = workspace_switcher.switch_to_prev_workspace() },
+}
+
+-- Leader + 0-9 to activate tabs
+for i = 0, 9 do
+    table.insert(config.keys, {
+        mods = "LEADER",
+        key = tostring(i),
+        action = act.ActivateTab(i),
+    })
+end
+
+-- ── Plugin Setup ────────────────────────────────────────────────────
+
+-- Apply tabline to config (sets tab bar rendering)
+tabline.apply_to_config(config)
+
+-- Re-apply padding after tabline (it overwrites window_padding)
+config.window_padding = {
+    left = 24,
+    right = 10,
+    top = 10,
+    bottom = 10,
+}
+
+-- Resurrect: auto-save state every 15 minutes
+resurrect.state_manager.periodic_save({
+    interval_seconds = 900,
+    save_workspaces = true,
+    save_windows = true,
+    save_tabs = true,
+})
+
+-- Workspace switcher: shorten labels to directory name
+workspace_switcher.workspace_formatter = function(label)
+    return wezterm.format({
+        { Attribute = { Intensity = "Bold" } },
+        { Text = "󱂬 " .. label:match("([^/]+)$") },
+    })
+end
+
+-- ── Events ──────────────────────────────────────────────────────────
+
+-- Tab titles managed by tabline plugin (process:cwd, updates on focus change)
+
+-- Custom right status bar
+-- wezterm.on("update-status", function(window, pane)
+--     local cwd = pane:get_current_working_dir()
+--     local path = cwd and cwd.file_path or ""
+--     -- Show leader status indicator
+--     local leader = window:leader_is_active() and " LEADER " or ""
+--     window:set_right_status(wezterm.format({
+--         { Attribute = { Intensity = "Bold" } },
+--         { Text = leader },
+--         { Text = path .. " " },
+--     }))
+-- end)
+
+-- ── Startup ─────────────────────────────────────────────────────────
+
+wezterm.on("gui-startup", function(cmd)
+    local screen = wezterm.gui.screens().active
+    local ratio = 0.7
+    local width, height = screen.width * ratio, screen.height * ratio
+    local tab, pane, window = wezterm.mux.spawn_window({
+        position = {
+            x = (screen.width - width) / 2,
+            y = (screen.height - height) / 2,
+            origin = "ActiveScreen",
+        },
+    })
+    window:gui_window():set_inner_size(width, height)
+end)
+
+return config

@@ -1,0 +1,102 @@
+# Linux packages — common across all profiles
+# Package names differ between distros, so we define per-manager lists.
+# Tools not available in system repos are installed via Homebrew on Linux.
+
+[packages.linux.common]
+
+# Tools installed via Homebrew on Linux (not in apt/dnf, or outdated there)
+brew = [
+    "fd",
+    "ripgrep",
+    "bat",
+    "eza",
+    "zoxide",
+    "dust",
+    "bottom",
+    "procs",
+    "sd",
+    "tokei",
+    "starship",
+    "atuin",
+    "lazygit",
+    "git-delta",
+    "yazi",
+    "topgrade",
+    "gh",
+    "neovim",
+    "fish",
+]
+
+# Languages (installed via brew or system package manager)
+languages = [
+    "go",
+    "node",
+    "python3",
+    "deno",
+]
+
+# ── System package manager lists ─────────────────────────────────────
+# Names must match the respective package manager's naming convention
+
+[packages.linux.common.apt]
+packages = [
+    "fish",
+    "neovim",
+    "git",
+    "curl",
+    "wget",
+    "jq",
+    "fzf",
+    "xclip",
+    "build-essential",
+    "gcc",
+    "make",
+]
+
+[packages.linux.common.dnf]
+packages = [
+    "fish",
+    "neovim",
+    "git",
+    "curl",
+    "wget",
+    "jq",
+    "fd-find",
+    "ripgrep",
+    "bat",
+    "fzf",
+    "xclip",
+    "gcc",
+    "make",
+]
+
+[packages.linux.common.pacman]
+packages = [
+    "fish",
+    "neovim",
+    "git",
+    "curl",
+    "wget",
+    "jq",
+    "fd",
+    "ripgrep",
+    "bat",
+    "fzf",
+    "zoxide",
+    "eza",
+    "dust",
+    "bottom",
+    "procs",
+    "sd",
+    "tokei",
+    "xclip",
+    "starship",
+    "gcc",
+    "make",
+]
+
+# ── Standalone installers (fallback when no Homebrew) ────────────────
+
+[packages.linux.common.installers]
+starship = "curl -sS https://starship.rs/install.sh | sh -s -- -y"
+atuin = "curl -sSf https://setup.atuin.sh | bash"

@@ -1,0 +1,65 @@
+# k9s 0.50.18
+# k9s configuration
+# https://k9scli.io/topics/config/
+#
+# Usage:
+#   k9s                   # launch
+#   k9s -n <namespace>    # specific namespace
+#   k9s --context <ctx>   # specific context
+#   k9s --readonly        # read-only mode
+
+k9s:
+  # Refresh rate in seconds
+  refreshRate: 2
+
+  # Max rows in log view
+  maxConnRetry: 5
+
+  # Enable mouse support
+  enableMouse: false
+
+  # Headless mode (no header)
+  headless: false
+
+  # Crumb mode (show breadcrumbs)
+  crumbsless: false
+
+  # Read-only mode
+  readOnly: false
+
+  # Disable pod count display
+  noExitOnCtrlC: false
+
+  # UI settings
+  ui:
+    # Enable skin
+    skin: {{ .theme.name | lower | replace " " "-" }}
+    # Enable icons (requires Nerd Font)
+    enableSkinsFromDir: true
+    # Reactive UI
+    reactive: true
+    # Logo display
+    logoless: false
+    # No icons
+    noIcons: false
+
+  # Logger settings
+  logger:
+    # Tail log lines
+    tail: 100
+    # Buffer size
+    buffer: 5000
+    # Text wrap
+    textWrap: false
+    # Show timestamp
+    showTime: false
+    # Since duration
+    sinceSeconds: -1
+
+  # Shell pod settings
+  # shellPod:
+  #   image: busybox:1.35.0
+  #   namespace: default
+  #   limits:
+  #     cpu: 100m
+  #     memory: 100Mi

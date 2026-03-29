@@ -1,0 +1,25 @@
+# deadbranch 0.3.0
+# Deadbranch configuration
+# https://github.com/armgabrielyan/deadbranch
+#
+# Usage:
+#   deadbranch          # list dead branches (default: 30 days)
+#   deadbranch -d 60    # list branches older than 60 days
+
+[general]
+default_days = 30
+
+[branches]
+protected = [
+    "main",
+    "master",
+    "develop",
+    "staging",
+    "production",
+]
+exclude_patterns = [
+    "wip/*",
+    "draft/*",
+    "*/wip",
+    "*/draft",
+]

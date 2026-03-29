@@ -1,0 +1,14 @@
+# <type>: 50-character subject line
+#
+# link: Include a link to the issue or pull request that this commit is related to, if applicable.
+#
+# 72-character body: Provide a detailed description of the change, if necessary.
+# Wrap the body at 72 characters. It should answer:
+#
+# - What was the motivation for this change?
+# - How does this change address the issue?
+# - Are there any side effects or additional considerations?
+#
+# Footer: Include any relevant metadata, such as the type of change, if applicable.
+#
+# type: feat|fix|refactor|docs|style|test|chore|perf|ci|build|revert
