@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Reinstall when package.toml changes:
-# {{ include "dot_config/yazi/package.toml.tmpl" | sha256sum }}
+# {{ include "dot_config/yazi/create_package.toml.tmpl" | sha256sum }}
 {{ if not .ephemeral -}}
 
 set -uo pipefail
