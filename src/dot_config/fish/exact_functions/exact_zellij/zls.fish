@@ -1,3 +1,3 @@
 function zls
-    zellij --list-sessions
+    zellij list-sessions $argv
 end

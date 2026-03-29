@@ -31,4 +31,21 @@ if status is-interactive
         zoxide init fish | source
     end
 
+    # ── Keybindings ─────────────────────────────────────────────────
+
+    # Ctrl+Z: toggle suspend/resume (fg)
+    bind \cz 'if test (count (jobs)) -gt 0; fg; commandline -f repaint; end'
+
+    # !! expansion: type !! then press Space to replace with last command
+    function _expand_bang_bang
+        set -l cmd (commandline)
+        if string match -q -- "*!!" "$cmd"
+            commandline -r (string replace "!!" "$history[1]" "$cmd")
+            commandline -f repaint
+        else
+            commandline -i " "
+        end
+    end
+    bind " " _expand_bang_bang
+
 end

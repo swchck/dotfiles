@@ -547,6 +547,15 @@ end
 
 -- ── Events ──────────────────────────────────────────────────────────
 
+{{ if eq .chezmoi.os "darwin" -}}
+-- Switch to US input source when WezTerm gains focus (macOS only)
+wezterm.on("window-focus-changed", function(window, pane)
+    if window:is_focused() then
+        os.execute(os.getenv("HOME") .. "/.local/bin/switch-to-us &")
+    end
+end)
+{{ end -}}
+
 -- Tab titles managed by tabline plugin (process:cwd, updates on focus change)
 
 -- Custom right status bar

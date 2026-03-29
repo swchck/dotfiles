@@ -24,7 +24,7 @@ style = "BrightCyan"
 align = "Right"
 
 [[columns]]
-kind = "User"
+kind = "Username"
 style = "BrightYellow"
 
 [[columns]]
@@ -36,12 +36,12 @@ style = "BrightMagenta"
 align = "Right"
 
 [[columns]]
-kind = "Cpu"
+kind = "UsageCpu"
 style = "BrightRed"
 align = "Right"
 
 [[columns]]
-kind = "Mem"
+kind = "UsageMem"
 style = "BrightGreen"
 align = "Right"
 
