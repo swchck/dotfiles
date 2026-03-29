@@ -186,15 +186,15 @@ tabline.setup({
         },
         tabline_c = {},
         tab_active = {
-            { "process", padding = { left = 1, right = 0 } },
+            { "process", padding = { left = 1, right = 0 }, max_length = 15 },
             ":",
-            { "cwd", padding = { left = 0, right = 1 } },
+            { "cwd", padding = { left = 0, right = 1 }, max_length = 30 },
             { "zoomed", padding = 0 },
         },
         tab_inactive = {
-            { "process", padding = { left = 1, right = 0 } },
+            { "process", padding = { left = 1, right = 0 }, max_length = 15 },
             ":",
-            { "cwd", padding = { left = 0, right = 1 } },
+            { "cwd", padding = { left = 0, right = 1 }, max_length = 25 },
         },
         tabline_x = {},
         tabline_y = {},
@@ -439,11 +439,15 @@ config.keys = {
     { mods = "LEADER", key = "k", action = act.ActivatePaneDirection("Up") },
     { mods = "LEADER", key = "l", action = act.ActivatePaneDirection("Right") },
 
-    -- Pane navigation — Alt + Arrow (direct, no leader)
-    { key = "LeftArrow",  mods = "ALT", action = act.ActivatePaneDirection("Left") },
-    { key = "RightArrow", mods = "ALT", action = act.ActivatePaneDirection("Right") },
-    { key = "UpArrow",    mods = "ALT", action = act.ActivatePaneDirection("Up") },
-    { key = "DownArrow",  mods = "ALT", action = act.ActivatePaneDirection("Down") },
+    -- Pane navigation — Ctrl+Alt + Arrow
+    { key = "LeftArrow",  mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
+    { key = "RightArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Right") },
+    { key = "UpArrow",    mods = "CTRL|ALT", action = act.ActivatePaneDirection("Up") },
+    { key = "DownArrow",  mods = "CTRL|ALT", action = act.ActivatePaneDirection("Down") },
+
+    -- Tab navigation — Cmd + Arrow
+    { key = "LeftArrow",  mods = "CMD", action = act.ActivateTabRelative(-1) },
+    { key = "RightArrow", mods = "CMD", action = act.ActivateTabRelative(1) },
 
     -- Pane resize — leader + Arrow
     { mods = "LEADER", key = "LeftArrow",  action = act.AdjustPaneSize({ "Left", 5 }) },
