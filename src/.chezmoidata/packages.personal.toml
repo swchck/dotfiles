@@ -18,6 +18,7 @@ cli = [
     "gabrie30/utils/ghorg", # Repository management (Configurable)
     "nmap",                 # Network scanner
     "hurl",                 # HTTP client
+    "himalaya",             # CLI email client
 ]
 
 casks = [
