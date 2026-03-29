@@ -6,6 +6,7 @@ taps = [
     "derailed/k9s",             # Kubernetes CLI Repository
     "armgabrielyan/deadbranch", # Git dead branch cleaner
     "gabrie30/utils",           # Ghorg repository cloner
+    "neur0map/tap",             # GlazePKG (gpk)
 ]
 
 fonts = [
@@ -89,6 +90,7 @@ cli = [
     "tailspin",             # log viewer
     "graphviz",             # graph visualization
     "upx",                  # binary packer
+    "neur0map/tap/gpk",     # unified package manager TUI
 ]
 
 casks = [
