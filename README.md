@@ -45,7 +45,7 @@ Included `.devcontainer/devcontainer.json` runs `chezmoi init --apply` on creati
 | Git              | delta, lazygit, gitsigns, deadbranch, ghorg                      |
 | DevOps           | k9s, Docker (OrbStack), OpenFortiVPN (work)                      |
 | Packages         | Homebrew formulae, casks, App Store apps, VS Code extensions     |
-| Theme            | Catppuccin Mocha everywhere                                      |
+| Theme            | One Dark Pro everywhere                                           |
 
 ### Container / Codespace (headless)
 
