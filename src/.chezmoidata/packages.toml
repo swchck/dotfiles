@@ -61,7 +61,7 @@ cli = [
     "deadbranch",           # Git dead branch cleaner
 
     # Data & Text Processing
-    "jq",                   # JSON processor
+    "jaq",                  # JSON/YAML/TOML processor (jq replacement, Rust)
     "fx",                   # JSON viewer
     "tokei",                # code statistics
 
