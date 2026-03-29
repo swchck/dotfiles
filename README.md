@@ -40,7 +40,7 @@ Included `.devcontainer/devcontainer.json` runs `chezmoi init --apply` on creati
 | ---------------- | ---------------------------------------------------------------- |
 | Shell            | Fish + Starship prompt + Atuin history + Zoxide + fzf            |
 | Editors          | Neovim (kickstart + lazy.nvim), Zed, Gram                        |
-| Terminals        | WezTerm (tabline + resurrect plugins), Ghostty, Zellij           |
+| Terminals        | WezTerm (tabline + resurrect plugins), Zellij                    |
 | CLI replacements | bat, eza, fd, ripgrep, sd, dust, bottom, procs, viddy, bandwhich |
 | Git              | delta, lazygit, gitsigns, deadbranch, ghorg                      |
 | DevOps           | k9s, Docker (OrbStack), OpenFortiVPN (work)                      |

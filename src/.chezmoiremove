@@ -9,3 +9,6 @@
 .gitconfig-personal
 .gitconfig-work
 .git-scripts
+
+# Removed tools
+.config/ghostty
