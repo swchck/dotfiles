@@ -125,6 +125,7 @@ encryption = "age"
 
 [data.work]
     email = {{ promptStringOnce (dig "work" (dict) .) "email" "Work email" | quote }}
+    jira_url = {{ promptStringOnce (dig "work" (dict) .) "jira_url" "Jira base URL (e.g. https://company.atlassian.net)" | quote }}
 
 [data.gitlab]
     user = {{ promptStringOnce (dig "gitlab" (dict) .) "user" "GitLab username" | quote }}

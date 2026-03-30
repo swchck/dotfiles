@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+{{ if and (eq .machine_type "work") (hasKey . "work") -}}
+
+# Auto-fill link: field with Jira link from branch name
+# Only applies to repos under work directory
+
+WORK_DIR="{{ .paths.work }}"
+JIRA_URL="{{ .work.jira_url }}"
+COMMIT_MSG_FILE="$1"
+
+# Check if we're in a work repo
+if [[ "$(git rev-parse --show-toplevel 2>/dev/null)" != "$WORK_DIR"* ]]; then
+    exit 0
+fi
+
+# Extract ticket ID from branch name (e.g. WINTOK-8447 from WINTOK-8447:WINTOK-8447 or feature/WINTOK-8447)
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+TICKET=$(echo "$BRANCH" | grep -oE '[A-Z]+-[0-9]+' | head -1)
+
+if [ -z "$TICKET" ]; then
+    exit 0
+fi
+
+JIRA_LINK="$JIRA_URL/browse/$TICKET"
+
+# If commit message has empty "link:" line, fill it
+if grep -q '^link:$' "$COMMIT_MSG_FILE" 2>/dev/null; then
+    sed -i '' "s|^link:$|link: $JIRA_LINK|" "$COMMIT_MSG_FILE"
+# If no "link:" line exists at all, add it after the first line
+elif ! grep -q '^link:' "$COMMIT_MSG_FILE" 2>/dev/null; then
+    # Read current message (excluding comments)
+    MSG=$(grep -v '^#' "$COMMIT_MSG_FILE")
+    if [ -n "$MSG" ]; then
+        # Add issue line after first blank line (or at the end)
+        if grep -q '^$' "$COMMIT_MSG_FILE"; then
+            sed -i '' "0,/^$/s||\\
+link: $JIRA_LINK\\
+|" "$COMMIT_MSG_FILE"
+        else
+            echo "" >> "$COMMIT_MSG_FILE"
+            echo "link: $JIRA_LINK" >> "$COMMIT_MSG_FILE"
+        fi
+    fi
+fi
+
+{{ end -}}
