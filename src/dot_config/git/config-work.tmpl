@@ -4,5 +4,5 @@
     email = "{{ .work.email }}"
 
 [core]
-    hooksPath = ~/.config/git/hooks
+    hooksPath = {{ .chezmoi.homeDir }}/.config/git/hooks
 {{ end -}}
