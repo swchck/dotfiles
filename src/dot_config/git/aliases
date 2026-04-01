@@ -33,6 +33,7 @@
     taggraph = "!f(){ git log --graph --oneline \"$1..$2\"; }; f"
     taggraphnm = "!f(){ git log --graph --oneline --no-merges \"$1..$2\"; }; f"
     tagbrowse = "!sh ~/.config/git/scripts/tagbrowse.sh"
+    tags = "!git tag --sort=-version:refname | fzf --preview 'git log --oneline -10 {}' --header 'Enter: checkout | Ctrl-D: delete | Ctrl-L: log' --bind 'enter:become(git checkout {})' --bind 'ctrl-d:execute-silent(git tag -d {})+reload(git tag --sort=-version:refname)' --bind 'ctrl-l:execute(git log --oneline {}..HEAD | less)'"
 
     # Interactive stash picker (requires fzf, bat)
     unstash = "!f(){ \
