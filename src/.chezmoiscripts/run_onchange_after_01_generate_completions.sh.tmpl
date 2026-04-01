@@ -51,6 +51,16 @@ if command -v deno &>/dev/null; then
     deno completions fish > "$FISH_COMPLETIONS/deno.fish" 2>/dev/null || true
 fi
 
+# ghorg
+if command -v ghorg &>/dev/null; then
+    ghorg completion fish > "$FISH_COMPLETIONS/ghorg.fish" 2>/dev/null || true
+fi
+
+# deadbranch
+if command -v deadbranch &>/dev/null; then
+    deadbranch completions fish > "$FISH_COMPLETIONS/deadbranch.fish" 2>/dev/null || true
+fi
+
 echo "Fish completions generated in $FISH_COMPLETIONS"
 
 {{ end -}}
