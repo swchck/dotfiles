@@ -13,6 +13,6 @@ github:
   description: "Clone all personal GitHub repos to {{ .paths.personal }}"
 {{ if and (eq .machine_type "work") (hasKey . "gitlab") }}
 gitlab:
-  cmd: ghorg clone {{ .gitlab.user }} --config={{ .chezmoi.homeDir }}/.config/ghorg/gitlab.yaml --clone-type=org
+  cmd: ghorg clone {{ .gitlab.org }} --config={{ .chezmoi.homeDir }}/.config/ghorg/gitlab.yaml --clone-type=org
   description: "Clone all work GitLab repos to {{ .paths.work }}"
 {{ end -}}

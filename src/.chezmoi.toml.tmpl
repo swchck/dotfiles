@@ -132,6 +132,7 @@ encryption = "age"
 
 [data.gitlab]
     user = {{ promptStringOnce (dig "gitlab" (dict) .) "user" "GitLab username" | quote }}
+    org = {{ promptStringOnce (dig "gitlab" (dict) .) "org" "GitLab organization/group" | quote }}
     url = {{ promptStringOnce (dig "gitlab" (dict) .) "url" "GitLab URL (without https://)" | quote }}
 
 [data.openfortivpn]
