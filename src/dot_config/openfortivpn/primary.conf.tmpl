@@ -11,7 +11,7 @@ port = {{ .openfortivpn.port }}
 #########################
 
 username = {{ .openfortivpn.username }}
-password = {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "vpn-primary-password" "-w" | trim }}
+password = {{ (decrypt (include ".chezmoitemplates/secrets.toml.age") | fromToml).secrets.vpn_primary_password }}
 
 #############################
 #   Advanced Configuration  #

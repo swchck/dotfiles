@@ -1,3 +1,3 @@
 # Code::Stats configuration
 # https://codestats.net/
-api_token = "{{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "code-stats-token" "-w" | trim }}"
+api_token = "{{ (decrypt (include ".chezmoitemplates/secrets.toml.age") | fromToml).secrets.code_stats_token }}"

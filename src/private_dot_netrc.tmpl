@@ -1,3 +1,3 @@
 {{- if and (eq .machine_type "work") (hasKey . "gitlab") -}}
-machine {{ .gitlab.url }} login {{ .gitlab.user }} password {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "gitlab-token" "-w" | trim }}
+machine {{ .gitlab.url }} login {{ .gitlab.user }} password {{ (decrypt (include ".chezmoitemplates/secrets.toml.age") | fromToml).secrets.gitlab_token }}
 {{ end -}}

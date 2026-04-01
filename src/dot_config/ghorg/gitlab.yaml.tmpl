@@ -6,7 +6,7 @@ GHORG_SCM_TYPE: gitlab
 GHORG_SCM_BASE_URL: https://{{ .gitlab.url }}
 GHORG_CLONE_TYPE: org
 GHORG_ABSOLUTE_PATH_TO_CLONE_TO: {{ .paths.work }}
-GHORG_GITLAB_TOKEN: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "ghorg-gitlab-token" "-w" | trim }}
+GHORG_GITLAB_TOKEN: {{ (decrypt (include ".chezmoitemplates/secrets.toml.age") | fromToml).secrets.ghorg_gitlab_token }}
 
 {{ template "ghorg-common" . }}
 {{ else }}
