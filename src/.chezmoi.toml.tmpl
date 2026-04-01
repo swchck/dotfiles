@@ -34,6 +34,7 @@
 {{- $email := "a.bogomazov@proton.me" -}}
 {{- $github_user := "swchck" -}}
 {{- $machine_type := "personal" -}}
+{{- $hostname := .chezmoi.hostname -}}
 
 {{- if not $ephemeral -}}
 {{-   if stdinIsATTY -}}
@@ -41,6 +42,7 @@
 {{-     $email = promptStringOnce . "email" "Personal email" -}}
 {{-     $github_user = promptStringOnce (dig "github" (dict) .) "user" "GitHub username" -}}
 {{-     $machine_type = promptChoiceOnce . "machine_type" "Machine type" (list "personal" "work") -}}
+{{-     $hostname = promptStringOnce . "hostname" "Machine hostname" -}}
 {{-   end -}}
 {{- end -}}
 
@@ -101,6 +103,7 @@ encryption = "age"
     name = {{ $name | quote }}
     email = {{ $email | quote }}
     machine_type = {{ $machine_type | quote }}
+    hostname = {{ $hostname | quote }}
     osid = {{ $osID | quote }}
     ephemeral = {{ $ephemeral }}
     headless = {{ $headless }}

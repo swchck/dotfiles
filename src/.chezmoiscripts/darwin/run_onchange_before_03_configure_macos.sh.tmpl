@@ -26,15 +26,9 @@ done 2>/dev/null &
 #################################
 
 # Set computer name (as done via System Preferences → Sharing)
-{{ if eq .machine_type "work" -}}
-sudo scutil --set ComputerName "fl0ppy-ma4ine"
-sudo scutil --set HostName "fl0ppy-ma4ine"
-sudo scutil --set LocalHostName "fl0ppy-ma4ine"
-{{ else -}}
-sudo scutil --set ComputerName "k3rnel-pan1c"
-sudo scutil --set HostName "k3rnel-pan1c"
-sudo scutil --set LocalHostName "k3rnel-pan1c"
-{{ end -}}
+sudo scutil --set ComputerName "{{ .hostname }}"
+sudo scutil --set HostName "{{ .hostname }}"
+sudo scutil --set LocalHostName "{{ .hostname }}"
 
 #################################
 #            Dock               #
