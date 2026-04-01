@@ -59,7 +59,7 @@ cli = [
     "act",                  # Run GitHub Actions locally
     "git-delta",            # beautiful git diffs
     "lazygit",              # Git TUI
-    "deadbranch",           # Git dead branch cleaner
+    "armgabrielyan/deadbranch/deadbranch", # Git dead branch cleaner
 
     # Data & Text Processing
     "jaq",                  # JSON/YAML/TOML processor (jq replacement, Rust)
