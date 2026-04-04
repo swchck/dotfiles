@@ -4,7 +4,8 @@
 
 GHORG_SCM_TYPE: github
 GHORG_CLONE_TYPE: user
-GHORG_ABSOLUTE_PATH_TO_CLONE_TO: {{ .paths.personal }}
+GHORG_ABSOLUTE_PATH_TO_CLONE_TO: {{ .paths.repo_root }}
+GHORG_OUTPUT_DIR: personal
 GHORG_GITHUB_TOKEN: {{ (decrypt (include ".chezmoitemplates/secrets.toml.age") | fromToml).secrets.ghorg_github_token }}
 
 {{ template "ghorg-common" . }}
