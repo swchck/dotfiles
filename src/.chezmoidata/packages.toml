@@ -92,6 +92,7 @@ cli = [
     "graphviz",             # graph visualization
     "upx",                  # binary packer
     "neur0map/tap/gpk",     # unified package manager TUI
+    "rtk",
 ]
 
 casks = [
