@@ -70,6 +70,7 @@ cli = [
     "iproute2mac",          # iproute2 for macOS
     "wget",                 # download utility
     "bandwhich",            # network utilization
+    "vegeta",               # HTTP load testing tool
 
     # Media & Archives
     "ffmpeg",               # video processing
@@ -91,7 +92,6 @@ cli = [
     "tailspin",             # log viewer
     "graphviz",             # graph visualization
     "upx",                  # binary packer
-    "neur0map/tap/gpk",     # unified package manager TUI
     "rtk",
 ]
 
@@ -109,6 +109,7 @@ casks = [
     # AI
     "chatgpt",              # OpenAI ChatGPT
     "claude",               # Anthropic Claude
+    "claude-code",          # Anthropic Claude Code CLI
     "copilot-cli",          # GitHub Copilot CLI
 
     # Video

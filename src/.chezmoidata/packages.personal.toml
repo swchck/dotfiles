@@ -39,6 +39,7 @@ casks = [
     # Browsers
     "orion",                # WebKit Browser
     "ungoogled-chromium",   # Privacy Browser
+    "helium-browser",       # Chromium-based privacy browser
 
     # Utilities
     "motrix",               # Download Manager

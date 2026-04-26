@@ -1,0 +1,23 @@
+# Claude Code plugins — source of truth for both settings.json and install script.
+#
+# Each entry under [[claude.plugins.install]] declares a user-scope plugin to
+# install on apply. Marketplaces other than the built-in claude-plugins-official
+# must be declared in [claude.plugins.marketplaces] (key = marketplace name,
+# value = github "owner/repo").
+
+[claude.plugins]
+
+[claude.plugins.marketplaces]
+claude-dashboard = "uppinote20/claude-dashboard"
+
+[[claude.plugins.install]]
+name = "gopls-lsp"
+marketplace = "claude-plugins-official"
+
+[[claude.plugins.install]]
+name = "frontend-design"
+marketplace = "claude-plugins-official"
+
+[[claude.plugins.install]]
+name = "claude-dashboard"
+marketplace = "claude-dashboard"

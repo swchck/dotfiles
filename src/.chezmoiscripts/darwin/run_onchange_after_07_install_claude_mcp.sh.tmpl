@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Install Claude Code user-scope MCP servers declared in .chezmoidata/claude_mcp.toml.
+#
+# Hash (force re-run when manifest changes):
+#   servers: {{ .claude.mcp.servers | toJson | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "claude CLI not found, skipping MCP install"
+    exit 0
+fi
+
+echo "Registering Claude Code user-scope MCP servers..."
+{{ range .claude.mcp.servers -}}
+{{- $config := dict "command" .command "args" .args -}}
+claude mcp remove {{ .name | quote }} --scope user >/dev/null 2>&1 || true
+claude mcp add-json {{ .name | quote }} {{ $config | toJson | quote }} --scope user
+{{ end }}

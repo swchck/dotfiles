@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Install Claude Code plugins declared in .chezmoidata/claude_plugins.toml.
+#
+# Hashes (force re-run when manifest changes):
+#   marketplaces: {{ .claude.plugins.marketplaces | toJson | sha256sum }}
+#   install:      {{ .claude.plugins.install | toJson | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "claude CLI not found, skipping plugin install"
+    exit 0
+fi
+
+echo "Registering Claude Code marketplaces..."
+{{ range $name, $repo := .claude.plugins.marketplaces -}}
+claude plugin marketplace add {{ $repo | quote }} || true
+{{ end }}
+
+echo "Installing Claude Code plugins..."
+{{ range .claude.plugins.install -}}
+claude plugin install {{ printf "%s@%s" .name .marketplace | quote }} || true
+{{ end }}

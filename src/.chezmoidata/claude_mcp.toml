@@ -1,0 +1,14 @@
+# Claude Code MCP servers — installed via `claude mcp add-json --scope user`.
+#
+# Each entry under [[claude.mcp.servers]] becomes a user-scope MCP server.
+# Re-applied (remove + add) whenever this file changes.
+
+[[claude.mcp.servers]]
+name = "context7"
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[[claude.mcp.servers]]
+name = "playwright"
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]

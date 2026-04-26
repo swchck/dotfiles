@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Wrapper around the claude-dashboard plugin.
+# Post-processing applied on top of what claude-dashboard.local.json configures:
+#   1. contextPercentage added via config (bar + %)
+#   2. Single-line layout enforced via config
+#   3. Strip the 📁 folder emoji (and trailing space) from projectInfo output
+#   4. Hide the todo/tasks segment when there are no pending tasks:
+#      - "Todos: -" or "Tasks: -"         → drop (no tasks at all)
+#      - "Todos: N/N" or "Tasks: N/N"     → drop (all completed, N==N)
+#      - "Todos: N/M" or "Tasks: N/M" N<M → keep (some still pending)
+
+PLUGIN="node {{ .chezmoi.homeDir }}/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.26.1/dist/index.js"
+
+# Read stdin once, run plugin
+input=$(cat)
+raw_output=$(printf '%s' "$input" | $PLUGIN 2>/dev/null)
+
+# Apply post-processing via a single Perl pass (pure bytes — no Encode module
+# required, works on macOS system Perl and any standard Perl installation).
+#
+#   a) Strip 📁 (U+1F4C1, UTF-8 bytes: \xF0\x9F\x93\x81) plus any ANSI escape
+#      sequences immediately surrounding it and one optional trailing space.
+#   b) Split on the dim-pipe separator the plugin emits between widgets
+#      (" \e[2m┃\e[0m "), drop any segment whose visible text is a placeholder
+#      todo/tasks entry ("Todos: -", "Tasks: N/N", etc.), then rejoin.
+printf '%s' "$raw_output" | perl -e '
+    use strict;
+    binmode(STDIN,  ":bytes");
+    binmode(STDOUT, ":bytes");
+    local $/;
+    my $text = <STDIN>;
+
+    # Step a: strip ANSI codes surrounding the folder emoji, then the emoji
+    # itself (UTF-8 bytes F0 9F 93 81) and one optional trailing space.
+    my $ANSI = qr/(?:\e\[[0-9;]*m)*/;
+    $text =~ s/${ANSI}\xF0\x9F\x93\x81${ANSI}\s?//g;
+
+    # Step b: split on the dim-pipe widget separator, filter, rejoin.
+    # Separator visible form: " ┃ " (┃ = U+2503, UTF-8: E2 94 83)
+    # with surrounding ANSI dim/reset codes.
+    my $SEP_RE = qr/ \e\[2m\xE2\x94\x83\e\[0m /;
+    my $SEP    = " \e[2m\xE2\x94\x83\e[0m ";
+    my @parts  = split($SEP_RE, $text);
+    my @kept = grep {
+        my $vis = $_;
+        $vis =~ s/\e\[[0-9;]*m//g;  # strip ANSI for content check
+        $vis =~ s/^\s+|\s+$//g;     # trim
+        my $keep = 1;
+        # Drop "Todos: -" / "Tasks: -" (no tasks configured)
+        $keep = 0 if $vis =~ /^(?:Todos|Tasks):\s*-\s*$/;
+        # Drop "Todos: N/N" / "Tasks: N/N" (all done)
+        $keep = 0 if $vis =~ /^(?:Todos|Tasks):\s*(\d+)\/(\d+)\s*$/ && $1 == $2;
+        $keep;
+    } @parts;
+    print join($SEP, @kept);
+'

@@ -1,0 +1,6 @@
+{
+  "banner": "never",
+  "model": "gpt-4.1",
+  "renderMarkdown": true,
+  "theme": "auto"
+}

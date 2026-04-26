@@ -62,3 +62,34 @@
 .config/k9s
 .netrc
 {{ end }}
+
+# ── Claude Code runtime (never sync) ─────────────────────────────────
+# Static config (CLAUDE.md, settings.json, hooks/, skills/, statusline-command.sh)
+# IS tracked under src/dot_claude/. Everything below is per-machine state.
+
+.claude/backups
+.claude/cache
+.claude/file-history
+.claude/history.jsonl
+.claude/paste-cache
+.claude/plans
+.claude/plugins
+.claude/policy-limits.json
+.claude/projects
+.claude/remote-settings.json
+.claude/session-env
+.claude/sessions
+.claude/shell-snapshots
+.claude/stats-cache.json
+.claude/tasks
+.claude/telemetry
+.claude/claude-dashboard.local.json
+.claude/**/.DS_Store
+.claude/*.headroom-backup-*
+
+# ── Copilot CLI runtime ──────────────────────────────────────────────
+# Only config.json (create-once) tracked under src/dot_copilot/.
+
+.copilot/command-history-state.json
+.copilot/logs
+.copilot/session-state

@@ -1,0 +1,138 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(echo:*)",
+      "Bash(printf:*)",
+      "Bash(which:*)",
+      "Bash(type:*)",
+      "Bash(uname:*)",
+      "Bash(date:*)",
+      "Bash(file:*)",
+      "Bash(stat:*)",
+      "Bash(tree:*)",
+      "Bash(diff:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(cut:*)",
+      "Bash(tr:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(fd:*)",
+      "Bash(bat:*)",
+      "Bash(eza:*)",
+      "Bash(jq:*)",
+      "Bash(yq:*)",
+      "Bash(sleep:*)",
+      "Bash(true)",
+      "Bash(false)",
+      "Bash(test:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git fetch:*)",
+      "Bash(git remote:*)",
+      "Bash(git stash list:*)",
+      "Bash(go build:*)",
+      "Bash(go test:*)",
+      "Bash(go vet:*)",
+      "Bash(go run:*)",
+      "Bash(go mod:*)",
+      "Bash(go doc:*)",
+      "Bash(task lint:*)",
+      "Bash(task test:*)",
+      "Bash(npm install:*)",
+      "Bash(npm test:*)",
+      "Bash(npx vite:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vue-tsc:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx prettier:*)",
+      "Bash(npx playwright:*)",
+      "Bash(hugo:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(chezmoi diff:*)",
+      "Bash(chezmoi managed:*)",
+      "Bash(chezmoi data:*)",
+      "Bash(chezmoi cat:*)",
+      "Bash(chezmoi status:*)",
+      "Bash(chezmoi doctor:*)",
+      "Bash(chezmoi execute-template:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker images:*)",
+      "Bash(docker inspect:*)",
+      "Bash(kubectl get:*)",
+      "Bash(kubectl describe:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(rtk gain:*)",
+      "Bash(rtk discover:*)"
+    ],
+    "defaultMode": "default"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ .chezmoi.homeDir }}/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash {{ .chezmoi.homeDir }}/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    {{- $first := true -}}
+    {{- range .claude.plugins.install }}
+    {{- if not $first }},{{ end }}
+    "{{ .name }}@{{ .marketplace }}": true
+    {{- $first = false -}}
+    {{- end }}
+  },
+  "extraKnownMarketplaces": {
+    {{- $first := true -}}
+    {{- range $name, $repo := .claude.plugins.marketplaces }}
+    {{- if not $first }},{{ end }}
+    "{{ $name }}": {
+      "source": {
+        "source": "github",
+        "repo": "{{ $repo }}"
+      }
+    }
+    {{- $first = false -}}
+    {{- end }}
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "autoMemoryEnabled": true,
+  "autoDreamEnabled": true,
+  "autoCompactWindow": 800000,
+  "skillListingBudgetFraction": 0.005,
+  "feedbackSurveyRate": 0,
+  "spinnerTipsEnabled": false,
+  "promptSuggestionEnabled": false,
+  "autoUpdatesChannel": "stable",
+  "minimumVersion": "2.1.91",
+  "autoUpdateChannel": "latest"
+}
