@@ -36,10 +36,10 @@ printf '%s' "$raw_output" | perl -e '
     $text =~ s/${ANSI}\xF0\x9F\x93\x81${ANSI}\s?//g;
 
     # Step b: split on the dim-pipe widget separator, filter, rejoin.
-    # Separator visible form: " ┃ " (┃ = U+2503, UTF-8: E2 94 83)
+    # Separator visible form: " │ " (│ = U+2502, UTF-8: E2 94 82)
     # with surrounding ANSI dim/reset codes.
-    my $SEP_RE = qr/ \e\[2m\xE2\x94\x83\e\[0m /;
-    my $SEP    = " \e[2m\xE2\x94\x83\e[0m ";
+    my $SEP_RE = qr/ \e\[2m\xE2\x94\x82\e\[0m /;
+    my $SEP    = " \e[2m\xE2\x94\x82\e[0m ";
     my @parts  = split($SEP_RE, $text);
     my @kept = grep {
         my $vis = $_;
