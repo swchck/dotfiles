@@ -50,5 +50,4 @@ casks = [
 
 [packages.darwin.personal.appstore_apps]
 FoXray = 6448898396       # macOS X-Ray VPN Client
-LINE = 539883307          # LINE Messenger
 SnippetsLab = 1006087419  # Code Snippets Manager
