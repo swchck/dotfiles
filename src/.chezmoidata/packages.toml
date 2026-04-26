@@ -93,6 +93,7 @@ cli = [
     "graphviz",             # graph visualization
     "upx",                  # binary packer
     "rtk",
+    "pam-reattach",         # PAM module for tmux/screen Touch ID sudo support
 ]
 
 casks = [

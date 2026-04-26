@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Configure sudo to accept Touch ID, then Apple Watch, then password fallback.
+#
+# Uses /etc/pam.d/sudo_local (Sonoma 14+ extension point — survives macOS
+# updates, unlike editing /etc/pam.d/sudo directly). The parent sudo PAM stack
+# already includes sudo_local, so this file just adds the biometric layers.
+#
+# Order matters in PAM: list "sufficient" entries from most-preferred to least.
+# Each "sufficient" short-circuits on success; on failure, control falls
+# through to the next line, ultimately reaching pam_opendirectory.so (password)
+# from the parent /etc/pam.d/sudo.
+#
+# Hash for chezmoi onchange trigger:
+#   version: 1
+
+set -euo pipefail
+
+TARGET="/etc/pam.d/sudo_local"
+
+# --- 1. Detect Homebrew prefix and pam_reattach.so ---------------------------
+# pam_reattach lets Touch ID work inside tmux/screen sessions. Without it,
+# sudo inside a multiplexer falls through to password.
+BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
+if [[ -z "${BREW_PREFIX}" ]]; then
+    echo "Homebrew not found, skipping sudo Touch ID setup"
+    exit 0
+fi
+
+REATTACH_SO="${BREW_PREFIX}/lib/pam/pam_reattach.so"
+if [[ ! -f "${REATTACH_SO}" ]]; then
+    echo "WARN: pam_reattach.so not at ${REATTACH_SO} (run 'brew install pam-reattach')"
+    REATTACH_SO=""
+fi
+
+# --- 2. Install pam-watchid if missing ---------------------------------------
+# No working Homebrew tap exists; install from upstream (mostpinkest fork —
+# active maintainer, supports Sequoia 15+ via biometrics-or-companion policy).
+WATCHID_SO="/usr/local/lib/pam/pam_watchid.so"
+
+if [[ ! -f "${WATCHID_SO}" ]]; then
+    if ! command -v swiftc >/dev/null 2>&1; then
+        echo "WARN: swiftc not found (Xcode CLT required); skipping pam-watchid install"
+    else
+        echo "Installing pam-watchid from mostpinkest/pam-watchid (sudo prompt may appear)..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mostpinkest/pam-watchid/HEAD/install.sh)" -- enable || \
+            echo "WARN: pam-watchid install failed; continuing without Apple Watch support"
+    fi
+fi
+
+if [[ ! -f "${WATCHID_SO}" ]]; then
+    WATCHID_SO=""
+fi
+
+# --- 3. Build desired sudo_local content -------------------------------------
+TMP="$(mktemp)"
+trap 'rm -f "${TMP}"' EXIT
+
+{
+    echo "# managed by chezmoi (08_configure_sudo_touchid)"
+    echo "# Touch ID + Apple Watch sudo, password fallback via parent sudo stack"
+    if [[ -n "${REATTACH_SO}" ]]; then
+        # `optional` (not sufficient/required) — survives `brew upgrade` moves.
+        echo "auth       optional       ${REATTACH_SO} ignore_ssh"
+    fi
+    echo "auth       sufficient     pam_tid.so"
+    if [[ -n "${WATCHID_SO}" ]]; then
+        echo "auth       sufficient     ${WATCHID_SO}"
+    fi
+} > "${TMP}"
+
+# --- 4. Idempotent install ---------------------------------------------------
+if [[ -f "${TARGET}" ]] && cmp -s "${TMP}" "${TARGET}"; then
+    echo "${TARGET} already matches desired config, nothing to do"
+    exit 0
+fi
+
+echo "Updating ${TARGET} (sudo prompt may appear)..."
+sudo install -o root -g wheel -m 0644 "${TMP}" "${TARGET}"
+
+echo
+echo "Done. Verify with: sudo -k && sudo true"
+echo "Lockout recovery: boot to Recovery Mode and 'rm /etc/pam.d/sudo_local'"
