@@ -16,9 +16,9 @@ Classify the task. Tell the user your classification before delegating, so they 
 | Class | Pipeline |
 |---|---|
 | **trivial** (one-line fix, rename, typo) | engineer only, then stop |
-| **bugfix** (localized behavior change) | engineer → qa → reviewer |
-| **feature-lib** (new code, no UI/HTTP surface) | explorer → architect → engineer → qa → reviewer |
-| **feature-ui** (touches UI or HTTP API) | explorer → architect → engineer → qa → aqa → reviewer |
+| **bugfix** (localized behavior change) | engineer → qa → ase → reviewer |
+| **feature-lib** (new code, no UI/HTTP surface) | explorer → architect → engineer → qa → ase → reviewer |
+| **feature-ui** (touches UI or HTTP API) | explorer → architect → engineer → qa → aqa → ase → reviewer |
 
 If you can't tell, ask the user one specific question and wait. Don't guess.
 
@@ -54,6 +54,13 @@ Delegate to `aqa`. Pass: the user-facing flows that need coverage + entry-point 
 
 aqa writes Playwright specs and runs them. If green, continue. If red, surface the failure — don't auto-fix.
 
+## Stage 5.5 — application-security-engineer (skip for trivial only)
+
+Delegate to `application-security-engineer`. Pass: file:line list of changes + one-sentence description of the business domain (SaaS, game, etc.) so it can target the right threat surfaces.
+
+If verdict is `secure` → continue.
+If verdict is `fix-first` → surface findings to user. Do not auto-fix. Do not continue to reviewer until user decides.
+
 ## Stage 6 — reviewer
 
 Delegate to `reviewer` last. Pass: file:line list of changes (or `git diff` instruction).
@@ -68,6 +75,7 @@ Reviewer reports only findings ≥ 80 confidence. If `ship` → done. If `fix-fi
 - Tests added (count + green/red)
 - Spec verification result
 - e2e result if aqa ran
+- Security verdict (ase result) if it ran
 - Reviewer verdict
 - Files touched (paths only, no diff)
 - Open questions for the user (if any)
