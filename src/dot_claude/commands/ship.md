@@ -1,5 +1,5 @@
 ---
-description: Orchestrate explorer → architect → engineer → qa → (aqa) → reviewer pipeline for a feature or fix
+description: Orchestrate explorer → architect → [backend|frontend]-engineer → qa → (aqa) → ase → reviewer pipeline for a feature or fix
 argument-hint: feature description or bug to fix
 ---
 
@@ -15,10 +15,10 @@ Classify the task. Tell the user your classification before delegating, so they 
 
 | Class | Pipeline |
 |---|---|
-| **trivial** (one-line fix, rename, typo) | engineer only, then stop |
-| **bugfix** (localized behavior change) | engineer → qa → ase → reviewer |
-| **feature-lib** (new code, no UI/HTTP surface) | explorer → architect → engineer → qa → ase → reviewer |
-| **feature-ui** (touches UI or HTTP API) | explorer → architect → engineer → qa → aqa → ase → reviewer |
+| **trivial** (one-line fix, rename, typo) | [backend\|frontend]-engineer only, then stop |
+| **bugfix** (localized behavior change) | [backend\|frontend]-engineer → qa → ase → reviewer |
+| **feature-lib** (new code, no UI/HTTP surface) | explorer → architect → backend-engineer → qa → ase → reviewer |
+| **feature-ui** (touches UI or HTTP API) | explorer → architect → backend-engineer → frontend-engineer → qa → aqa → ase → reviewer |
 
 If you can't tell, ask the user one specific question and wait. Don't guess.
 
@@ -37,16 +37,21 @@ Output: a blueprint. If architect says "trivial — engineer can proceed directl
 
 ## Stage 3 — engineer
 
-Delegate to `engineer`. Pass: blueprint (or task description if no blueprint).
+Route to the right specialist based on the work involved:
+- `backend-engineer` — API, services, business logic, data models, databases, auth.
+- `frontend-engineer` — UI components, CSS, browser APIs, forms, accessibility.
+- Both, serially — if the feature spans both layers: `backend-engineer` first (data contracts and APIs), then `frontend-engineer` (UI consuming those APIs).
 
-Engineer must run the unit tests they wrote and confirm green before returning. If they return without green tests, send back with "tests must pass" and stop after one retry.
+Pass: blueprint (or task description if no blueprint).
+
+Each engineer must run the unit tests they wrote and confirm green before returning. If they return without green tests, send back with "tests must pass" and stop after one retry.
 
 ## Stage 4 — qa
 
-Delegate to `qa`. Pass: original task spec + summary of what engineer changed (file:line list).
+Delegate to `qa`. Pass: original task spec + summary of what the engineer(s) changed (file:line list).
 
 If qa returns `matches-spec` → continue.
-If qa returns `partial` or `diverges` → send the gaps back to engineer ONCE. If still gaps, surface to user — don't loop a third time.
+If qa returns `partial` or `diverges` → send the gaps back to the responsible engineer ONCE. If still gaps, surface to user — don't loop a third time.
 
 ## Stage 5 — aqa (only for feature-ui)
 
