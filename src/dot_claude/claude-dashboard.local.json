@@ -1,0 +1,25 @@
+{
+  "language": "en",
+  "plan": "max",
+  "displayMode": "custom",
+  "lines": [
+    [
+      "model",
+      "contextBar",
+      "contextPercentage",
+      "contextTokens",
+      "cost",
+      "rateLimit5h",
+      "rateLimit7d",
+      "rateLimit7dSonnet",
+      "projectInfo",
+      "todoProgress",
+      "agentStatus"
+    ]
+  ],
+  "theme": "default",
+  "disabledWidgets": ["codexUsage", "zaiUsage"],
+  "cache": {
+    "ttlSeconds": 300
+  }
+}
