@@ -9,7 +9,7 @@
 
 [claude.plugins.marketplaces]
 claude-dashboard = "uppinote20/claude-dashboard"
-claude-obsidian = "AgriciDaniel/claude-obsidian"
+claude-obsidian-marketplace = "AgriciDaniel/claude-obsidian"
 obsidian-skills = "kepano/obsidian-skills"
 
 [[claude.plugins.install]]
@@ -26,7 +26,7 @@ marketplace = "claude-dashboard"
 
 [[claude.plugins.install]]
 name = "claude-obsidian"
-marketplace = "claude-obsidian"
+marketplace = "claude-obsidian-marketplace"
 
 [[claude.plugins.install]]
 name = "obsidian"
