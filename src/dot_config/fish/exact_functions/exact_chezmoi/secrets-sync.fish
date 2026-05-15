@@ -20,7 +20,15 @@ function secrets-sync
     age -d -i "$key_file" "$source" > $tmpfile 2>/dev/null
 
     # Open in editor
+    set -l hash_before (sha256sum $tmpfile | cut -d' ' -f1)
     $EDITOR $tmpfile
+    set -l hash_after (sha256sum $tmpfile | cut -d' ' -f1)
+
+    if test "$hash_before" = "$hash_after"
+        command rm $tmpfile
+        echo "No changes, skipping commit"
+        return 0
+    end
 
     # Re-encrypt and save
     age -r $recipient -o $source $tmpfile 2>/dev/null
