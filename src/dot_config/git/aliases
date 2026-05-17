@@ -12,6 +12,7 @@
     rb = rebase -i
     last = log -1 HEAD
     root = rev-parse --show-toplevel
+    excl = "!$EDITOR \"$(git rev-parse --git-dir)/info/exclude\""
 
     # Quick actions
     undo = reset --soft HEAD~1
