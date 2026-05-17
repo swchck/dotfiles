@@ -382,8 +382,11 @@ config.status_update_interval = 500 -- ms
 -- config.ulimit_nproc = nil
 
 -- Keyboard protocol
--- config.enable_kitty_keyboard = false
--- config.enable_csi_u_key_encoding = false
+-- Disabled: Claude Code (Ink/Node TUI) desyncs with WezTerm's progressive
+-- keyboard enhancement on focus changes — typing breaks after first prompt
+-- or when window loses focus. Standard xterm encoding is reliable.
+config.enable_kitty_keyboard = false
+config.enable_csi_u_key_encoding = false
 -- config.key_map_preference = "Mapped" -- Mapped, Physical
 -- config.swap_backspace_and_delete = false
 

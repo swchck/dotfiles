@@ -5,6 +5,16 @@
 
 set fish_greeting ""
 
+# ── Terminal protocols ───────────────────────────────────────────────
+# Disable kitty keyboard protocol / xterm modifyOtherKey negotiation.
+# When TUI apps (Claude Code, etc.) crash without restoring terminal state,
+# fish leaves the protocol enabled and keypresses render as literal escape
+# sequences (e.g. `[27u`, `[200~`) until the shell is restarted.
+# fish_features is a universal var read at startup; the guard makes this idempotent.
+if not contains no-keyboard-protocols $fish_features
+    set -Ua fish_features no-keyboard-protocols
+end
+
 # ── Functions ───────────────────────────────────────────────────────
 # Add subdirectories to fish_function_path for lazy autoloading.
 # Functions are loaded on first call, not at startup.
