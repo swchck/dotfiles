@@ -34,7 +34,7 @@ if status is-interactive
     # ── Keybindings ─────────────────────────────────────────────────
 
     # Ctrl+Z: toggle suspend/resume (fg)
-    bind \cz 'if test (count (jobs)) -gt 0; fg; commandline -f repaint; end'
+    bind ctrl-z 'if test (count (jobs)) -gt 0; fg; commandline -f repaint; end'
 
     # !! expansion: type !! then press Space to replace with last command
     function _expand_bang_bang
@@ -46,6 +46,6 @@ if status is-interactive
             commandline -i " "
         end
     end
-    bind " " _expand_bang_bang
+    bind space _expand_bang_bang
 
 end
