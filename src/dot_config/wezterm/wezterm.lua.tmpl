@@ -17,7 +17,12 @@ local config = wezterm.config_builder()
 -- ── Appearance ──────────────────────────────────────────────────────
 
 config.automatically_reload_config = true
-config.color_scheme = "One Dark (Gogh)"
+
+local function is_appearance_dark()
+    local appearance = (wezterm.gui and wezterm.gui.get_appearance()) or "Light"
+    return appearance:find("Dark") ~= nil
+end
+config.color_scheme = is_appearance_dark() and "One Dark (Gogh)" or "One Half Light"
 config.window_background_opacity = 0.97
 config.window_decorations = "RESIZE"          -- FULL, RESIZE, NONE, TITLE
 config.window_close_confirmation = "NeverPrompt" -- AlwaysPrompt, NeverPrompt
@@ -266,6 +271,16 @@ tabline.setup({
 
 -- ── Mouse & Input ───────────────────────────────────────────────────
 
+-- Triple-click selects the entire output of a command (relies on OSC 133
+-- prompt markers — fish 4.x emits them by default).
+config.mouse_bindings = {
+    {
+        event = { Down = { streak = 3, button = "Left" } },
+        action = act.SelectTextAtMouseCursor("SemanticZone"),
+        mods = "NONE",
+    },
+}
+
 -- config.hide_mouse_cursor_when_typing = true
 -- config.swallow_mouse_click_on_pane_focus = false
 -- config.swallow_mouse_click_on_window_focus = false
@@ -451,6 +466,10 @@ config.keys = {
     -- Tab navigation — Cmd + Arrow
     { key = "LeftArrow",  mods = "CMD", action = act.ActivateTabRelative(-1) },
     { key = "RightArrow", mods = "CMD", action = act.ActivateTabRelative(1) },
+
+    -- Jump between prompts in scrollback (uses OSC 133 markers from fish)
+    { key = "UpArrow",   mods = "SHIFT", action = act.ScrollToPrompt(-1) },
+    { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
 
     -- Pane resize — leader + Arrow
     { mods = "LEADER", key = "LeftArrow",  action = act.AdjustPaneSize({ "Left", 5 }) },
