@@ -225,17 +225,19 @@ return {
         })
         require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+        -- Broadcast nvim-cmp capabilities to every server by default.
+        vim.lsp.config("*", { capabilities = capabilities })
+
+        -- Per-server overrides (settings, custom cmd, etc.)
+        for server_name, server_opts in pairs(servers) do
+            if next(server_opts) ~= nil then
+                vim.lsp.config(server_name, server_opts)
+            end
+        end
+
         require("mason-lspconfig").setup({
-            handlers = {
-                function(server_name)
-                    local server = servers[server_name] or {}
-                    -- This handles overriding only values explicitly passed
-                    -- by the server configuration above. Useful when disabling
-                    -- certain features of an LSP (for example, turning off formatting for ts_ls)
-                    server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                    require("lspconfig")[server_name].setup(server)
-                end,
-            },
+            ensure_installed = vim.tbl_keys(servers),
+            automatic_enable = true,
         })
     end,
 }

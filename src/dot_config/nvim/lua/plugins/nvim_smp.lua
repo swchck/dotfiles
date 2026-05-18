@@ -33,12 +33,6 @@ return { -- Autocompletion
         --  into multiple repos for maintenance purposes.
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-path",
-        {
-            "zbirenbaum/copilot-cmp",
-            config = function()
-                require("copilot_cmp").setup()
-            end,
-        },
     },
     config = function()
         -- See `:help cmp`
@@ -73,7 +67,8 @@ return { -- Autocompletion
                 --  This will expand snippets if the LSP sent a snippet.
                 ["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
-                -- Tab also accepts when menu is visible (otherwise default Tab).
+                -- <Tab>: accept LSP/snippet suggestion from the cmp menu.
+                -- <S-Tab>: accept Copilot ghost-text suggestion.
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.confirm({ select = true })
@@ -82,7 +77,10 @@ return { -- Autocompletion
                     end
                 end, { "i", "s" }),
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
+                    local ok, suggestion = pcall(require, "copilot.suggestion")
+                    if ok and suggestion.is_visible() then
+                        suggestion.accept()
+                    elseif cmp.visible() then
                         cmp.select_prev_item()
                     else
                         fallback()
@@ -128,7 +126,6 @@ return { -- Autocompletion
                     -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
                     group_index = 0,
                 },
-                { name = "copilot" },
                 { name = "nvim_lsp" },
                 { name = "luasnip" },
                 { name = "path" },
