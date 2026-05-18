@@ -18,11 +18,11 @@ local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
 
-local function is_appearance_dark()
-    local appearance = (wezterm.gui and wezterm.gui.get_appearance()) or "Light"
-    return appearance:find("Dark") ~= nil
-end
-config.color_scheme = is_appearance_dark() and "One Dark (Gogh)" or "One Half Light"
+-- Always use the dark scheme regardless of macOS appearance.
+-- (macOS may auto-switch system-wide between light/dark, but the terminal
+-- stays dark — see run_onchange_before_03_configure_macos.sh for the
+-- system-level AppleInterfaceStyleSwitchesAutomatically toggle.)
+config.color_scheme = "One Dark (Gogh)"
 config.window_background_opacity = 0.97
 config.window_decorations = "RESIZE"          -- FULL, RESIZE, NONE, TITLE
 config.window_close_confirmation = "NeverPrompt" -- AlwaysPrompt, NeverPrompt
