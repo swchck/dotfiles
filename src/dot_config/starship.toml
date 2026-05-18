@@ -316,7 +316,7 @@ diverged = "⇕"
 up_to_date = ""
 conflicted = "="
 untracked = "?"
-stashed = "$"
+stashed = '\$'
 modified = "!"
 staged = "+"
 renamed = "»"
