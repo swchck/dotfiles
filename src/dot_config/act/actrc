@@ -9,9 +9,10 @@
 #   act -n                 # dry run
 
 # Use medium images (good balance of size and compatibility)
+# ubuntu-latest now tracks 24.04 (GitHub retired the 20.04 hosted image 2025-04).
 -P ubuntu-latest=catthehacker/ubuntu:act-latest
+-P ubuntu-24.04=catthehacker/ubuntu:act-24.04
 -P ubuntu-22.04=catthehacker/ubuntu:act-22.04
--P ubuntu-20.04=catthehacker/ubuntu:act-20.04
 
 # Container architecture (needed on Apple Silicon)
 --container-architecture linux/amd64

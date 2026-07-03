@@ -1,6 +1,6 @@
 # Yazi keybindings for plugins
 
-[manager]
+[mgr]
 prepend_keymap = [
     # Smart filter (live filtering)
     { on = "F", run = "plugin smart-filter", desc = "Smart filter" },

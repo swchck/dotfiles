@@ -110,11 +110,11 @@ gui:
   # branchColorPatterns: {}
 
 git:
-  # Use delta as pager
-  paging:
-    pager: delta --dark --paging=never
-    colorArg: always
-    externalDiffCommand: ""
+  # Use delta as pager (git.pagers array — current schema; legacy git.paging
+  # is auto-migrated. Array form enables `|`-key pager cycling.)
+  pagers:
+    - pager: delta --dark --paging=never
+      colorArg: always
 
   # Auto fetch/refresh
   autoFetch: true

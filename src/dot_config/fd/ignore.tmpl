@@ -12,9 +12,10 @@
 /private/
 /usr/
 
-# User Library (except CloudStorage)
+# User Library (except CloudStorage — `dir/*` keeps Library traversable so
+# the following negation can re-include the CloudStorage child)
 {{ .chezmoi.homeDir }}/Library/*
-{{ .chezmoi.homeDir }}/!/Library/CloudStorage/
+!{{ .chezmoi.homeDir }}/Library/CloudStorage/
 
 # Large binary files
 {{ .chezmoi.homeDir }}/**/*.photoslibrary/

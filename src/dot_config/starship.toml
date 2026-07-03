@@ -378,8 +378,13 @@ style = "bold red dimmed"
 symbol = "☸ "
 format = '[$symbol$context( \($namespace\))]($style) in '
 style = "bold blue"
-context_aliases = { "dev-*" = "dev" }
-user_aliases = { "dev-*" = "dev" }
+# context_aliases/user_aliases map form was removed — use [[kubernetes.contexts]]
+# (regex patterns with capture-group support).
+[[kubernetes.contexts]]
+context_pattern = "dev-.*"
+context_alias = "dev"
+user_pattern = "dev-.*"
+user_alias = "dev"
 
 [lua]
 # https://starship.rs/config/#lua
