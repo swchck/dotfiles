@@ -8,49 +8,110 @@
 #      - "Todos: -" or "Tasks: -"         → drop (no tasks at all)
 #      - "Todos: N/N" or "Tasks: N/N"     → drop (all completed, N==N)
 #      - "Todos: N/M" or "Tasks: N/M" N<M → keep (some still pending)
+#   5. Wrap onto multiple lines when the rendered output exceeds the terminal
+#      width. Greedy fill: pack widgets per line until the next one would
+#      overflow, then break. Visible length ignores ANSI/OSC8 escapes.
+#
+# Terminal width detection (in order):
+#   a) $COLUMNS env var (rare — Claude Code doesn't pass it)
+#   b) `wezterm cli list` if $WEZTERM_PANE is set
+#   c) fallback to 120
 
-PLUGIN="node {{ .chezmoi.homeDir }}/.claude/plugins/cache/claude-dashboard/claude-dashboard/1.26.1/dist/index.js"
+# Versionless plugin path — survives claude-dashboard upgrades (the versioned
+# cache dir under plugins/cache/... changes on every update and would break
+# this wrapper; this symlinked path stays stable).
+PLUGIN="node {{ .chezmoi.homeDir }}/.claude/plugins/claude-dashboard/dist/index.js"
 
-# Read stdin once, run plugin
+# Detect terminal width.
+detect_width() {
+    if [[ -n "${COLUMNS:-}" ]] && [[ "$COLUMNS" =~ ^[0-9]+$ ]]; then
+        echo "$COLUMNS"
+        return
+    fi
+    if [[ -n "${WEZTERM_PANE:-}" ]] && command -v wezterm >/dev/null 2>&1; then
+        local w
+        w=$(wezterm cli list --format=json 2>/dev/null \
+            | jq --argjson pid "$WEZTERM_PANE" -r \
+                '.[] | select(.pane_id == $pid) | .size.cols' 2>/dev/null)
+        if [[ -n "$w" && "$w" != "null" && "$w" =~ ^[0-9]+$ ]]; then
+            echo "$w"
+            return
+        fi
+    fi
+    echo 120
+}
+
+WIDTH=$(detect_width)
+
+# Read stdin once, run plugin.
 input=$(cat)
 raw_output=$(printf '%s' "$input" | $PLUGIN 2>/dev/null)
 
-# Apply post-processing via a single Perl pass (pure bytes — no Encode module
-# required, works on macOS system Perl and any standard Perl installation).
+# Single Perl pass — pure bytes, no Encode module required.
 #
-#   a) Strip 📁 (U+1F4C1, UTF-8 bytes: \xF0\x9F\x93\x81) plus any ANSI escape
+#   a) Strip 📁 (U+1F4C1, UTF-8 bytes F0 9F 93 81) plus any ANSI escape
 #      sequences immediately surrounding it and one optional trailing space.
-#   b) Split on the dim-pipe separator the plugin emits between widgets
-#      (" \e[2m┃\e[0m "), drop any segment whose visible text is a placeholder
-#      todo/tasks entry ("Todos: -", "Tasks: N/N", etc.), then rejoin.
-printf '%s' "$raw_output" | perl -e '
+#   b) Split on the dim-pipe widget separator the plugin emits between
+#      widgets (" \e[2m│\e[0m "), drop placeholder todo/tasks segments,
+#      then greedily wrap segments onto lines no wider than $WIDTH columns.
+printf '%s' "$raw_output" | WIDTH="$WIDTH" perl -e '
     use strict;
     binmode(STDIN,  ":bytes");
     binmode(STDOUT, ":bytes");
     local $/;
-    my $text = <STDIN>;
+    my $text  = <STDIN>;
+    my $width = int($ENV{WIDTH} || 120);
 
-    # Step a: strip ANSI codes surrounding the folder emoji, then the emoji
-    # itself (UTF-8 bytes F0 9F 93 81) and one optional trailing space.
+    # Step a: strip ANSI around 📁, then the emoji and one optional space.
     my $ANSI = qr/(?:\e\[[0-9;]*m)*/;
     $text =~ s/${ANSI}\xF0\x9F\x93\x81${ANSI}\s?//g;
 
-    # Step b: split on the dim-pipe widget separator, filter, rejoin.
     # Separator visible form: " │ " (│ = U+2502, UTF-8: E2 94 82)
-    # with surrounding ANSI dim/reset codes.
     my $SEP_RE = qr/ \e\[2m\xE2\x94\x82\e\[0m /;
     my $SEP    = " \e[2m\xE2\x94\x82\e[0m ";
-    my @parts  = split($SEP_RE, $text);
+
+    # Strip ANSI + OSC8 hyperlinks to compute visible char count.
+    # OSC8: ESC ] 8 ; ... ESC \   (the closing form ESC]8;;ESC\ marks the end)
+    my $visible_len = sub {
+        my ($s) = @_;
+        $s =~ s/\e\[[0-9;]*m//g;            # CSI ... m
+        $s =~ s/\e\]8;[^\e]*\e\\//g;        # OSC 8 (any payload until ESC\)
+        return length($s);
+    };
+
+    my @parts = split($SEP_RE, $text);
+
+    # Step b1: filter placeholder todo/tasks segments.
     my @kept = grep {
-        my $vis = $_;
-        $vis =~ s/\e\[[0-9;]*m//g;  # strip ANSI for content check
-        $vis =~ s/^\s+|\s+$//g;     # trim
+        my $vis = &$visible_len($_);
+        my $txt = $_;
+        $txt =~ s/\e\[[0-9;]*m//g;
+        $txt =~ s/\e\]8;[^\e]*\e\\//g;
+        $txt =~ s/^\s+|\s+$//g;
         my $keep = 1;
-        # Drop "Todos: -" / "Tasks: -" (no tasks configured)
-        $keep = 0 if $vis =~ /^(?:Todos|Tasks):\s*-\s*$/;
-        # Drop "Todos: N/N" / "Tasks: N/N" (all done)
-        $keep = 0 if $vis =~ /^(?:Todos|Tasks):\s*(\d+)\/(\d+)\s*$/ && $1 == $2;
+        $keep = 0 if $txt =~ /^(?:Todos|Tasks):\s*-\s*$/;
+        $keep = 0 if $txt =~ /^(?:Todos|Tasks):\s*(\d+)\/(\d+)\s*$/ && $1 == $2;
         $keep;
     } @parts;
-    print join($SEP, @kept);
+
+    # Step b2: greedy wrap onto lines no wider than $width columns.
+    # Separator " │ " contributes 3 visible columns between segments.
+    my $sep_w = 3;
+    my @lines = ([]);
+    my $cur   = 0;
+    for my $seg (@kept) {
+        my $seg_w = &$visible_len($seg);
+        if (@{$lines[-1]} == 0) {
+            push @{$lines[-1]}, $seg;
+            $cur = $seg_w;
+        } elsif ($cur + $sep_w + $seg_w > $width) {
+            push @lines, [$seg];
+            $cur = $seg_w;
+        } else {
+            push @{$lines[-1]}, $seg;
+            $cur += $sep_w + $seg_w;
+        }
+    }
+
+    print join("\n", map { join($SEP, @$_) } @lines);
 '
