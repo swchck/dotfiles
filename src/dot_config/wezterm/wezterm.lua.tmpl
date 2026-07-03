@@ -166,6 +166,19 @@ local extra_process_icons = {
     ["claude"] = { wezterm.nerdfonts.md_robot, color = { fg = "#D97757" } },
 }
 
+-- Claude Code status dot: colored ● reflecting the `claude_status` pane user var
+-- set by ~/.claude/hooks/wezterm-claude-status.sh (green=idle, yellow=waiting for
+-- your input/choice, blue=working). Shows nothing when Claude isn't running.
+-- tabline passes (TabInformation, PaneInformation) to function components.
+local claude_status_colors = { working = "#61afef", waiting = "#e5c07b", idle = "#98c379" }
+local function claude_status_dot(tab, pane)
+    local st = pane and pane.user_vars and pane.user_vars.claude_status
+    if not st or st == "" then return "" end
+    local color = claude_status_colors[st]
+    if not color then return "" end
+    return wezterm.format({ { Foreground = { Color = color } }, { Text = "● " } })
+end
+
 tabline.setup({
     options = {
         icons_enabled = true,
@@ -198,11 +211,13 @@ tabline.setup({
         },
         tabline_c = {},
         tab_active = {
+            claude_status_dot,
             { "process", padding = { left = 1, right = 0 }, icons_only = true, process_to_icon = extra_process_icons },
             function(tab) return tostring(tab.tab_index + 1) .. " " end,
             { "zoomed", padding = 0 },
         },
         tab_inactive = {
+            claude_status_dot,
             { "process", padding = { left = 1, right = 0 }, icons_only = true, process_to_icon = extra_process_icons },
             function(tab) return tostring(tab.tab_index + 1) .. " " end,
         },
