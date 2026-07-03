@@ -1,13 +1,13 @@
-# yazi 26.1.22
+# yazi 26.5.6
 # Yazi file manager configuration
 # https://yazi-rs.github.io/docs/configuration/yazi
 #
 # Usage:
-#   yazi              # open file manager
-#   ya pack -i        # install plugins from package.toml
-#   ya pack -u        # update plugins
+#   yazi                 # open file manager
+#   ya pkg install       # install plugins from package.toml
+#   ya pkg upgrade       # update plugins
 
-[manager]
+[mgr]
 # Layout ratios: parent:current:preview
 ratio = [1, 4, 3]
 
@@ -52,11 +52,11 @@ max_height = 900
 [plugin]
 # Plugin prepend rules for previewing
 prepend_previewers = [
-    # Use bat for text file previews with syntax highlighting
-    { name = "*.fish", run = "code" },
-    { name = "*.toml", run = "code" },
-    { name = "*.yaml", run = "code" },
-    { name = "*.yml", run = "code" },
+    # Match by Url glob (key renamed name -> url in yazi 25.x)
+    { url = "*.fish", run = "code" },
+    { url = "*.toml", run = "code" },
+    { url = "*.yaml", run = "code" },
+    { url = "*.yml", run = "code" },
 ]
 
 # prepend_fetchers = []

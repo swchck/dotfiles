@@ -12,30 +12,25 @@ k9s:
   # Refresh rate in seconds
   refreshRate: 2
 
-  # Max rows in log view
+  # API-server reconnect retries
   maxConnRetry: 5
-
-  # Enable mouse support
-  enableMouse: false
-
-  # Headless mode (no header)
-  headless: false
-
-  # Crumb mode (show breadcrumbs)
-  crumbsless: false
 
   # Read-only mode
   readOnly: false
 
-  # Disable pod count display
+  # Don't quit on Ctrl-C
   noExitOnCtrlC: false
 
-  # UI settings
+  # UI settings (v0.30+ — these keys live under k9s.ui)
   ui:
-    # Enable skin
+    # Skin name (loaded from $XDG_DATA_HOME/k9s/skins/<name>.yaml)
     skin: {{ .theme.name | lower | replace " " "-" }}
-    # Enable icons (requires Nerd Font)
-    enableSkinsFromDir: true
+    # Enable mouse support
+    enableMouse: false
+    # Headless mode (no header)
+    headless: false
+    # Hide breadcrumbs
+    crumbsless: false
     # Reactive UI
     reactive: true
     # Logo display

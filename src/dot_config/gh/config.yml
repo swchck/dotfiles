@@ -1,4 +1,4 @@
-# gh 2.88.1
+# gh 2.95.0
 # GitHub CLI configuration
 # https://cli.github.com/manual/gh_config
 #
@@ -9,6 +9,9 @@
 
 # Config schema version
 version: 1
+
+# Opt out of usage telemetry (default enabled): enabled, disabled, log
+telemetry: disabled
 
 # Git protocol for gh operations: ssh, https
 git_protocol: ssh
