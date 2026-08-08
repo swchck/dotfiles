@@ -31,6 +31,15 @@ if status is-interactive
     # wrapper, which had a dead branch and no `cd -` support).
     if command -q zoxide
         zoxide init fish --cmd cd | source
+
+        # Keep the classic `z`/`zi` names too — `--cmd cd` renames them to
+        # `cd`/`cdi`, so wrap the internal functions to restore muscle memory.
+        function z --wraps __zoxide_z --description 'zoxide: jump to a directory'
+            __zoxide_z $argv
+        end
+        function zi --wraps __zoxide_zi --description 'zoxide: interactive jump'
+            __zoxide_zi $argv
+        end
     end
 
     # ── Keybindings ─────────────────────────────────────────────────
