@@ -1,4 +1,4 @@
-# lazygit 0.60.0
+# lazygit 0.63.1
 # Lazygit configuration
 # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
 #
@@ -182,6 +182,7 @@ os:
 # refresher:
 #   refreshInterval: 10
 #   fetchInterval: 60
+#   externalChangeCheckInterval: 2   # 0.63+: poll for external repo changes, auto-refresh (default 2s; 0 disables)
 
 # Quit behavior
 # confirmOnQuit: false

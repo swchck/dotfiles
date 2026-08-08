@@ -35,6 +35,7 @@ casks = [
 
     # Development
     "gb-studio",            # Game Boy Game Development
+    "figma",                # Design tool
 
     # Browsers
     "orion",                # WebKit Browser
@@ -46,6 +47,7 @@ casks = [
     "qflipper",             # Flipper Zero Manager
     "raspberry-pi-imager",  # Raspberry Pi Image Flasher
     "bahaaio/pomo/pomo",    # Pomodoro Timer
+    "equinox",              # Dynamic wallpaper creator
 ]
 
 [packages.darwin.personal.appstore_apps]

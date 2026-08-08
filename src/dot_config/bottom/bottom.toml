@@ -53,7 +53,7 @@ show_table_scroll_bar = true
 # get_threads = false
 # disable_advanced_kill = false
 # hide_k_threads = false
-# default_sort = "cpu%"          # default sort column
+default_sort = "cpu%"            # default sort column (0.14.7+: honored from config)
 # columns = []                   # customize process table columns
 
 # ── Memory ───────────────────────────────────────────────────────────
@@ -74,7 +74,7 @@ show_table_scroll_bar = true
 
 # ── Disk ─────────────────────────────────────────────────────────────
 # [disk]
-# default_sort = "name"
+default_sort = "name"
 
 # ── Styles (One Dark Pro) ────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
 # Description: Detailed list with header, hidden files and git status
 function ll
-    eza -l --all --group-directories-first --git --icons --header --classify=auto --color-scale=size $argv
+    eza -l --all --group-directories-first --git --icons --header --classify=auto --color-scale=size --hyperlink=auto $argv
 end
