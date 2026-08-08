@@ -5,7 +5,14 @@
        Tokens come from the macOS Keychain (account=chezmoi); work host/user come
        from prompted chezmoi data, never hard-coded. Auto-managed fields
        (timestamps, versions, duo/orbit binary paths) are omitted so glab
-       re-derives them at runtime. */ -}}
+       re-derives them at runtime.
+
+       Keychain lookups are routed through `sh -c "… 2>/dev/null || true"` so a
+       missing item yields an empty token (exit 0) instead of aborting the whole
+       `chezmoi apply` — chezmoi's `output` treats any non-zero exit as fatal, and
+       `security` returns 44 when the item is absent. Add tokens with:
+         security add-generic-password -a chezmoi -s glab-token-com  -w <token>
+         security add-generic-password -a chezmoi -s glab-token-work -w <token> */ -}}
 git_protocol: ssh
 glamour_style: dark
 check_update: true
@@ -15,11 +22,11 @@ telemetry: false
 host: gitlab.com
 hosts:
     gitlab.com:
-        token: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "glab-token-com" "-w" | trim }}
+        token: {{ output "sh" "-c" "security find-generic-password -a chezmoi -s glab-token-com -w 2>/dev/null || true" | trim }}
         api_protocol: https
         git_protocol: ssh
     {{ .gitlab.url }}:
-        token: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "glab-token-work" "-w" | trim }}
+        token: {{ output "sh" "-c" "security find-generic-password -a chezmoi -s glab-token-work -w 2>/dev/null || true" | trim }}
         api_host: {{ .gitlab.url }}
         ssh_host: git@{{ .gitlab.url }}
         api_protocol: https
