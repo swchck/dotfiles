@@ -31,3 +31,15 @@ marketplace = "claude-obsidian-marketplace"
 [[claude.plugins.install]]
 name = "obsidian"
 marketplace = "obsidian-skills"
+
+[[claude.plugins.install]]
+name = "code-simplifier"
+marketplace = "claude-plugins-official"
+
+[[claude.plugins.install]]
+name = "codspeed"
+marketplace = "claude-plugins-official"
+
+[[claude.plugins.install]]
+name = "figma"
+marketplace = "claude-plugins-official"
