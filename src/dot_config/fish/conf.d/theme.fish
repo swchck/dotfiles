@@ -6,6 +6,8 @@
 # Syntax highlighting
 set -g fish_color_normal abb2bf           # fg
 set -g fish_color_command 61afef          # blue
+set -g fish_color_builtin 56b6c2          # cyan — shell builtins (cd, set, string…) (fish 4.8.1)
+set -g fish_color_function 61afef         # blue — functions/plugins (fish 4.8.1)
 set -g fish_color_keyword c678dd          # purple
 set -g fish_color_quote 98c379            # green
 set -g fish_color_redirection 56b6c2      # cyan
