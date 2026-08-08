@@ -15,3 +15,6 @@
 
 # glab config migrated from macOS default (Library) to XDG (~/.config/glab-cli)
 Library/Application Support/glab-cli
+
+# Old /ship slash command — superseded by the ship skill (agents-v2 roster)
+.claude/commands/ship.md
