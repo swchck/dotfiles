@@ -1,6 +1,6 @@
 # versions.lock — snapshot of installed tool versions at config-review time.
 # Machine-readable baseline: next audit diffs a fresh snapshot against this.
-# Regenerate: see CONFIG-REVIEW.md. Review date recorded in CONFIG-REVIEW.md.
+# Regenerate: re-snapshot installed tool versions and bump the [review] date below.
 
 [review]
 date = "2026-08-08"
