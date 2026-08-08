@@ -29,6 +29,7 @@ cli = [
     # Misc
     "slackdump",            # Slack export tool
     "node@22",              # Node.js 22 LTS
+    "k6",                   # Load-testing CLI
 ]
 
 casks = [

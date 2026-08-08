@@ -50,14 +50,16 @@
   },
   // "buffer_line_height": "comfortable",  // "comfortable", "standard", {"custom": 1.5}
 
-  // Agent panel font size (default: same as buffer_font_size)
-  // "agent_font_size": 13,
+  // Agent panel font size — split into UI vs buffer in Zed 1.x (default: buffer_font_size)
+  // "agent_ui_font_size": 13,
+  // "agent_buffer_font_size": 13,
 
   // ── Editor ──────────────────────────────────────────────────────────
 
   // Save behavior
   "autosave": "on_focus_change",
-  "format_on_save": "on",
+  // Format only Git-changed lines when the LSP supports it, else whole buffer (Zed 1.12+).
+  "format_on_save": "modifications_if_available",
   "ensure_final_newline_on_save": true,
   // "remove_trailing_whitespace_on_save": true,
   // "close_on_file_delete": false,
@@ -312,7 +314,7 @@
   },
   "git_panel": {
     "tree_view": true,
-    "sort_by_path": true,
+    "sort_by": "path", // was sort_by_path:true — replaced by sort_by enum in Zed 1.x
     "dock": "right"
   },
   // "diff_view_style": "split",       // unified, split
@@ -433,7 +435,7 @@
         "name": "Agent",
         "default_model": {
           "provider": "google",
-          "model": "gemini-3-pro-preview"
+          "model": "gemini-3.1-pro-preview"
         },
         "tools": {
           "copy_path": true,

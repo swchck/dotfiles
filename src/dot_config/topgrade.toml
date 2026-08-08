@@ -1,4 +1,4 @@
-# topgrade 17.1.0
+# topgrade 17.9.0
 # Topgrade configuration
 # https://github.com/topgrade-rs/topgrade
 #
@@ -163,6 +163,8 @@ cleanup = true
 # git = false
 # Run quietly (default: false)
 # quiet = true
+# Pass --locked to cargo install-update for reproducible upgrades (default: false)
+# locked = true
 # Other options via CARGO_INSTALL_OPTS env var
 
 [rustup]
@@ -210,6 +212,9 @@ autoremove = true
 
 # Perform `git fetch` instead of `git pull` (default: false)
 # fetch_only = false
+
+# Fetch the default branch instead of failing when a repo is on another branch
+# fetch_default_branch = true
 
 # ── Chezmoi ──────────────────────────────────────────────────────────
 
