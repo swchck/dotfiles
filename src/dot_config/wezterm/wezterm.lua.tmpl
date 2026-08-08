@@ -136,7 +136,7 @@ config.use_cap_height_to_scale_fallback_fonts = true
 
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false -- keep bar visible so the Claude status dot always shows
 config.tab_bar_at_bottom = true
 config.tab_and_split_indices_are_zero_based = true
 
@@ -166,18 +166,12 @@ local extra_process_icons = {
     ["claude"] = { wezterm.nerdfonts.md_robot, color = { fg = "#D97757" } },
 }
 
--- Claude Code status dot: colored ● reflecting the `claude_status` pane user var
--- set by ~/.claude/hooks/wezterm-claude-status.sh (green=idle, yellow=waiting for
--- your input/choice, blue=working). Shows nothing when Claude isn't running.
--- tabline passes (TabInformation, PaneInformation) to function components.
+-- Claude Code status dot: a colored ● at the left of the tab reflecting the
+-- `claude_status` pane user var set by ~/.claude/hooks/wezterm-claude-status.sh
+-- (idle=green, waiting=yellow for your input/choice, working=blue & blinking).
+-- Injected by wrapping tabline's set_title after apply_to_config (below), because
+-- tabline's own section functions can only return uncolored text.
 local claude_status_colors = { working = "#61afef", waiting = "#e5c07b", idle = "#98c379" }
-local function claude_status_dot(tab, pane)
-    local st = pane and pane.user_vars and pane.user_vars.claude_status
-    if not st or st == "" then return "" end
-    local color = claude_status_colors[st]
-    if not color then return "" end
-    return wezterm.format({ { Foreground = { Color = color } }, { Text = "● " } })
-end
 
 tabline.setup({
     options = {
@@ -211,13 +205,11 @@ tabline.setup({
         },
         tabline_c = {},
         tab_active = {
-            claude_status_dot,
             { "process", padding = { left = 1, right = 0 }, icons_only = true, process_to_icon = extra_process_icons },
             function(tab) return tostring(tab.tab_index + 1) .. " " end,
             { "zoomed", padding = 0 },
         },
         tab_inactive = {
-            claude_status_dot,
             { "process", padding = { left = 1, right = 0 }, icons_only = true, process_to_icon = extra_process_icons },
             function(tab) return tostring(tab.tab_index + 1) .. " " end,
         },
@@ -570,6 +562,57 @@ config.window_padding = {
     top = 10,
     bottom = 10,
 }
+
+-- Claude status: tint the claude robot process-icon by the active pane's
+-- `claude_status` user var (idle=green, waiting=yellow, working=blue). No
+-- separate dot — we recolor the icon that's already in the tab. Done by wrapping
+-- tabline's title builder (its section functions can only emit uncolored text);
+-- the original is cached on the module so config auto-reload never double-wraps.
+--
+-- WezTerm repaints tab titles frequently (via the status tick), so the color
+-- tracks status changes without hover.
+do
+    local ok_tabs, tl_tabs = pcall(require, "tabline.tabs")
+    if ok_tabs and type(tl_tabs) == "table" and tl_tabs.set_title then
+        if not tl_tabs.__claude_orig_set_title then
+            tl_tabs.__claude_orig_set_title = tl_tabs.set_title
+        end
+        local orig = tl_tabs.__claude_orig_set_title
+        local robot = wezterm.nerdfonts.md_robot
+        tl_tabs.set_title = function(tab, hover)
+            local items = orig(tab, hover)
+            local pane = tab and tab.active_pane
+            local st = pane and pane.user_vars and pane.user_vars.claude_status
+            local color = (st and st ~= "") and claude_status_colors[st]
+            if color and type(items) == "table" then
+                -- Find the robot glyph and repaint the nearest preceding Foreground
+                -- (tabline emits {Foreground=icon_color} then {Text=icon}).
+                for i = 1, #items do
+                    local it = items[i]
+                    if type(it) == "table" and it.Text and string.find(it.Text, robot, 1, true) then
+                        for j = i, 1, -1 do
+                            if type(items[j]) == "table" and items[j].Foreground then
+                                items[j] = { Foreground = { Color = color } }
+                                break
+                            end
+                        end
+                        break
+                    end
+                end
+            end
+            return items
+        end
+    end
+end
+
+-- Update the dot promptly on state change: WezTerm doesn't repaint tab titles on
+-- a timer, so force a tab-bar refresh whenever claude_status changes (otherwise
+-- the color only updates when you hover/focus the tab).
+wezterm.on("user-var-changed", function(window, pane, name, value)
+    if name == "claude_status" then
+        pcall(function() tabline.refresh(window) end)
+    end
+end)
 
 -- Resurrect: auto-save state every 15 minutes
 resurrect.state_manager.periodic_save({

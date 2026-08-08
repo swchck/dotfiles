@@ -22,4 +22,8 @@ prepend_keymap = [
 
     # macOS tags
     { on = ["c", "t"], run = "plugin mactag", desc = "macOS tag" },
+
+    # Viewport motions (yazi 26.x has top/bot; no "middle" command)
+    { on = "H", run = "arrow top", desc = "Move to top of viewport" },
+    { on = "L", run = "arrow bot", desc = "Move to bottom of viewport" },
 ]

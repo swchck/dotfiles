@@ -1,0 +1,24 @@
+# eza theme — Catppuccin Mocha (matches the shell/prompt palette).
+# Auto-loaded from ~/.config/eza/theme.yml; merged over eza's built-in defaults.
+# Schema validated against the installed eza.
+filekinds:
+  directory: {foreground: "#89b4fa"}
+  symlink: {foreground: "#89dceb"}
+  executable: {foreground: "#a6e3a1"}
+perms:
+  user_read: {foreground: "#cdd6f4"}
+  user_write: {foreground: "#f9e2af"}
+  user_execute_file: {foreground: "#a6e3a1"}
+size:
+  major: {foreground: "#cdd6f4"}
+  unit: {foreground: "#9399b2"}
+users:
+  user_you: {foreground: "#cdd6f4"}
+git:
+  new: {foreground: "#a6e3a1"}
+  modified: {foreground: "#f9e2af"}
+  deleted: {foreground: "#f38ba8"}
+  renamed: {foreground: "#cba6f7"}
+punctuation: {foreground: "#6c7086"}
+date: {foreground: "#94e2d5"}
+symlink_path: {foreground: "#89dceb"}

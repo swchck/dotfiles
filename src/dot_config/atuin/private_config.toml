@@ -241,7 +241,7 @@ enabled = false
 
 [theme]
 # Theme name: default, autumn, marine, or custom
-# name = "default"
+name = "marine"
 
 # Output theme loading diagnostics
 # debug = false

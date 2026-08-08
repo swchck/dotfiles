@@ -16,3 +16,6 @@ export GONOSUMCHECK="{{ .gitlab.url }}/*"
 
 # Deno
 export DENO_DIR="$HOME/.deno"
+
+# glab (GitLab CLI): pin config to XDG (defaults to ~/Library/... on macOS)
+export GLAB_CONFIG_DIR="$HOME/.config/glab-cli"

@@ -28,6 +28,24 @@ set -uo pipefail
 {{ $cli       = $cli       | sortAlpha | uniq -}}
 {{ $casks     = $casks     | sortAlpha | uniq -}}
 
+# Tap and trust third-party taps so `brew bundle` and `brew update` succeed
+# under HOMEBREW_REQUIRE_TAP_TRUST (default in Homebrew 5.2+/6.0).
+# Tap-level trust is used because each of these is a single-formula tap,
+# making tap-trust effectively equivalent to per-formula trust by surface area,
+# while keeping `brew update` clean (formula-trust only blocks tap updates).
+# Trust state is recorded in ~/.homebrew/trust.json and is idempotent.
+brew tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
+brew tap gabrie30/utils           >/dev/null 2>&1 || true
+brew tap bahaaio/pomo             >/dev/null 2>&1 || true
+brew trust --tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
+brew trust --tap gabrie30/utils           >/dev/null 2>&1 || true
+brew trust --tap bahaaio/pomo             >/dev/null 2>&1 || true
+{{ if eq .machine_type "work" -}}
+brew tap derailed/k9s            >/dev/null 2>&1 || true
+brew tap alesbrelih/gitlab-ci-ls >/dev/null 2>&1 || true
+brew trust --tap derailed/k9s            >/dev/null 2>&1 || true
+brew trust --tap alesbrelih/gitlab-ci-ls >/dev/null 2>&1 || true
+{{ end }}
 # Install packages via Brewfile
 brew bundle --file=/dev/stdin <<EOF
 {{ range $taps -}}
@@ -103,3 +121,20 @@ mas "{{$key}}", id: {{$value}}
 EOF
 
 brew autoremove
+
+# ── Set fish as default shell ────────────────────────────────────────
+# Done here (once, on change) instead of in ~/.zshrc so it never prompts for
+# a password on every interactive shell start. Compare against the real login
+# shell from dscl — $SHELL is inherited from the parent process and never
+# reflects a chsh made in the same session, which would re-fire the prompt
+# forever.
+FISH_PATH=$(command -v fish || true)
+if [ -n "$FISH_PATH" ]; then
+    if ! grep -q "$FISH_PATH" /etc/shells 2>/dev/null; then
+        echo "$FISH_PATH" | sudo tee -a /etc/shells >/dev/null
+    fi
+    current_shell=$(dscl . -read "/Users/$(whoami)" UserShell 2>/dev/null | awk '{print $2}')
+    if [ "$current_shell" != "$FISH_PATH" ]; then
+        sudo chsh -s "$FISH_PATH" "$(whoami)" || true
+    fi
+fi

@@ -21,6 +21,21 @@ k9s:
   # Don't quit on Ctrl-C
   noExitOnCtrlC: false
 
+  # Auto-refresh describe/YAML live views
+  liveViewAutoRefresh: true
+
+  # Skip pod counting for speed on large clusters
+  disablePodCounting: true
+
+  # Color resource cells by usage thresholds (percent)
+  thresholds:
+    cpu:
+      critical: 90
+      warn: 70
+    memory:
+      critical: 90
+      warn: 70
+
   # UI settings (v0.30+ — these keys live under k9s.ui)
   ui:
     # Skin name (loaded from $XDG_DATA_HOME/k9s/skins/<name>.yaml)

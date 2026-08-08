@@ -137,6 +137,11 @@ return {
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
                     end, "[T]oggle Inlay [H]ints")
                 end
+
+                -- Inline color swatches for CSS/Tailwind/etc. (native, 0.12+; replaces colorizer)
+                if client and vim.lsp.document_color and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentColor) then
+                    vim.lsp.document_color.enable(true, event.buf)
+                end
             end,
         })
 
@@ -239,5 +244,15 @@ return {
             ensure_installed = vim.tbl_keys(servers),
             automatic_enable = true,
         })
+
+        -- Servers installed outside Mason (e.g. Homebrew). Enable only when
+        -- the binary is on PATH so machines without it don't error out.
+        -- Server config comes from nvim-lspconfig's lsp/gitlab_ci_ls.lua via
+        -- runtimepath; capabilities are picked up from the "*" config above.
+        -- Filetype detection for yaml.gitlab lives in core/autocommands.lua
+        -- so it registers before the first buffer is opened.
+        if vim.fn.executable("gitlab-ci-ls") == 1 then
+            vim.lsp.enable("gitlab_ci_ls")
+        end
     end,
 }

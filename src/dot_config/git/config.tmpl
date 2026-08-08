@@ -39,6 +39,8 @@
 [fetch]
     prune = true
     fsckObjects = true
+    all = true              # bare `git fetch` fetches every remote (2.44+)
+    writeCommitGraph = true  # keep commit-graph fresh; basis for `git maintenance`
 
 [commit]
     template = ~/.config/git/message
@@ -46,6 +48,14 @@
 [rebase]
     autoSquash = true
     autoStash = true
+    updateRefs = true       # auto-update intermediate branch refs when rebasing a stack (2.38+)
+
+# Background maintenance (prefetch, commit-graph, incremental-repack). This is a
+# per-repo opt-in — run `git maintenance start` inside repos you want scheduled;
+# it writes a [maintenance] section there and registers a launchd/cron job.
+
+[remote "origin"]
+    followRemoteHEAD = always  # keep origin/HEAD correct after default-branch renames (2.48+)
 
 [log]
     date = iso

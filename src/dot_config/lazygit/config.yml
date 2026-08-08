@@ -49,8 +49,8 @@ gui:
   # commandLogSize: 8
   # showRootItemInFileTree: true
   # showNumstatInFilesView: false
-  # showBranchCommitHash: false
-  # showDivergenceFromBaseBranch: none  # none, onlyArrow, arrowAndNumber
+  showBranchCommitHash: true
+  showDivergenceFromBaseBranch: arrowAndNumber  # none, onlyArrow, arrowAndNumber
   # animateExplosion: true
 
   # Layout
@@ -67,7 +67,7 @@ gui:
   # mainPanelSplitMode: "flexible"   # flexible, horizontal, vertical
   # screenMode: "normal"             # normal, half, fullscreen
   # portraitMode: "auto"             # auto, always, never
-  # filterMode: "substring"          # substring, fuzzy
+  filterMode: "fuzzy"              # substring, fuzzy
   # statusPanelView: "dashboard"     # dashboard, allBranchesLog
 
   # Confirmations
@@ -94,7 +94,7 @@ gui:
   # Stash behavior
   # switchToFilesAfterStashPop: true
   # switchToFilesAfterStashApply: true
-  # switchTabsWithPanelJumpKeys: false
+  switchTabsWithPanelJumpKeys: true
 
   # Spinner
   # spinner:
@@ -104,10 +104,15 @@ gui:
   # Split diff
   # splitDiff: "auto"
 
-  # Custom branch colors
-  # authorColors: {}
+  # Custom branch colors (Catppuccin palette)
+  authorColors:
+    "*": "#cba6f7"
   # branchColors: {}
-  # branchColorPatterns: {}
+  branchColorPatterns:
+    "^(feat|feature)/": "#a6e3a1"
+    "^(fix|hotfix)/": "#f38ba8"
+    "^(chore|refactor|docs)/": "#89b4fa"
+    "^(main|master)$": "#f9e2af"
 
 git:
   # Use delta as pager (git.pagers array — current schema; legacy git.paging

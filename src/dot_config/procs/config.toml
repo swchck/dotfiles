@@ -1,4 +1,4 @@
-# procs 0.14.11
+# procs 0.14.12
 # procs configuration
 # https://github.com/dalance/procs#configuration
 #
@@ -32,6 +32,13 @@ kind = "State"
 
 [[columns]]
 kind = "Nice"
+style = "BrightMagenta"
+align = "Right"
+
+# Context-switch count (this build has no Arch/Nvcsw kind; ContextSw is the
+# macOS equivalent — voluntary+involuntary switches).
+[[columns]]
+kind = "ContextSw"
 style = "BrightMagenta"
 align = "Right"
 
