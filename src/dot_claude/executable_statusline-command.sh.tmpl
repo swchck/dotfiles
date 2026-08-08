@@ -17,10 +17,27 @@
 #   b) `wezterm cli list` if $WEZTERM_PANE is set
 #   c) fallback to 120
 
-# Versionless plugin path — survives claude-dashboard upgrades (the versioned
-# cache dir under plugins/cache/... changes on every update and would break
-# this wrapper; this symlinked path stays stable).
-PLUGIN="node {{ .chezmoi.homeDir }}/.claude/plugins/claude-dashboard/dist/index.js"
+# Resolve the claude-dashboard plugin entrypoint. The cache dir is versioned
+# (plugins/cache/claude-dashboard/claude-dashboard/<version>/dist/index.js) and
+# the version changes on every upgrade, so pinning one path silently breaks the
+# statusline after an update. Prefer a stable symlink if one exists, otherwise
+# glob the cache and pick the highest version. Resolving at runtime makes the
+# wrapper self-healing across upgrades — no manual re-pin needed.
+_dashboard_dist() {
+    local base="{{ .chezmoi.homeDir }}/.claude/plugins"
+    if [[ -f "$base/claude-dashboard/dist/index.js" ]]; then
+        echo "$base/claude-dashboard/dist/index.js"
+        return
+    fi
+    ls -d "$base"/cache/claude-dashboard/claude-dashboard/*/dist/index.js 2>/dev/null \
+        | sort -V | tail -1
+}
+DIST="$(_dashboard_dist)"
+
+# Plugin missing (not installed yet / cache cleared) — emit nothing rather than
+# spawning `node` with no script and blocking on stdin.
+[[ -z "$DIST" ]] && exit 0
+PLUGIN="node $DIST"
 
 # Detect terminal width.
 detect_width() {
