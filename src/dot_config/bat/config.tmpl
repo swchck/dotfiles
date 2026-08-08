@@ -10,12 +10,12 @@
 
 # ── Theme ────────────────────────────────────────────────────────────
 
-# Color theme for syntax highlighting (use --list-themes to see all)
---theme="OneHalfDark"
-
-# Theme for light/dark terminal (auto-detected)
-# --theme-light="OneHalfLight"
-# --theme-dark="{{ .theme.name }}"
+# Auto-detect light/dark terminal (use "auto:system" to follow macOS appearance).
+# Note: .theme.name ("One Dark Pro") is not a valid bat theme; OneHalfDark is
+# the built-in closest match (see .chezmoiexternal.toml).
+--theme="auto"
+--theme-light="OneHalfLight"
+--theme-dark="OneHalfDark"
 
 # ── Display ──────────────────────────────────────────────────────────
 

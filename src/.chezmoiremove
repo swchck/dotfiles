@@ -12,3 +12,6 @@
 
 # Removed tools
 .config/ghostty
+
+# glab config migrated from macOS default (Library) to XDG (~/.config/glab-cli)
+Library/Application Support/glab-cli

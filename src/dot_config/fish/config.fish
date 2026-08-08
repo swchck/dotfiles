@@ -27,25 +27,31 @@ if status is-interactive
     end
 
     # ── Zoxide (smart cd) ────────────────────────────────────────────
+    # --cmd cd generates zoxide-backed `cd`/`cdi` (replaces the old cd.fish
+    # wrapper, which had a dead branch and no `cd -` support).
     if command -q zoxide
-        zoxide init fish | source
+        zoxide init fish --cmd cd | source
     end
 
     # ── Keybindings ─────────────────────────────────────────────────
 
-    # Ctrl+Z: toggle suspend/resume (fg)
-    bind ctrl-z 'if test (count (jobs)) -gt 0; fg; commandline -f repaint; end'
+    # Ctrl+Z: toggle suspend/resume (fg) — see functions/utils/ctrl_z_toggle.fish
+    bind ctrl-z ctrl_z_toggle
 
-    # !! expansion: type !! then press Space to replace with last command
-    function _expand_bang_bang
-        set -l cmd (commandline)
-        if string match -q -- "*!!" "$cmd"
-            commandline -r (string replace "!!" "$history[1]" "$cmd")
-            commandline -f repaint
-        else
-            commandline -i " "
-        end
-    end
-    bind space _expand_bang_bang
+    # Token-wise navigation/editing (fish 4.1+) — like word motions but by shell token
+    bind ctrl-alt-f forward-token
+    bind ctrl-alt-b backward-token
+    bind ctrl-alt-w backward-kill-token
+
+    # !! expansion is handled by the `!!` abbr in functions/utils/last_history_item.fish.
+    # (An earlier `bind space` handler was removed — it broke abbr expansion on space.)
+
+    # ── Abbreviations ────────────────────────────────────────────────
+    # Command-scoped git abbreviations (fish 4.0+): expand only after `git `,
+    # so they never collide as a first word.
+    abbr --add --command git st status
+    abbr --add --command git co checkout
+    abbr --add --command git br branch
+    abbr --add --command git cm commit
 
 end

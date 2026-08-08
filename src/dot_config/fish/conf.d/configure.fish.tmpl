@@ -36,6 +36,9 @@ set -gx HOMEBREW_BUNDLE_DESCRIBE 1
 # Opt into the compact internal JSON API (Homebrew 5.0+). Smaller payloads,
 # faster `brew update` / `brew install`. Will become default in a future release.
 set -gx HOMEBREW_USE_INTERNAL_API 1
+# Require explicit `brew trust` for third-party taps (default in Homebrew 5.2+/6.0).
+# Trusted formulae are recorded by run_onchange_before_02_install_packages.sh.tmpl.
+set -gx HOMEBREW_REQUIRE_TAP_TRUST 1
 set -gx MAS_NO_AUTO_INDEX 1
 # set -gx HOMEBREW_NO_AUTO_UPDATE 1
 # set -gx HOMEBREW_CLEANUP_MAX_AGE_DAYS 30
@@ -96,9 +99,11 @@ set -gx FZF_ALT_C_COMMAND "fd --type d --hidden --follow --exclude .git"
 # Default options: One Dark Pro colors, bat preview for files, eza for dirs
 set -gx FZF_DEFAULT_OPTS "\
   --height=60% \
+  --tmux=center,80% \
   --layout=reverse \
   --border \
   --info=inline \
+  --highlight-line \
   --color=bg+:#3e4452,bg:#282c34,spinner:#e5c07b,hl:#e06c75 \
   --color=fg:#abb2bf,header:#e06c75,info:#c678dd,pointer:#e5c07b \
   --color=marker:#61afef,fg+:#abb2bf,prompt:#c678dd,hl+:#e06c75 \
@@ -114,6 +119,12 @@ set -gx FZF_ALT_C_OPTS "\
 # ── ripgrep ──────────────────────────────────────────────────────────
 
 set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/config
+
+# ── glab (GitLab CLI) ────────────────────────────────────────────────
+# glab defaults to ~/Library/Application Support/glab-cli on macOS (Go
+# os.UserConfigDir). Pin it to XDG so the config lives alongside everything
+# else in ~/.config. The config itself is deployed only on work machines.
+set -gx GLAB_CONFIG_DIR $HOME/.config/glab-cli
 
 # ── Misc ─────────────────────────────────────────────────────────────
 

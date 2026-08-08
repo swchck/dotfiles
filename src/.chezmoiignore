@@ -21,6 +21,7 @@
 .orbstack
 .docker
 .config/openfortivpn
+.config/glab-cli
 {{ end }}
 
 # ── Linux-only configs ───────────────────────────────────────────────
@@ -61,6 +62,7 @@
 .config/openfortivpn
 .config/k9s
 .netrc
+.config/glab-cli
 {{ end }}
 
 # ── Claude Code runtime (never sync) ─────────────────────────────────

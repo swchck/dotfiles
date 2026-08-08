@@ -1,0 +1,28 @@
+{{- /* glab (GitLab CLI) config. Lives in XDG (~/.config/glab-cli) via
+       GLAB_CONFIG_DIR — glab defaults to ~/Library/Application Support on macOS
+       (Go os.UserConfigDir), so the env var in configure.fish.tmpl / shell-env-posix
+       redirects it here. Deployed only on macOS work machines (see .chezmoiignore).
+       Tokens come from the macOS Keychain (account=chezmoi); work host/user come
+       from prompted chezmoi data, never hard-coded. Auto-managed fields
+       (timestamps, versions, duo/orbit binary paths) are omitted so glab
+       re-derives them at runtime. */ -}}
+git_protocol: ssh
+glamour_style: dark
+check_update: true
+display_hyperlinks: true
+# Opt out of sending usage data to the GitLab instance.
+telemetry: false
+host: gitlab.com
+hosts:
+    gitlab.com:
+        token: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "glab-token-com" "-w" | trim }}
+        api_protocol: https
+        git_protocol: ssh
+    {{ .gitlab.url }}:
+        token: {{ output "security" "find-generic-password" "-a" "chezmoi" "-s" "glab-token-work" "-w" | trim }}
+        api_host: {{ .gitlab.url }}
+        ssh_host: git@{{ .gitlab.url }}
+        api_protocol: https
+        git_protocol: ssh
+        user: {{ .gitlab.user }}
+        container_registry_domains: {{ .gitlab.url }},{{ .gitlab.url }}:443,registry.{{ .gitlab.url }}

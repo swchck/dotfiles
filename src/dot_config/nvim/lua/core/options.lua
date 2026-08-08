@@ -53,3 +53,9 @@ vim.g.have_nerd_font = true -- Set to true if you have a Nerd Font installed Def
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
 end)
+
+-- Rounded borders for all floating windows (LSP hover, signature, diagnostics). (0.11+)
+vim.o.winborder = "rounded"
+
+-- Show multi-line diagnostics inline on the current line (built-in lsp_lines). (0.11+)
+vim.diagnostic.config({ virtual_lines = { current_line = true } })

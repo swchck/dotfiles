@@ -1,4 +1,4 @@
-// Zed 0.229.0 settings
+// Zed 1.9.0 settings
 // https://zed.dev/docs/configuring-zed
 //
 // To see all defaults: run `open default settings` from the command palette.
@@ -285,14 +285,26 @@
 
   // ── Git ─────────────────────────────────────────────────────────────
 
+  // ── Adopted from Zed 1.x (config predates it; verified against 1.9 defaults) ──
+  "code_lens": "menu",
+  "colorize_brackets": true,
+  "semantic_tokens": "combined",
+  "document_folding_ranges": "on",
+  "document_symbols": "on",
+  "global_lsp_settings": { "request_timeout": 120 },
+
   "git": {
     "inline_blame": {
-      "enabled": true
+      "enabled": true,
+      "location": "inline"
       // "delay_ms": null,
       // "show_commit_summary": null,
       // "min_column": null,
       // "padding": null
-    }
+    },
+    "blame": { "show_avatar": true },
+    "show_stage_restore_buttons": true,
+    "worktree_directory": "../worktrees"
     // "git_gutter": "tracked_files",
     // "gutter_debounce": null,
     // "branch_picker": { "show_author_name": false },
@@ -400,14 +412,22 @@
     "dock": "right",
     "default_width": 640,
     "default_height": 320,
-    "default_model": {
-      "provider": "claude-acp",
-      "model": "claude-sonnet-4-5-20250514"
-    },
+    // default_model expects a real LLM provider (zed.dev/anthropic/google/openai/…),
+    // NOT an ACP agent. Claude Code and other ACP agents install via the agent panel
+    // UI (Add Agent → Install from Registry) and are selected there — no settings key.
+    // Set a provider you actually use if you want a built-in-agent default, e.g.:
+    // "default_model": { "provider": "zed.dev", "model": "claude-sonnet-4-5" },
     "default_profile": "write",
     "tool_permissions": {
       "default": "allow"
     },
+    // Auto-summarize long threads before the context window fills (Zed 1.x).
+    "auto_compact": { "enabled": true, "threshold": "90%" },
+    "play_sound_when_agent_done": "when_hidden",
+    "notify_when_agent_waiting": "primary_screen",
+    "show_turn_stats": true,
+    // AI-generated commit messages follow Conventional Commits (matches global rule).
+    "commit_message_instructions": "Use Conventional Commits: <type>(<scope>): <description>. Never mention AI authorship.",
     "profiles": {
       "agent": {
         "name": "Agent",
@@ -437,22 +457,19 @@
       }
     }
   },
-  "agent_servers": {
-    "github-copilot-cli": { "type": "registry" },
-    "claude-acp": { "type": "registry" }
-  },
+  // agent_servers: registry agents (Claude Code, Copilot CLI, Gemini CLI) install via
+  // the agent panel UI — there is no "registry" type and no settings entry is needed.
+  // Removed the non-functional block; use { "type": "custom", "command": … } only for
+  // a truly custom local ACP server.
 
   // ── Edit Predictions (Copilot) ──────────────────────────────────────
 
   "edit_predictions": {
     "provider": "copilot",
-    "mode": "eager"
+    "mode": "eager",
+    "copilot": { "enable_next_edit_suggestions": true },
+    "allow_data_collection": "no"
     // "disabled_globs": [],
-    // "copilot": {
-    //   "proxy": null,
-    //   "proxy_no_verify": null,
-    //   "enterprise_uri": null
-    // }
   },
   // "show_edit_predictions": true,
   // "edit_predictions_disabled_in": [],

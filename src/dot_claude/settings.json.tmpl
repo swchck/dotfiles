@@ -122,6 +122,15 @@
             "command": "{{ .chezmoi.homeDir }}/.claude/hooks/rtk-rewrite.sh"
           }
         ]
+      },
+      {
+        "matcher": "AskUserQuestion|ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ .chezmoi.homeDir }}/.claude/hooks/wezterm-claude-status.sh waiting"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [
@@ -134,9 +143,19 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "{{ .chezmoi.homeDir }}/.claude/hooks/wezterm-claude-status.sh working"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
-        "matcher": "permission_prompt|elicitation_dialog|agent_needs_input",
+        "matcher": "permission_prompt|elicitation_dialog",
         "hooks": [
           {
             "type": "command",

@@ -26,3 +26,6 @@
 # Max columns — truncate long lines
 --max-columns=200
 --max-columns-preview
+
+# Clickable file paths in supporting terminals (WezTerm/Ghostty)
+--hyperlink-format=default

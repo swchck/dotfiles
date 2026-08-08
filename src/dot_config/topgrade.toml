@@ -27,11 +27,21 @@
 # Sudo command to be used
 # sudo_command = "sudo"
 
-# Disable specific steps — same options as the command line flag
-# disable = ["system", "emacs"]
+# Disable specific steps — same options as the command line flag.
+# - gem / rubygems: macOS system Ruby is 2.6.10 (Apple-bundled, deprecated)
+#   and most modern gems require Ruby >= 3.2. These steps cannot succeed
+#   without installing a newer Ruby via rbenv/asdf, which we don't use.
+disable = ["gem", "rubygems"]
 
-# Ignore failures for these steps
-# ignore_failures = ["powershell"]
+# Ignore failures for these steps.
+# - mas: `mas upgrade` fails on Safari extension apps (e.g.,
+#   uBlock Origin Lite, ADAM 6745342698) because mas can't initiate
+#   downloads for them. The App Store.app updates them in the background;
+#   we just need to keep this from blocking the topgrade run.
+# - containers: locally-cached private/internal images can't be pulled
+#   without auth and emit per-image ERROR lines. Public images still
+#   update normally — we just don't want the failures to halt the run.
+ignore_failures = ["mas", "containers"]
 
 # List of remote machines with Topgrade installed on them
 # remote_topgrades = ["toothless", "pi", "parnas"]
@@ -116,6 +126,7 @@ cleanup = true
 [commands]
 # "Neovim Plugins" = "nvim --headless '+Lazy! sync' +qa"
 # "Fish Completions" = "fish -c 'fish_update_completions'"
+"Atuin history dedup" = "atuin history dedup"
 
 # ── Languages & Package Managers ─────────────────────────────────────
 
