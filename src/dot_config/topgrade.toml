@@ -28,10 +28,10 @@
 # sudo_command = "sudo"
 
 # Disable specific steps — same options as the command line flag.
-# - gem / rubygems: macOS system Ruby is 2.6.10 (Apple-bundled, deprecated)
+# - gem / ruby_gems: macOS system Ruby is 2.6.10 (Apple-bundled, deprecated)
 #   and most modern gems require Ruby >= 3.2. These steps cannot succeed
 #   without installing a newer Ruby via rbenv/asdf, which we don't use.
-disable = ["gem", "rubygems"]
+disable = ["gem", "ruby_gems"]
 
 # Ignore failures for these steps.
 # - mas: `mas upgrade` fails on Safari extension apps (e.g.,
