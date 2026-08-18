@@ -71,8 +71,16 @@ set -gx GONOSUMCHECK "{{ .gitlab.url }}/*"
 
 set -gx DENO_DIR $HOME/.deno
 
-# ── Python / pipx ───────────────────────────────────────────────────
-
+# ── Python / uv ──────────────────────────────────────────────────────
+# Homebrew python must beat Apple's /usr/bin/python3 — a frozen 3.9 with a
+# read-only site-packages that forces every `pip install` into a --user dir
+# nobody has on PATH. The inherited macOS PATH puts /opt/homebrew/bin after
+# /usr/bin, so pull it in front here.
+fish_add_path /opt/homebrew/bin
+# opt/python3 tracks the current formula, so unversioned python/pip survive a
+# 3.14 → 3.15 bump. Homebrew itself only links python3/pip3.
+fish_add_path /opt/homebrew/opt/python3/libexec/bin
+# uv owns tool installs and project venvs; its shims land here.
 fish_add_path $HOME/.local/bin
 
 # ── Ollama ───────────────────────────────────────────────────────────

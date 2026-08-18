@@ -42,6 +42,12 @@ if status is-interactive
         end
     end
 
+    # ── uv (Python package/venv/tool manager) ───────────────────────
+    if command -q uv
+        uv generate-shell-completion fish | source
+        uvx --generate-shell-completion fish | source
+    end
+
     # ── Keybindings ─────────────────────────────────────────────────
 
     # Ctrl+Z: toggle suspend/resume (fg) — see functions/utils/ctrl_z_toggle.fish
