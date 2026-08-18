@@ -4,6 +4,7 @@
 
 taps = [
     "alesbrelih/gitlab-ci-ls", # GitLab CI Language Server
+    "hashicorp/tap",           # Vault (dropped from homebrew-core after the BUSL relicense)
 ]
 
 cli = [
@@ -22,6 +23,10 @@ cli = [
     "derailed/k9s/k9s",    # Kubernetes CLI
     "kaskade",              # Kafka TUI
     "openfortivpn",         # FortiVPN client
+    "hashicorp/tap/vault",  # Secrets manager
+
+    # GitLab
+    "glab",                 # GitLab CLI — config in dot_config/glab-cli, token from Keychain
 
     # LSP / Editor
     "alesbrelih/gitlab-ci-ls/gitlab-ci-ls", # GitLab CI Language Server
