@@ -81,7 +81,7 @@ cli = [
     "yazi",                 # Terminal file manager
 
     # Python
-    "pipx",                 # Python CLI tool installer
+    "uv",                   # Python package/venv/tool manager (replaces pip, pipx, pyenv, venv)
 
     # Node
     "nvm",                  # Node version manager
