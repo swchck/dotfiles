@@ -583,21 +583,24 @@ do
             local items = orig(tab, hover)
             local pane = tab and tab.active_pane
             local st = pane and pane.user_vars and pane.user_vars.claude_status
-            local color = (st and st ~= "") and claude_status_colors[st]
-            if color and type(items) == "table" then
-                -- Find the robot glyph and repaint the nearest preceding Foreground
-                -- (tabline emits {Foreground=icon_color} then {Text=icon}).
-                for i = 1, #items do
-                    local it = items[i]
-                    if type(it) == "table" and it.Text and string.find(it.Text, robot, 1, true) then
-                        for j = i, 1, -1 do
-                            if type(items[j]) == "table" and items[j].Foreground then
-                                items[j] = { Foreground = { Color = color } }
-                                break
-                            end
+            if st == nil or st == "" or type(items) ~= "table" then return items end
+            local color = claude_status_colors[st]
+            -- WezTerm reports no foreground process name for a Claude Code pane, so
+            -- tabline falls back to the tab title, matches nothing in process_to_icon
+            -- and lands on its `default` icon. So put the robot there ourselves
+            -- instead of hunting for one that was never emitted. The first non-blank
+            -- Text is the process icon — tab_separators are empty in this config.
+            for i = 1, #items do
+                local it = items[i]
+                if type(it) == "table" and type(it.Text) == "string" and it.Text:match("%S") then
+                    items[i] = { Text = (it.Text:gsub("%S+", robot, 1)) }
+                    for j = i, 1, -1 do
+                        if color and type(items[j]) == "table" and items[j].Foreground then
+                            items[j] = { Foreground = { Color = color } }
+                            break
                         end
-                        break
                     end
+                    break
                 end
             end
             return items
