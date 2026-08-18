@@ -82,6 +82,7 @@ cli = [
 
     # Python
     "uv",                   # Python package/venv/tool manager (replaces pip, pipx, pyenv, venv)
+    "ruff",                 # Python linter + formatter (Rust)
 
     # Node
     "nvm",                  # Node version manager
