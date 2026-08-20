@@ -128,6 +128,23 @@ is migrated.
 
 ## Editing existing code
 
-Comments are part of the code you touch. Within the lines of your own diff, a comment that has
-become wrong or stale must be updated or deleted — a lying comment is worse than none. Do not
-sweep the rest of the file for comment noise; keep the diff reviewable.
+Comments are part of the code you touch, and **every limit above is measured on the comment as it
+ends up, not on the lines you added**. Extending an eight-line comment by two lines produces a
+ten-line comment, not a two-line edit. "It was already long" is not an exemption — the moment your
+diff touches it, its length is yours.
+
+So when your change needs an existing comment to say more:
+
+- **Rewrite it whole.** Re-derive it from what the code does now and fit the result inside the
+  limits. Appending a clause to something already over budget is how these grow to ten lines
+  without anyone ever deciding to write a ten-line comment.
+- **Read the file's other comments while you are in there.** Not to tidy them — to find the ones
+  that talk about what you just changed. Two comments describing the same mechanism differently, or
+  one that still describes the behaviour you just replaced, is a bug report about your own diff.
+  Fix those, and say so.
+- **A doc comment that has grown into a specification is in the wrong place.** Move the contract to
+  the type or package doc, where length is allowed, and leave the symbol its one-sentence summary.
+
+A comment inside your diff that has become wrong or stale must be updated or deleted — a lying
+comment is worse than none. Beyond that, still do not sweep the file for comment noise: an
+unrelated comment that is merely verbose belongs to someone else's diff.
