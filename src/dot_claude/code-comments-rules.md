@@ -133,6 +133,12 @@ ends up, not on the lines you added**. Extending an eight-line comment by two li
 ten-line comment, not a two-line edit. "It was already long" is not an exemption — the moment your
 diff touches it, its length is yours.
 
+**The unit is the declaration you touched, not the lines you edited.** Change a function's body and
+its doc comment is in your diff, even though you never typed on those lines. Same for a field whose
+type you changed, a const whose value you changed, an interface you added a method to. Before
+finishing, re-read the doc comment of every declaration your diff lands in and hold it to the limits
+— that comment is now yours whether or not git colours it green.
+
 So when your change needs an existing comment to say more:
 
 - **Rewrite it whole.** Re-derive it from what the code does now and fit the result inside the
