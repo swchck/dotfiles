@@ -496,7 +496,12 @@
     "Go": {
       "wrap_guides": [80],
       "inlay_hints": {},
-      "language_servers": ["gopls"]
+      "language_servers": ["gopls", "golangci-lint"]
+    },
+    "YAML": {
+      // compose-language-service registers itself for all of YAML, and its
+      // YAML.parseDocument() throws on any multi-document file
+      "language_servers": ["...", "!docker-compose"]
     }
   },
 
@@ -519,6 +524,15 @@
         "runtime.version": "LuaJIT",
         "diagnostics.globals": ["vim"],
         "workspace.checkThirdParty": false
+      }
+    },
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          // gitlab-ci's !reference is not in the YAML spec, without this every
+          // use of it is flagged as an unresolved tag
+          "customTags": ["!reference sequence"]
+        }
       }
     }
   },
