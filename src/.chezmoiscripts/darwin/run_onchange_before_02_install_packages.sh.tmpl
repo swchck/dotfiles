@@ -40,11 +40,33 @@ brew tap bahaaio/pomo             >/dev/null 2>&1 || true
 brew trust --tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
 brew trust --tap gabrie30/utils           >/dev/null 2>&1 || true
 brew trust --tap bahaaio/pomo             >/dev/null 2>&1 || true
+brew trust --tap swchck/local             >/dev/null 2>&1 || true
 {{ if eq .machine_type "work" -}}
 brew tap derailed/k9s            >/dev/null 2>&1 || true
 brew tap alesbrelih/gitlab-ci-ls >/dev/null 2>&1 || true
 brew trust --tap derailed/k9s            >/dev/null 2>&1 || true
 brew trust --tap alesbrelih/gitlab-ci-ls >/dev/null 2>&1 || true
+{{ end }}
+# ── Version-pinned casks ─────────────────────────────────────────────
+# homebrew/cask carries one version per token, and Homebrew 7 refuses to install
+# a cask from a loose file, so anything held back needs a tap of its own. These
+# are also listed in the Brewfile below — `brew bundle cleanup --force` untaps
+# and uninstalls everything it does not see there.
+PINNED_TAP="$(brew --repository)/Library/Taps/swchck/homebrew-local"
+mkdir -p "$PINNED_TAP/Casks"
+{{ range $token := (list "raycast@1") }}
+cat >"$PINNED_TAP/Casks/{{ $token }}.rb" <<'CASK'
+{{ includeTemplate (printf "casks/%s.rb" $token) . | trim }}
+CASK
+want=$(awk -F'"' '/^  version /{print $2; exit}' "$PINNED_TAP/Casks/{{ $token }}.rb")
+have=$(ls "$(brew --caskroom)/{{ $token }}" 2>/dev/null | head -1)
+if [ "$want" != "$have" ]; then
+    brew unpin --cask {{ $token }} >/dev/null 2>&1 || true
+    brew install --cask --force "swchck/local/{{ $token }}"
+fi
+# Pinning does not stop a cask with `auto_updates true` from replacing itself —
+# Raycast also needs its own "Automatically download & install updates" off.
+brew pin --cask {{ $token }} >/dev/null 2>&1 || true
 {{ end }}
 # Install packages via Brewfile
 brew bundle --file=/dev/stdin <<EOF
