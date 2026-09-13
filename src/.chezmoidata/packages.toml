@@ -6,6 +6,7 @@ taps = [
     "derailed/k9s",             # Kubernetes CLI Repository
     "armgabrielyan/deadbranch", # Git dead branch cleaner
     "gabrie30/utils",           # Ghorg repository cloner
+    "swchck/local",             # Local tap for version-pinned casks
 ]
 
 fonts = [
@@ -124,7 +125,7 @@ casks = [
     "keka",                 # macOS Archive Manager
     "kekaexternalhelper",   # Keka helper
     "hyperkey",             # Keyboard Remapper adds Hyper Key
-    "raycast",              # macOS Launcher (Spotlight Alternative)
+    "swchck/local/raycast@1", # macOS Launcher (Spotlight Alternative), held at 1.x
     "coconutbattery",       # macOS Battery Health Monitor
     "keycastr",             # Key Press Visualizer
     "latest",               # App Update Checker
