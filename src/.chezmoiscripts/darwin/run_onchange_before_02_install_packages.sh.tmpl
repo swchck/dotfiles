@@ -29,7 +29,7 @@ set -uo pipefail
 {{ $casks     = $casks     | sortAlpha | uniq -}}
 
 # Tap and trust third-party taps so `brew bundle` and `brew update` succeed
-# under HOMEBREW_REQUIRE_TAP_TRUST (default in Homebrew 5.2+/6.0).
+# under the tap-trust requirement (the default since Homebrew 6.0).
 # Tap-level trust is used because each of these is a single-formula tap,
 # making tap-trust effectively equivalent to per-formula trust by surface area,
 # while keeping `brew update` clean (formula-trust only blocks tap updates).
