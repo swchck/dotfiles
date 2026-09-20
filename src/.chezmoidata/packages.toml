@@ -133,4 +133,3 @@ casks = [
 
 [packages.darwin.common.appstore_apps]
 Telegram = 747648890          # Telegram Messenger
-# uBlockOriginLite = 6745342698 # Safari Ad Blocker (mas install fails for Safari extensions)

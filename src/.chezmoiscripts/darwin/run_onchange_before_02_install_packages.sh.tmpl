@@ -37,9 +37,15 @@ set -uo pipefail
 brew tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
 brew tap gabrie30/utils           >/dev/null 2>&1 || true
 brew tap bahaaio/pomo             >/dev/null 2>&1 || true
+brew tap thsnkhn/harbor           >/dev/null 2>&1 || true
+brew tap mrrockysl/muro           >/dev/null 2>&1 || true
+brew tap abue-ammar/tinycast      >/dev/null 2>&1 || true
 brew trust --tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
 brew trust --tap gabrie30/utils           >/dev/null 2>&1 || true
 brew trust --tap bahaaio/pomo             >/dev/null 2>&1 || true
+brew trust --tap thsnkhn/harbor           >/dev/null 2>&1 || true
+brew trust --tap mrrockysl/muro           >/dev/null 2>&1 || true
+brew trust --tap abue-ammar/tinycast      >/dev/null 2>&1 || true
 brew trust --tap swchck/local             >/dev/null 2>&1 || true
 {{ if eq .machine_type "work" -}}
 brew tap derailed/k9s            >/dev/null 2>&1 || true
