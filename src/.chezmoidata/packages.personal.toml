@@ -3,7 +3,10 @@
 [packages.darwin.personal]
 
 taps = [
-    "bahaaio/pomo", # Pomodoro Timer
+    "bahaaio/pomo",    # Pomodoro Timer
+    "thsnkhn/harbor",  # Harbor
+    "mrrockysl/muro",  # Muro
+    "abue-ammar/tinycast", # Tinycast
 ]
 
 cli = [
@@ -12,13 +15,17 @@ cli = [
     "syncthing",            # File synchronization
     "ollama",               # Language model
     "llama.cpp",            # LLM inference
-    "whisper-cpp",          # Speech-to-text
+    "whisper.cpp",          # Speech-to-text
     "yt-dlp",              # Video downloader
     "termshark",            # Wireshark for the terminal
     "gabrie30/utils/ghorg", # Repository management (Configurable)
     "nmap",                 # Network scanner
     "hurl",                 # HTTP client
     "himalaya",             # CLI email client
+    "innoextract",          # Inno Setup installer extractor
+    "mkvtoolnix",           # Matroska (MKV) toolset
+    "tesseract-lang",       # OCR language data for tesseract
+    "verapdf",              # PDF/A validator
 ]
 
 casks = [
@@ -41,6 +48,13 @@ casks = [
     "orion",                # WebKit Browser
     "ungoogled-chromium",   # Privacy Browser
     "helium-browser",       # Chromium-based privacy browser
+    "firefox",              # Firefox Browser
+
+    # Communication
+    "telegram-desktop",     # Telegram desktop client
+
+    # Development
+    "github-copilot-app",   # GitHub Copilot desktop app
 
     # Utilities
     "motrix",               # Download Manager
@@ -48,8 +62,31 @@ casks = [
     "raspberry-pi-imager",  # Raspberry Pi Image Flasher
     "bahaaio/pomo/pomo",    # Pomodoro Timer
     "equinox",              # Dynamic wallpaper creator
+    "octarine",             # Markdown editor
+    "thsnkhn/harbor/harbor",       # Harbor
+    "mrrockysl/muro/muro",         # Muro
+    "abue-ammar/tinycast/tinycast", # Tinycast
 ]
 
 [packages.darwin.personal.appstore_apps]
 FoXray = 6448898396       # macOS X-Ray VPN Client
 SnippetsLab = 1006087419  # Code Snippets Manager
+
+# Games
+"Balatro" = 6502451661
+"Card Of Darkness" = 1462717703
+"CivilizationVII" = 6744373452
+"CozyCaravan" = 6740474743
+"Cult Of The Lamb" = 1639580858
+"DREDGE+" = 6753196416
+"Mini Metro+" = 1550663539
+"Mini Motorways" = 1456188526
+"Oceanhorn 3" = 1539411904
+"Outlanders 2" = 1614682164
+"Patty Pursuit 2" = 6472008605
+"PowerWash Simulator" = 6477445344
+"Ultimate Ninja STORM" = 6745006459
+# Safari extension — `mas install` fails for these on a fresh machine (the
+# install line errors but the script continues; brew bundle has no set -e).
+# Listed anyway so cleanup won't remove an already-installed copy.
+"uBlock Origin Lite" = 6745342698
