@@ -582,7 +582,9 @@ do
         tl_tabs.set_title = function(tab, hover)
             local items = orig(tab, hover)
             local pane = tab and tab.active_pane
-            local st = pane and pane.user_vars and pane.user_vars.claude_status
+            local vars = pane and pane.user_vars or {}
+            local st = vars.codex_status
+            if st == nil or st == "" then st = vars.claude_status end
             if st == nil or st == "" or type(items) ~= "table" then return items end
             local color = claude_status_colors[st]
             -- WezTerm reports no foreground process name for a Claude Code pane, so
@@ -612,7 +614,7 @@ end
 -- a timer, so force a tab-bar refresh whenever claude_status changes (otherwise
 -- the color only updates when you hover/focus the tab).
 wezterm.on("user-var-changed", function(window, pane, name, value)
-    if name == "claude_status" then
+    if name == "claude_status" or name == "codex_status" then
         pcall(function() tabline.refresh(window) end)
     end
 end)
