@@ -70,3 +70,7 @@ if status is-interactive
     abbr --add --command git cm commit
 
 end
+
+function claude-personal
+    CLAUDE_CONFIG_DIR="$HOME/.claude-personal" claude $argv
+end
