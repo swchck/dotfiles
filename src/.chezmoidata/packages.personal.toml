@@ -61,6 +61,7 @@ casks = [
 
 [packages.darwin.personal.appstore_apps]
 Xcode = 497799835         # Apple IDE
+FoXray = 6448898396       # macOS X-Ray VPN Client
 
 # Games
 "Balatro" = 6502451661
