@@ -3,6 +3,7 @@
 [packages.darwin.work]
 
 taps = [
+    "derailed/k9s",            # Kubernetes CLI Repository
     "alesbrelih/gitlab-ci-ls", # GitLab CI Language Server
     "hashicorp/tap",           # Vault (dropped from homebrew-core after the BUSL relicense)
 ]
@@ -31,6 +32,9 @@ cli = [
     # LSP / Editor
     "alesbrelih/gitlab-ci-ls/gitlab-ci-ls", # GitLab CI Language Server
 
+    # Python
+    "pipx",                 # Isolated installs of Python CLI apps
+
     # Misc
     "slackdump",            # Slack export tool
     "node@22",              # Node.js 22 LTS
@@ -41,5 +45,7 @@ casks = [
     # Communication
     "zoom",                 # Video Conferencing
     "slack",                # Team Messenger
-    "postman",              # API Testing
+
+    # Database
+    "dbeaver-community",    # Universal database client
 ]
