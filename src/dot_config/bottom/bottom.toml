@@ -42,7 +42,7 @@ show_table_scroll_bar = true
 # left_legend = false            # (was cpu_left_legend)
 
 # ── Processes ────────────────────────────────────────────────────────
-# [processes]
+[processes]
 # default_grouped = false        # (was group_processes)
 # case_sensitive = false
 # whole_word = false
@@ -73,7 +73,7 @@ default_sort = "cpu%"            # default sort column (0.14.7+: honored from co
 # temperature_type = "celsius"   # celsius, fahrenheit, kelvin
 
 # ── Disk ─────────────────────────────────────────────────────────────
-# [disk]
+[disk]
 default_sort = "name"
 
 # ── Styles (One Dark Pro) ────────────────────────────────────────────
