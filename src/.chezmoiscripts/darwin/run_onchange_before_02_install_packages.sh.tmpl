@@ -6,13 +6,20 @@ set -uo pipefail
 
 {{ $darwin := .packages.darwin -}}
 
-{{/* Always include: common + personal */}}
-{{/* Work machines additionally include: work */}}
-{{ $taps      := concat (dig "common" "taps"      (list) $darwin) (dig "personal" "taps"      (list) $darwin) -}}
-{{ $fonts     := concat (dig "common" "fonts"     (list) $darwin) (dig "personal" "fonts"     (list) $darwin) -}}
-{{ $languages := concat (dig "common" "languages" (list) $darwin) (dig "personal" "languages" (list) $darwin) -}}
-{{ $cli       := concat (dig "common" "cli"       (list) $darwin) (dig "personal" "cli"       (list) $darwin) -}}
-{{ $casks     := concat (dig "common" "casks"     (list) $darwin) (dig "personal" "casks"     (list) $darwin) -}}
+{{/* common everywhere; the machine_type profile on top of it */}}
+{{ $taps      := dig "common" "taps"      (list) $darwin -}}
+{{ $fonts     := dig "common" "fonts"     (list) $darwin -}}
+{{ $languages := dig "common" "languages" (list) $darwin -}}
+{{ $cli       := dig "common" "cli"       (list) $darwin -}}
+{{ $casks     := dig "common" "casks"     (list) $darwin -}}
+
+{{ if eq .machine_type "personal" -}}
+{{ $taps      = concat $taps      (dig "personal" "taps"      (list) $darwin) -}}
+{{ $fonts     = concat $fonts     (dig "personal" "fonts"     (list) $darwin) -}}
+{{ $languages = concat $languages (dig "personal" "languages" (list) $darwin) -}}
+{{ $cli       = concat $cli       (dig "personal" "cli"       (list) $darwin) -}}
+{{ $casks     = concat $casks     (dig "personal" "casks"     (list) $darwin) -}}
+{{ end -}}
 
 {{ if eq .machine_type "work" -}}
 {{ $taps      = concat $taps      (dig "work" "taps"      (list) $darwin) -}}
@@ -36,17 +43,19 @@ set -uo pipefail
 # Trust state is recorded in ~/.homebrew/trust.json and is idempotent.
 brew tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
 brew tap gabrie30/utils           >/dev/null 2>&1 || true
+brew trust --tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
+brew trust --tap gabrie30/utils           >/dev/null 2>&1 || true
+brew trust --tap swchck/local             >/dev/null 2>&1 || true
+{{ if eq .machine_type "personal" -}}
 brew tap bahaaio/pomo             >/dev/null 2>&1 || true
 brew tap thsnkhn/harbor           >/dev/null 2>&1 || true
 brew tap mrrockysl/muro           >/dev/null 2>&1 || true
 brew tap abue-ammar/tinycast      >/dev/null 2>&1 || true
-brew trust --tap armgabrielyan/deadbranch >/dev/null 2>&1 || true
-brew trust --tap gabrie30/utils           >/dev/null 2>&1 || true
 brew trust --tap bahaaio/pomo             >/dev/null 2>&1 || true
 brew trust --tap thsnkhn/harbor           >/dev/null 2>&1 || true
 brew trust --tap mrrockysl/muro           >/dev/null 2>&1 || true
 brew trust --tap abue-ammar/tinycast      >/dev/null 2>&1 || true
-brew trust --tap swchck/local             >/dev/null 2>&1 || true
+{{ end -}}
 {{ if eq .machine_type "work" -}}
 brew tap derailed/k9s            >/dev/null 2>&1 || true
 brew tap alesbrelih/gitlab-ci-ls >/dev/null 2>&1 || true
@@ -99,8 +108,10 @@ cask "{{ . }}"
 {{ range $key, $value := (dig "common" "appstore_apps" (dict) $darwin) -}}
 mas "{{$key}}", id: {{$value}}
 {{ end -}}
+{{ if eq .machine_type "personal" -}}
 {{ range $key, $value := (dig "personal" "appstore_apps" (dict) $darwin) -}}
 mas "{{$key}}", id: {{$value}}
+{{ end -}}
 {{ end -}}
 {{ if eq .machine_type "work" -}}
 {{ range $key, $value := (dig "work" "appstore_apps" (dict) $darwin) -}}
@@ -108,8 +119,12 @@ mas "{{$key}}", id: {{$value}}
 {{ end -}}
 {{ end -}}
 
+{{/* the visual-studio-code cask is personal-only, and `brew bundle` fails a
+     vscode line when the `code` CLI is absent */ -}}
+{{ if eq .machine_type "personal" -}}
 {{ range (.vscode.extensions | sortAlpha | uniq) -}}
 vscode "{{ . }}"
+{{ end -}}
 {{ end -}}
 EOF
 
@@ -138,8 +153,10 @@ cask "{{ . }}"
 {{ range $key, $value := (dig "common" "appstore_apps" (dict) $darwin) -}}
 mas "{{$key}}", id: {{$value}}
 {{ end -}}
+{{ if eq .machine_type "personal" -}}
 {{ range $key, $value := (dig "personal" "appstore_apps" (dict) $darwin) -}}
 mas "{{$key}}", id: {{$value}}
+{{ end -}}
 {{ end -}}
 {{ if eq .machine_type "work" -}}
 {{ range $key, $value := (dig "work" "appstore_apps" (dict) $darwin) -}}

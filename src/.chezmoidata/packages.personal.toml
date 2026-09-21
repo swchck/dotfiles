@@ -10,51 +10,39 @@ taps = [
 ]
 
 cli = [
-    "hugo",                 # Static site generator
-    "pandoc",               # document converter
-    "syncthing",            # File synchronization
-    "ollama",               # Language model
-    "llama.cpp",            # LLM inference
-    "whisper.cpp",          # Speech-to-text
-    "yt-dlp",              # Video downloader
-    "termshark",            # Wireshark for the terminal
-    "gabrie30/utils/ghorg", # Repository management (Configurable)
-    "nmap",                 # Network scanner
-    "hurl",                 # HTTP client
-    "himalaya",             # CLI email client
     "innoextract",          # Inno Setup installer extractor
     "mkvtoolnix",           # Matroska (MKV) toolset
     "tesseract-lang",       # OCR language data for tesseract
     "verapdf",              # PDF/A validator
+
+    # Python
+    "uv",                   # Python package/venv/tool manager (replaces pip, pipx, pyenv, venv)
+    "ruff",                 # Python linter + formatter (Rust)
 ]
 
 casks = [
+    # AI
+    "chatgpt",              # OpenAI ChatGPT
+
     # Communication
     "discord",              # Chat Client
-    "gram",                 # Telegram client
-
-    # Music
-    "yandex-music",         # Music Streaming Service
-    "spotify",              # Music Streaming Service
+    "telegram-desktop",     # Telegram desktop client
 
     # Gaming
     "epic-games",           # Game launcher
 
     # Development
+    "visual-studio-code",   # Code Editor
     "gb-studio",            # Game Boy Game Development
     "figma",                # Design tool
+    "github-copilot-app",   # GitHub Copilot desktop app
 
     # Browsers
+    "arc",                  # Modern Chromium Based Browser
+    "google-chrome",        # Chrome Browser
     "orion",                # WebKit Browser
     "ungoogled-chromium",   # Privacy Browser
-    "helium-browser",       # Chromium-based privacy browser
     "firefox",              # Firefox Browser
-
-    # Communication
-    "telegram-desktop",     # Telegram desktop client
-
-    # Development
-    "github-copilot-app",   # GitHub Copilot desktop app
 
     # Utilities
     "motrix",               # Download Manager
@@ -63,14 +51,16 @@ casks = [
     "bahaaio/pomo/pomo",    # Pomodoro Timer
     "equinox",              # Dynamic wallpaper creator
     "octarine",             # Markdown editor
+    "hyperkey",             # Keyboard Remapper adds Hyper Key
+    "keycastr",             # Key Press Visualizer
+    "latest",               # App Update Checker
     "thsnkhn/harbor/harbor",       # Harbor
     "mrrockysl/muro/muro",         # Muro
     "abue-ammar/tinycast/tinycast", # Tinycast
 ]
 
 [packages.darwin.personal.appstore_apps]
-FoXray = 6448898396       # macOS X-Ray VPN Client
-SnippetsLab = 1006087419  # Code Snippets Manager
+Xcode = 497799835         # Apple IDE
 
 # Games
 "Balatro" = 6502451661
@@ -86,7 +76,3 @@ SnippetsLab = 1006087419  # Code Snippets Manager
 "Patty Pursuit 2" = 6472008605
 "PowerWash Simulator" = 6477445344
 "Ultimate Ninja STORM" = 6745006459
-# Safari extension — `mas install` fails for these on a fresh machine (the
-# install line errors but the script continues; brew bundle has no set -e).
-# Listed anyway so cleanup won't remove an already-installed copy.
-"uBlock Origin Lite" = 6745342698

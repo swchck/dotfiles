@@ -3,7 +3,6 @@
 [packages.darwin.common]
 
 taps = [
-    "derailed/k9s",             # Kubernetes CLI Repository
     "armgabrielyan/deadbranch", # Git dead branch cleaner
     "gabrie30/utils",           # Ghorg repository cloner
     "swchck/local",             # Local tap for version-pinned casks
@@ -60,33 +59,41 @@ cli = [
     "git-delta",            # beautiful git diffs
     "lazygit",              # Git TUI
     "armgabrielyan/deadbranch/deadbranch", # Git dead branch cleaner
+    "gabrie30/utils/ghorg", # Repository management (Configurable)
 
     # Data & Text Processing
     "jaq",                  # JSON/YAML/TOML processor (jq replacement, Rust)
     "fx",                   # JSON viewer
     "tokei",                # code statistics
+    "pandoc",               # document converter
 
     # Network & Files
     "iproute2mac",          # iproute2 for macOS
     "wget",                 # download utility
     "bandwhich",            # network utilization
     "vegeta",               # HTTP load testing tool
+    "nmap",                 # Network scanner
+    "hurl",                 # HTTP client
+    "termshark",            # Wireshark for the terminal
+    "syncthing",            # File synchronization
 
     # Media & Archives
     "ffmpeg",               # video processing
     "ffmpegthumbnailer",    # video thumbnailer
     "poppler",              # PDF tools
     "unar",                 # unarchiver
+    "yt-dlp",               # Video downloader
 
     # File Manager
     "yazi",                 # Terminal file manager
 
-    # Python
-    "uv",                   # Python package/venv/tool manager (replaces pip, pipx, pyenv, venv)
-    "ruff",                 # Python linter + formatter (Rust)
-
     # Node
     "nvm",                  # Node version manager
+
+    # Local LLM
+    "ollama",               # Language model runner
+    "llama.cpp",            # LLM inference
+    "whisper.cpp",          # Speech-to-text
 
     # Misc
     "age",                  # file encryption
@@ -95,27 +102,31 @@ cli = [
     "upx",                  # binary packer
     "rtk",
     "pam-reattach",         # PAM module for tmux/screen Touch ID sudo support
+    "hugo",                 # Static site generator
+    "himalaya",             # CLI email client
 ]
 
 casks = [
     # Browsers
-    "arc",                  # Modern Chromium Based Browser
-    "google-chrome",        # Chrome Browser
+    "helium-browser",       # Chromium-based privacy browser
 
     # Development
     "wezterm",              # Terminal Emulator
-    "visual-studio-code",   # Code Editor
     "orbstack",             # macOS Container Manager
     "zed",                  # Code Editor
 
     # AI
-    "chatgpt",              # OpenAI ChatGPT
     "claude",               # Anthropic Claude
     "claude-code",          # Anthropic Claude Code CLI
     "copilot-cli",          # GitHub Copilot CLI
 
-    # Video
+    # Communication
+    "gram",                 # Telegram client
+
+    # Media
     "vlc",                  # Video Player
+    "spotify",              # Music Streaming Service
+    "yandex-music",         # Music Streaming Service
 
     # Productivity
     "obsidian",             # Note Taking Application
@@ -124,12 +135,17 @@ casks = [
     # Utilities
     "keka",                 # macOS Archive Manager
     "kekaexternalhelper",   # Keka helper
-    "hyperkey",             # Keyboard Remapper adds Hyper Key
     "swchck/local/raycast@1", # macOS Launcher (Spotlight Alternative), held at 1.x
     "coconutbattery",       # macOS Battery Health Monitor
-    "keycastr",             # Key Press Visualizer
-    "latest",               # App Update Checker
 ]
 
 [packages.darwin.common.appstore_apps]
 Telegram = 747648890          # Telegram Messenger
+TestFlight = 899247664        # Beta app distribution
+"Apple Configurator" = 1037126344 # iOS/iPadOS device provisioning
+FoXray = 6448898396           # macOS X-Ray VPN Client
+SnippetsLab = 1006087419      # Code Snippets Manager
+# Safari extension — `mas install` fails for these on a fresh machine (the
+# install line errors but the script continues; brew bundle has no set -e).
+# Listed anyway so cleanup won't remove an already-installed copy.
+"uBlock Origin Lite" = 6745342698
