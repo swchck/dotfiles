@@ -8,7 +8,9 @@
 #########################
 
 # Timeout for file scanning, in milliseconds (default: 30)
-# scan_timeout = 30
+# 30ms is not enough for large or network-backed directories — the scan aborts
+# and starship logs "Scanning current directory timed out".
+scan_timeout = 200
 
 # Timeout for commands executed by starship, in milliseconds (default: 500)
 command_timeout = 5000
