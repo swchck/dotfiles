@@ -39,6 +39,7 @@ cli = [
 
     # Editors & Multiplexers
     "neovim",               # text editor (Configurable)
+    "tree-sitter-cli",      # parser generator — nvim-treesitter main needs it to build parsers
     "zellij",               # terminal multiplexer (Configurable)
 
     # Modern CLI Replacements
