@@ -130,6 +130,7 @@ casks = [
 
     # Productivity
     "obsidian",             # Note Taking Application
+    "octarine",             # Markdown note-taking application
     "anki",                 # Flashcard Application
 
     # Utilities
