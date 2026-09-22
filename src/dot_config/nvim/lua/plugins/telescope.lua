@@ -1,7 +1,9 @@
 return { -- Fuzzy Finder (files, lsp, etc)
     "nvim-telescope/telescope.nvim",
     event = "VimEnter",
-    branch = "0.1.x",
+    -- 0.1.x previews via nvim-treesitter.parsers.ft_to_lang, gone in the main
+    -- rewrite; master calls vim.treesitter.start and needs no nvim-treesitter
+    branch = "master",
     dependencies = {
         "nvim-lua/plenary.nvim",
         { -- If encountering errors, see telescope-fzf-native README for installation instructions
