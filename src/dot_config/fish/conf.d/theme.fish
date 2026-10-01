@@ -1,4 +1,4 @@
-# Fish 4.5.0 shell color theme — One Dark Pro
+# Fish 4.9.3 shell color theme — One Dark Pro
 #
 # To preview: fish_config theme show
 # To reset to default: fish_config theme choose "Fish Default"

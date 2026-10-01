@@ -8,8 +8,4 @@ function last_history_item
     echo $history[1]
 end
 
-# Abbreviation: !!
-# This abbreviation allows you to quickly execute the last command
-# by typing '!!'. It uses the 'last_history_item' function to retrieve
-# the last command from the history.
-abbr -a !! --position anywhere --function last_history_item
+abbr -a !! --position anywhere --description="previous command" --function last_history_item
