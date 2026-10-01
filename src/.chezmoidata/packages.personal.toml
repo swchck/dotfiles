@@ -44,7 +44,7 @@ casks = [
     "firefox",              # Firefox Browser
 
     # Utilities
-    "motrix",               # Download Manager
+    "thsnkhn/harbor/harbor", # Download Manager (URLs, magnet links, torrents)
     "qflipper",             # Flipper Zero Manager
     "raspberry-pi-imager",  # Raspberry Pi Image Flasher
     "bahaaio/pomo/pomo",    # Pomodoro Timer
@@ -53,7 +53,6 @@ casks = [
     "hyperkey",             # Keyboard Remapper adds Hyper Key
     "keycastr",             # Key Press Visualizer
     "latest",               # App Update Checker
-    "thsnkhn/harbor/harbor",       # Harbor
     "mrrockysl/muro/muro",         # Muro
 ]
 
