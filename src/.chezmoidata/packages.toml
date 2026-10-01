@@ -5,7 +5,7 @@
 taps = [
     "armgabrielyan/deadbranch", # Git dead branch cleaner
     "gabrie30/utils",           # Ghorg repository cloner
-    "swchck/local",             # Local tap for version-pinned casks
+    "abue-ammar/tinycast",      # Tinycast
 ]
 
 fonts = [
@@ -137,7 +137,7 @@ casks = [
     # Utilities
     "keka",                 # macOS Archive Manager
     "kekaexternalhelper",   # Keka helper
-    "swchck/local/raycast@1", # macOS Launcher (Spotlight Alternative), held at 1.x
+    "abue-ammar/tinycast/tinycast", # macOS Launcher (Spotlight Alternative)
     "coconutbattery",       # macOS Battery Health Monitor
 ]
 

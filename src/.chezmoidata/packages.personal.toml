@@ -6,7 +6,6 @@ taps = [
     "bahaaio/pomo",    # Pomodoro Timer
     "thsnkhn/harbor",  # Harbor
     "mrrockysl/muro",  # Muro
-    "abue-ammar/tinycast", # Tinycast
 ]
 
 cli = [
@@ -56,7 +55,6 @@ casks = [
     "latest",               # App Update Checker
     "thsnkhn/harbor/harbor",       # Harbor
     "mrrockysl/muro/muro",         # Muro
-    "abue-ammar/tinycast/tinycast", # Tinycast
 ]
 
 [packages.darwin.personal.appstore_apps]
