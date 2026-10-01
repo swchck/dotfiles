@@ -1,4 +1,4 @@
-// Zed 1.9.0 settings
+// Zed 1.22.0 settings
 // https://zed.dev/docs/configuring-zed
 //
 // To see all defaults: run `open default settings` from the command palette.
@@ -87,7 +87,8 @@
   "unnecessary_code_fade": 0.7,
   // "vim_mode": false,
   // "helix_mode": false,
-  // "base_keymap": "VSCode",          // VSCode, JetBrains, Sublime Text, Atom, TextMate
+  // pinned: 1.14.2 flipped this default VSCode → Zed and moved every keybinding
+  "base_keymap": "Zed",             // VSCode, JetBrains, Sublime Text, Atom, TextMate
   // "confirm_quit": false,
   // "linked_edits": true,             // linked editing of associated ranges (e.g. HTML tags)
   // "extend_comment_on_newline": true,
@@ -276,6 +277,8 @@
 
   // ── Search ──────────────────────────────────────────────────────────
 
+  // pinned: search-on-type became the default in 1.19.2
+  "search": { "search_on_type": true },
   // "search": {
   //   "button": true,
   //   "whole_word": false,
@@ -428,6 +431,8 @@
     },
     // Auto-summarize long threads before the context window fills (Zed 1.x).
     "auto_compact": { "enabled": true, "threshold": "90%" },
+    // pinned: on by default since 1.21.0 — blocks idle sleep while a thread runs
+    "prevent_idle_sleep": true,
     "play_sound_when_agent_done": "when_hidden",
     "notify_when_agent_waiting": "primary_screen",
     "show_turn_stats": true,
