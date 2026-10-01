@@ -8,5 +8,4 @@ function multicd
     echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
 end
 
-# Register the multicd function as an abbreviation.
-abbr --add dotdot --regex '^\.\.+$' --function multicd
+abbr --add dotdot --regex '^\.\.+$' --description="cd up one level per dot" --function multicd

@@ -1,4 +1,4 @@
-# Fish 4.5.0 interactive shell configuration
+# Fish 4.9.3 interactive shell configuration
 # Sourced only for interactive sessions
 
 if status is-interactive
@@ -64,10 +64,10 @@ if status is-interactive
     # ── Abbreviations ────────────────────────────────────────────────
     # Command-scoped git abbreviations (fish 4.0+): expand only after `git `,
     # so they never collide as a first word.
-    abbr --add --command git st status
-    abbr --add --command git co checkout
-    abbr --add --command git br branch
-    abbr --add --command git cm commit
+    abbr --add --command git st --description="working tree status" status
+    abbr --add --command git co --description="switch branch or restore paths" checkout
+    abbr --add --command git br --description="list or manage branches" branch
+    abbr --add --command git cm --description="record staged changes" commit
 
 end
 
