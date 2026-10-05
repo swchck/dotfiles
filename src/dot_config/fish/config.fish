@@ -69,6 +69,9 @@ if status is-interactive
     abbr --add --command git br --description="list or manage branches" branch
     abbr --add --command git cm --description="record staged changes" commit
 
+    # psub instead of `| bash`: the script prompts, so its stdin has to stay the tty
+    abbr --add sfunlock --description="patch Spotify with SpotX" 'bash (curl -sSL https://spotx-official.github.io/run.sh | psub)'
+
 end
 
 function claude-personal
