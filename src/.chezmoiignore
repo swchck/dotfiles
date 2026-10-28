@@ -63,6 +63,7 @@
 .config/k9s
 .netrc
 .config/glab-cli
+.claude/mods
 {{ end }}
 
 # ── Claude Code runtime (never sync) ─────────────────────────────────

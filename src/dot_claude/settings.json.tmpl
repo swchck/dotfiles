@@ -195,6 +195,24 @@
       }
     ]
   },
+{{- if and (eq .machine_type "work") (not .ephemeral) }}
+  "env": {
+    "CLAUDE_CODE_PLUGIN_DIRS": "{{ range $i, $m := list "branch-guard" "comment-gate" "env-band" "plain-talk" "ship-check" }}{{ if $i }}:{{ end }}{{ $.chezmoi.homeDir }}/.claude/mods/{{ $m }}{{ end }}"
+  },
+  "pluginConfigs": {
+    "branch-guard": {
+      "options": {
+        "workTreePattern": {{ printf "%s/" (.paths.work | replace "." "\\.") | toJson }}
+      }
+    },
+    "env-band": {
+      "options": {
+        "vpnProbeUrl": {{ dig "work" "vpn_probe_url" "" . | toJson }},
+        "prodHostPattern": {{ dig "work" "prod_host_pattern" "" . | toJson }}
+      }
+    }
+  },
+{{- end }}
   "statusLine": {
     "type": "command",
     "command": "bash {{ .chezmoi.homeDir }}/.claude/statusline-command.sh"

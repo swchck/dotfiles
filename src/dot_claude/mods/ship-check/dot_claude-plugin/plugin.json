@@ -1,0 +1,1 @@
+{ "name": "ship-check", "version": "0.1.0", "description": "Pre-merge pane across the task's repos: branch, upstream, master drift, conflicts, tests, lint, app start, review", "types": "./types/index.d.ts" }

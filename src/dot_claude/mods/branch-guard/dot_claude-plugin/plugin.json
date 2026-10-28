@@ -1,0 +1,13 @@
+{
+  "name": "branch-guard",
+  "version": "0.1.0",
+  "description": "Keeps work branches off origin/master: no upstream to master, no push to master, branch → upstream in the status line",
+  "userConfig": {
+    "workTreePattern": {
+      "type": "string",
+      "title": "Work tree pattern",
+      "description": "Regex matching the paths the guard applies to; empty falls back to the built-in one",
+      "default": ""
+    }
+  }
+}

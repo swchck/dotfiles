@@ -1,0 +1,1 @@
+{ "name": "plain-talk", "version": "0.1.0", "description": "Short plain answers on demand (/plain or 'проще'), Slack/MR replies routed through doppelganger", "types": "./types/index.d.ts" }

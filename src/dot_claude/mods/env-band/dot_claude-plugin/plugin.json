@@ -1,0 +1,20 @@
+{
+  "name": "env-band",
+  "version": "0.1.0",
+  "description": "Band above the prompt with the target env (STAGE/PROD), active --prefix and VPN state; asks before writes to PROD",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "vpnProbeUrl": {
+      "type": "string",
+      "title": "VPN probe URL",
+      "description": "URL reachable only through the VPN; empty disables the VPN check",
+      "default": ""
+    },
+    "prodHostPattern": {
+      "type": "string",
+      "title": "PROD host pattern",
+      "description": "Regex matching production hosts in commands, on top of the built-in hints",
+      "default": ""
+    }
+  }
+}

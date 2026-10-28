@@ -1,0 +1,1 @@
+{ "name": "comment-gate", "version": "0.1.0", "description": "Checks comments in every Go/Python edit against the comment rules and makes Claude fix them on the spot" }
